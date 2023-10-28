@@ -2,45 +2,74 @@
 
 ## About Courses Curriculum
 
-- [C](#C)
-- [Python](#Python)
-- [Web Development](#Web_Development)
-<!-- - [Contributing](../CONTRIBUTING.md) -->
 
-## C <a name = "C"></a>
 
-Write about 1-2 paragraphs describing the purpose of your project.
+<div style="display: flex; align-items: center;">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-line.svg" height="35" alt="C logo" style="margin-right: 10px;" />
+    <span><a src="https://www.udemy.com/course/c-programming-for-beginners-programming-in-c/"><h3>C Programming</h3></a></span>
+</div>
+<hr>
 
-## Python <a name = "Python"></a>
+<h4>Course lenght: 44 hours on-demand video;</h4>
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See [deployment](#deployment) for notes on how to deploy the project on a live system.
+<h4>Course content:</h4>
 
-### Web Development
+- Input & Output (what it is and how it can be used in C);
+- Conditions & Control Flow (controlling the execution flow of a C Program);
+- Different types of Loops (including For, While, and Do-While in C);
+- Functions;
+- Arrays;
+- Pointers;
+- Using Strings in C Programming;
+- Recursions (Concepts + C Usage);
+- Constants;
+- Unions;
 
-What things you need to install the software and how to install them.
+<br><br>
 
-```
-Give examples
-```
 
-<!-- ### Installing
+<div style="display: flex; align-items: center;">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="35" alt="Python logo" style="margin-right: 10px;" />
+    <span><a src="https://www.udemy.com/course/python-3-do-zero-ao-avancado//"><h3>Python</h3></a></span>
+</div>
+<hr>
 
-A step by step series of examples that tell you how to get a development env running.
+<h4>Course lenght: 141 hours on-demand video;</h4>
 
-Say what the step will be
+<h4>Course content:</h4>
 
-```
-Give the example
-```
+- Basic Python 3 (with programming logic);
+- Intermediate Python 3 (with procedural and functional programming);
+- Advanced Python 3 (with object-oriented programming);
+- Python modules, such as PySide6 for Graphical Interface with Qt 6, Selenium, Django, and much more;
+- Django for creating websites and APIs;
+- Relational databases: SQLite3, MySQL, and MariaDB;
+- Automated testing in Python (with basic Test-Driven Development);
+- Design Patterns (GoF Design Patterns);
+- Regular Expressions;
+- Extra: SQL with MySQL;
+- Extra: Unix Commands (Linux, Mac, and Windows WSL2);
 
-And repeat
+<br><br>
 
-```
-until finished
-```
+<div style="display: flex; align-items: center;">
+    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-plain-wordmark.svg" height="30" alt="html5 logo" /><img width="5" /><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-plain-wordmark.svg" height="30" alt="css3 logo" /><img width="5" /><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="25" alt="javascript logo" /><img width="5"><img src="https://raw.githubusercontent.com/devicons/devicon/1119b9f84c0290e0f0b38982099a2bd027a48bf1/icons/php/php-plain.svg" height="30" alt="javascript logo" /><img width="15">
+    <span><a src="hhttps://www.udemy.com/course/complete-webdev-course/"><h3>Web Development</h3></a></span>
+</div>
+<hr>
 
-End with an example of getting some data out of the system or using it for a little demo.
+<h4>Course lenght: 42 hours on-demand video;</h4>
 
-## Usage <a name = "usage"></a>
-
-Add notes about how to use the system. -->
+- HTML and HTML 5;
+- CSS;
+- JavaScript;
+- jQuery for adding animations to a Website
+- Bootstrap for Mobile Optimized/Responsive Web Design;
+- PHP;
+- Databases;
+- PHP and MySQL for storing user information on a web server;
+- Login and Logout functionalities using PHP SESSIONS;
+- FINAL PROJECT: A dynamic website with a login system for admin and authors only;
+- WordPress;
+- eCommerce integration into WordPress site;
+- Additional Projects and Assignments in the course (e.g., Even Odd Checker, A simple web-based calculator, Your Own HTML editor, etc.)
