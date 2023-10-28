@@ -1,0 +1,143 @@
+{
+    "explorer.compactFolders": true,
+    "code-runner.runInTerminal": true,
+    "code-runner.clearPreviousOutput": true,
+    "code-runner.executorMap": {
+        "python": "cls ; python -u",
+         },
+    "code-runner.ignoreSelection": true,  // ignora rodar apenas a linha selecionada
+    "workbench.iconTheme": "material-icon-theme",
+    "python.defaultInterpreterPath": "python",    
+    "workbench.colorTheme": "Viow Arabian",
+    // "editor.renderWhitespace": "all",  
+
+
+    //Tokyo Night (theme Settings)
+    "workbench.colorCustomizations": {
+    "[Tokyo Night]": {
+        "foreground": "#959cbd",
+        "panelTitle.activeBorder": "#3d59a1",
+        "panelTitle.activeForeground": "#bdc7f0",
+        "panelTitle.inactiveForeground": "#959cbd",
+        "tab.activeForeground": "#bdc7f0",
+        "tab.inactiveForeground": "#959cbd",
+        "breadcrumb.foreground": "#959cbd",
+        "breadcrumb.focusForeground": "#bdc7f0",
+        "breadcrumb.activeSelectionForeground": "#bdc7f0",
+        "statusBar.foreground": "#bdc7f0",
+        "list.focusForeground": "#bdc7f0",
+        "list.hoverForeground": "#bdc7f0",
+        "list.activeSelectionForeground": "#bdc7f0",
+        "list.inactiveSelectionForeground": "#bdc7f0",
+        "list.inactiveSelectionBackground": "#202330",
+        "sideBar.foreground": "#959cbd",
+        "dropdown.foreground": "#959cbd",
+        "menu.foreground":"#bdc7f0",
+        "menubar.selectionForeground":"#13a1e3",
+        "input.foreground": "#959cbd",
+        "input.placeholderForeground": "#959cbd",
+        "activityBar.foreground": "#bdc7f0",
+        "activityBar.inactiveForeground": "#787c99",
+        "gitDecoration.ignoredResourceForeground": "#696d87",
+    },
+    // "[Ayu Dark]": {
+    //     "editor.background": "#1a1b26",
+    //     "sideBar.background": "#1a1b26",
+    //     "activityBar.background": "#1a1b26",
+        
+
+    // }
+    
+},
+
+    "editor.tokenColorCustomizations": {
+        "[Tokyo Night]": { // or "[Tokyo Night Storm]"
+            "textMateRules": [
+                {
+                "scope": [  //Disable Italic
+                    "comment",
+                    "meta.var.expr storage.type",
+                    "keyword.control.flow",
+                    "keyword.control.return",
+                    "meta.directive.vue punctuation.separator.key-value.html",
+                    "meta.directive.vue entity.other.attribute-name.html",
+                    "tag.decorator.js entity.name.tag.js",
+                    "tag.decorator.js punctuation.definition.tag.js",
+                    "storage.modifier",
+                    
+                ],
+                "settings": {
+                    "fontStyle": "",
+                }
+            },
+
+            {
+                "scope":[  // Change Docstring colour
+                "string.quoted.docstring.multi.python",
+                "string.quoted.docstring.multi.python punctuation.definition.string.begin.python",
+                "string.quoted.docstring.multi.python punctuation.definition.string.end.python",
+                "string.quoted.docstring.multi.python constant.character.escape.python",
+                ],
+                "settings": {
+                    "foreground": "#29c2a6e0" // Change Docstring colour
+                }                                                                                       
+            },
+            {
+                "scope":[
+                    "constant.other",
+                ],
+                "settings": {
+                    "foreground": "#e4478b",
+                }
+            },
+
+        ]
+        },
+        "[Tokyo Night Storm]": {
+            "textMateRules": [
+                {
+                "scope": [  //Disable Italic
+                    "comment",
+                    "meta.var.expr storage.type",
+                    "keyword.control.flow",
+                    "keyword.control.return",
+                    "meta.directive.vue punctuation.separator.key-value.html",
+                    "meta.directive.vue entity.other.attribute-name.html",
+                    "tag.decorator.js entity.name.tag.js",
+                    "tag.decorator.js punctuation.definition.tag.js",
+                    "storage.modifier",
+                ],
+                "settings": {
+                    "fontStyle": "",
+                }
+            },
+            {
+                "scope":[  // Change Docstring colour
+                    "string.quoted.docstring.multi.python",
+                    "string.quoted.docstring.multi.python punctuation.definition.string.begin.python",
+                    "string.quoted.docstring.multi.python punctuation.definition.string.end.python",
+                    "string.quoted.docstring.multi.python constant.character.escape.python",
+                ],  
+                "settings": {
+                    "foreground": "#29c2a6"
+                }
+
+            },
+            {
+                "scope":[
+                    "constant",
+                ],
+                "settings": {
+                    "foreground": "#e4478b",                    
+                }
+
+            },
+        ]
+        }
+    },
+    "git.autofetch": true,
+    
+
+
+
+}

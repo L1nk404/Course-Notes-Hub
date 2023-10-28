@@ -1,0 +1,14 @@
+azul para doc string:
+
+    #3f497a nice blue
+    #52609bb7 azul meio chumbado
+    #68cee38a azul claro (parecido com import)
+    #59659e azul Tokyo night storm
+    #29c2a6 azul verde piscina tokyo night storm 
+    #29c2a6d1 azul verde piscina mais fraco 
+    
+
+
+rosa maneiro da titina s2:
+
+    #e4478b

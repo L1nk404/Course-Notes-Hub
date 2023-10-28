@@ -1,0 +1,160 @@
+body{
+    background-color: #84808040;
+    margin:0
+}
+
+#container{
+    width: 1280px;
+    /* height: 500px; WE NEVER RESTRICT OUR CONTAINER HEIGHT*/
+    margin: auto;
+    padding: 0;
+    background-color: #7e78787d;
+}
+
+.icon{
+    width: 30px;
+    /* padding-left: 5px; */
+}
+/* ------------------------------------------------------------------ */
+
+
+#header{
+    width:100%;
+    height: 120px;
+    background-color: lightblue;
+}
+
+#logo{
+    height: 100%;
+    width: 25%;
+    background-color: blue;
+    float:left;
+    display: flex;
+    justify-content: center; /* Center the content horizontally */
+    align-items: center; /* Center the content vertically */
+}
+#logo img{
+    height: 100px;
+    width: 100px;
+}
+
+
+/* ------------------------------------------------------------------ */
+
+
+#slogan{
+    height: 100%;
+    width: 75%;
+    background-color: blueviolet;
+    float: right;
+}
+#slogan h1{
+    text-align: center;
+    margin-top: 40px;
+}
+#slogan img{
+    width: 100%;
+    height: 100%;
+}
+
+
+/* ------------------------------------------------------------------ */
+
+
+#nav{
+    width: 100%;
+    height: 50px;
+    background-color: #6a74c4;
+}
+
+#nav ul{
+    list-style: none;  /* Take off the dots of list */
+    margin: 0;
+    padding: 5px;
+}
+
+#nav ul li{
+    float: left;    
+}
+
+#nav ul li a{
+    text-decoration: none;  /* Remove underlines */
+    width: 60px;
+    display: block;  /* We have to use block for the padding works */
+    padding: 10px 12px 10px 12px;
+    background-color: #6a74c4;
+    color: white;
+    /* border: 1px solid; */
+}
+
+#nav ul li a:hover{  /*THis changes when the mouse is in the item */
+    background-color: grey;
+    border-radius: 25px;
+}
+
+
+/* ------------------------------------------------------------------ */
+
+
+#article{
+    width:70%;
+    height:900px;
+    background-color:#d4d5de;
+    float:left;  /* Makes it fits left of sidebar*/
+    padding: 0;
+}
+
+#content{
+    padding: 0;
+    margin: 0;
+    width: 90%;
+    margin-left: 12px;
+}
+#content h1, #content p{
+    margin: 5px;
+
+}
+
+
+/* ------------------------------------------------------------------ */
+
+
+#sidebar{
+    width: 30%;
+    height: 900px;
+    background-color: rgb(66, 66, 205);
+    float: right;  /* Makes it fit right of article */
+}
+
+#sidebar h1, #sidebar p{
+    padding: 0;
+    margin: 0;
+    padding-left: 10px;
+}
+#sidebar h1{
+    font-family: 'Courier New', Courier, monospace;
+}
+#sidebar a{
+    color: rgb(208, 193, 193);
+    text-decoration: none;
+}
+#sidebar button{
+    color:red;
+    /* background-color: black; */
+    border-style: none;
+    /* padding: 10px; */
+    text-align: center;
+    margin: 10px 0px 0px 15px;
+
+}
+
+/* ------------------------------------------------------------------ */
+
+
+#footer{
+    width: 100%;
+    height: 40px;
+    background-color: black;
+    clear: both;  /* It makes the footer not float and stay bellow */ 
+
+}

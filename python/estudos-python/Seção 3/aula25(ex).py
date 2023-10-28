@@ -1,0 +1,13 @@
+nome = input('Digite seu nome: ')
+sobrenome = input('Digite seu sobrenome: ')
+ano_nascimento = int(input('Digite o ano em que nasceu: '))
+idade = int(input('Digite sua idade: '))
+maior_de_idade = bool(2023 - ano_nascimento >= 18) 
+altura_metros = float(input('Digite sua altura em metros'))
+
+print('Nome:', nome)
+print('Sobrenome:', sobrenome)
+print('Idade:', idade)
+print('Ano de nascimento:', ano_nascimento)
+print('É maior de idade?', maior_de_idade)
+print('Altura em metros:',altura_metros)
