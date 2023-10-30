@@ -12,6 +12,14 @@ body{
     background-color: black;
 }
 
+input,textarea,select{
+    background-color: black;
+    color: rgb(53, 197, 13);
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 10px;
+    border: 1px solid rgb(53, 197, 13);
+}
+
 header{
     margin-top: 10px;
     border: 1px solid rgb(53, 197, 13);
