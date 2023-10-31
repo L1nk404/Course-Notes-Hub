@@ -24,7 +24,7 @@ aumentar_dez_porcento = partial(
 
 
 # novos_produtos = [
-#     {**p,
+#     {**p,  # Duas estrelas para expandir as chaves também
 #       'preco': aumentar_porcentagem(
 #         valor=p['preco'], porcentagem=1.1)}  # Aqui estamos sobreescrevendo as chaves 'preco' dos produtos
 #     for p in produtos 
@@ -47,7 +47,7 @@ novos_produtos = list(map(  # Como map é um iterator, temos que converter como 
 print(
     list(map(
     lambda x: x * 3,
-    [1, 2, 3, 4]
+    [1,2,3,4]
     ))
 )
 print()

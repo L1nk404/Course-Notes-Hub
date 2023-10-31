@@ -28,7 +28,7 @@ gen = generator(maximum=1000000)
 
 
 """ 
-Yield from
+Yield from (Continua o yild do generator citado)
 """
 
 def gen1():
