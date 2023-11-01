@@ -1,0 +1,3 @@
+A pasta lib é o diretório para coisas que instalo de terceiros no ambiente virtual
+
+A pasta Scripts tem todos os executáveis que serão usados no ambiente virtual

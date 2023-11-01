@@ -8,3 +8,4 @@ venv é o módulo que iremos usar para criar ambientes virtuais.
 Você pode dar o nome que preferir para um ambiente virtual, mas os mais 
 comuns são: venv, env, .venv, .env
 """
+# Olhar a pasta project(venv_learning)
