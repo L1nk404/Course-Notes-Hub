@@ -10,8 +10,8 @@
 int main() {
 
     int a, b, c;
-
     char grade;
+
     printf("Enter your grade (A-F): ");
     scanf("%c", &grade);
 

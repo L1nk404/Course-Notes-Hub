@@ -1,0 +1,62 @@
+
+## So, what's a bit?  ##
+
+Bits can be either 1 or 0 , and it is the basic unit in computing.
+
+## And about the bytes
+
+A byte is a sequence of 8 bits, like "01010101" or "11011000"
+
+## And about Binary Number?
+
+To understand what is a Binary Number, let's start understanding a Decimal
+Number:
+
+A decimal number is a base 10 number, that means that we can form 10 different
+values with a digit, let's see a example, take the number 2463:
+
+       THOUSANDS + HUNDREDS + TENS     + UNITS
+ 2463 = 2 * 10^3 + 4 * 10^2 + 6 * 10^1 + 3 * 10^0
+
+- A Decimal Number consists of "digits"
+- "digits" are placed at "positions", fom right to lef, starting at position 0.
+- There's a "weight" associated with each digit position where weight = base^(position).
+
+Now we can start talk about Binary Number.
+A Binary Number is a base two number set by bits.
+
+We have for example:
+
+Decimal value | Binary value
+
+0               1   
+1               1
+2               10
+3               11
+4               100
+5               110
+...             ...
+
+- There are digits (0/1). The numbers can be represented by multiple digits.
+- Everytime we add a new digit to a left position.
+
+# Converting Binary Numbers into to Decimal
+
+From base 2 to base 10 we use the equation above: weight = base^(position):
+
+1101 (binary) = 1 * 2^3 + 1 * 2^2 + 0 * 2^1 = 8 + 4 + 1 = 13 (decimal)
+
+# Converting Decimal into Binary Numbers
+
+
+
+
+# Base notations
+
+1. Decimal Numbers Base 10 Notations:
+    n_{10} (n if 10 subscript)
+    n_{d}  (n if "d" subscript)
+
+2. Binary Numbers Base 2 Notations:
+    n_{2} for example 101_{2} = 5_{10}
+    n_{b} or 101_{b} = 5_{d}
