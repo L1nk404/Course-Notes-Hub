@@ -1,0 +1,10 @@
+Json é uma estrutura de dados para permitir o transporte e armazenamento do mesmo.
+
+Nele podemos inserir 6 tipos de dados:
+
+- Bolean: True, False;
+- Numero: float, int;
+- null;
+- "string";
+- array: [];
+- objeto : {}; 
