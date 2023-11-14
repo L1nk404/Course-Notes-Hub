@@ -44,12 +44,7 @@ Decimal value | Binary value
 
 From base 2 to base 10 we use the equation above: weight = base^(position):
 
-1101 (binary) = 1 * 2^3 + 1 * 2^2 + 0 * 2^1 = 8 + 4 + 1 = 13 (decimal)
-
-# Converting Decimal into Binary Numbers
-
-
-
+1101 (binary) = 1 * 2^3 + 1 * 2^2 + 0 * 2^1 + 1 * 2^0= 8 + 4 + 1 = 13 (decimal)
 
 # Base notations
 
@@ -60,3 +55,54 @@ From base 2 to base 10 we use the equation above: weight = base^(position):
 2. Binary Numbers Base 2 Notations:
     n_{2} for example 101_{2} = 5_{10}
     n_{b} or 101_{b} = 5_{d}
+
+    
+## Converting Decimal Number into Binary
+ 
+1. Given a X decimal number
+
+2. Divide X by 2 and add remainder to binary
+    - The "remainder" (0/1) will be added to bit K (k - number of iteration)
+
+3. Repeat step until X = 0.
+
+We say that the contribution of the value at "bit i" is 2^i
+
+# Examples:
+
+1. Take X = 5:
+
+5 / 2 = 2(1)
+
+> So 5_{d} = 1..._{b}
+
+2 / 2 = 1(0)
+        
+        k  = 10
+> So 5_{d} = 01..
+
+1 / 2 =0(1)  (Because 0*2 + 1 = 1)
+
+         K = 210
+> SO 5_{d} = 101
+
+
+2. Take X = 11
+
+11 / 2 = 5(1) > 1
+5 / 2 = 2 (1) > 11
+2 / 2 = 1 (0) > 011
+1 / 2 = 0(1)  > 11_{d} = 1011_{b}
+
+3. Taker X = 700
+
+700 / 2 = 355(0) > 0
+355 / 2 = 177(1) > 10
+177 / 2 = 88(1) > 110
+88 / 2 = 44(0) > 0110
+44 / 2 = 22(0) > 00110
+22 / 2 = 11(0) > 000110
+11 / 2 = 5(1) > 1000110
+5 / 2 = 2(1) > 11000110
+2 / 2 = 1(0) > 011000110
+1 / 2 = 0(1) > 1011000110
