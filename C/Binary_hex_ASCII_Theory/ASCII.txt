@@ -1,0 +1,14 @@
+
+# What is ASCII
+
+1.ASCII stands for American Standard Code for Information Interchange.
+2.ASCII is a character enconding scheme.
+3.Character / Symbols such as:
+    - lower/upper case letter ('a'-'z' | 'A' - 'Z')
+    - Digits (0 - 9)
+    - Punctuations (:.,;...)
+    - Symbols (#$@!...)
+    -etc
+4.Each symbol has its own associated "enconding".
+
+You can see the ASCII table just googling it.

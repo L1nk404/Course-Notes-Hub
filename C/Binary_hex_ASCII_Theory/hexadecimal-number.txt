@@ -9,7 +9,7 @@ A Hexdecimal Digit has 16 options:
 
 Decimal value | Binary value  | Hex value
 
-0               1               0
+0               0               0
 1               1               1
 2               10              2
 3               11              3
@@ -62,3 +62,60 @@ So:
 7 / 16 = 0(7) > 7
 
 123_{d} = 0x7b
+
+## Converting Hexadecimenal to Binary
+
+Note that Hexadecimal and Binary are based on powers of 2 where binary is
+2^1 and Hexadecimal is 2^4, we say that a Hexadecimal number has 4 bits.
+
+# Examples:
+
+1. 0x123
+
+> 3
+3 / 2 = 1(1) > 1
+1 / 2 = 0(1) > 11
+
+>> 0x3 = 0b0011 (Where 0b is a notetion for Binary)
+
+> 2
+2 / 2 = 1(0) > 0
+1 / 2 = 0(1) > 10
+
+>> 0x2 = 0b0010
+
+> 1
+
+1 / 2 = 0(1) > 1
+
+>> 0x1 = 0b0001
+
+>>> 0x123 = 0b000100100011
+
+2. 0x2F
+
+> 0xF = 0d15
+15 / 2 = 7(1) > 1
+7 / 2 = 3(1) > 1
+3 / 2 = 1(1) > 1
+1 / 2 = 0(1) > 1
+
+>> 0xF = 0b1111
+
+> 0x2 = 0b0010
+
+>>> 0x2F = 0b00101111
+
+
+## Binary to Hexadecimal
+
+Just do the opposite, just remmeber a Hexa value has 4 binary digits.
+
+# example
+
+1. 0b01101101
+
+> 0b 1100 1101
+>> 0b 11001101 = 0x6D
+
+
