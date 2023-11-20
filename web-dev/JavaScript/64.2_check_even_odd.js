@@ -1,3 +1,5 @@
+// Using button.html
+
 function ask_number() {
     var num = prompt("Enter a num");
     check_even_odd(num);
