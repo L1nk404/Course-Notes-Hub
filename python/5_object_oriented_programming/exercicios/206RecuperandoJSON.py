@@ -1,9 +1,12 @@
-from ex206classPessoa import FILE_PATH, Pessoa
+from ex206classPessoa import FILE_PATH, Pessoa, fazer_dump
 import json
 
 
 with open(FILE_PATH, 'r', encoding='utf8') as arquivo:
     pessoas = json.load(arquivo)
+
+    # Note que dessa forma, se mudarmos os dados na base de dado, teremos
+    # transtornos, logo, não é dinâmico.
 
     # Desempacotando o dict
     p1 = Pessoa(**pessoas[0])

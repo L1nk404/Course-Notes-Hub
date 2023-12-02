@@ -6,6 +6,7 @@ da classe com os dados salvos.
 
 Faça em programas separados.
 """
+
 import json
 
 FILE_PATH = 'Course-Notes-Hub\\python\\5_object_oriented_programming\\exercicios\\Pessoas.json'
