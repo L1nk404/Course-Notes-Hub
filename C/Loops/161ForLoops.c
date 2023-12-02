@@ -8,7 +8,8 @@ int main()
     printf("Hello! Enter a numbe: ");
     scanf("%d", &num);
 
-    for (i = 1; i <= num; i++)
+    // Lets print just the odd numbers
+    for (i = 1; i <= num; i = i + 2)
         {
             printf("%d ", i);
         }
