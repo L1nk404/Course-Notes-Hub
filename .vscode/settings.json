@@ -1,3 +1,6 @@
 {
-    "python.analysis.typeCheckingMode": "basic"
+    "files.associations": {
+        "146CheckUpperCase.C": "cpp",
+        "145identifyCharacterType.C": "cpp"
+    }
 }
