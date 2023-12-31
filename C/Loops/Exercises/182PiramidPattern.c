@@ -17,32 +17,40 @@ n
 
 int main()
 {
-    int n;                   // user input var
-    int i = 1, j = 1, k = 1; // loop control parameters
+    int n; // user input variable
+    int i = 1, j = 1;
+    int k = 1, l = 0;
+
+    /*
+    Loop control:
+    i: Is the main row while loop.
+    j: Is the value to be printed in each column.
+    k: control blank spaces loop.
+    l: control control the quantity of values to be printed for each row.
+    */
 
     printf("Enter a integer number n: ");
     scanf("%d", &n);
 
-    while (i <= n)
+    while (i <= n) // roll loop
         {
-            while (k < n) // Printing blank spaces
+            for (k = 1; k <= (n - i); k++) // Printing blank spaces
                 {
-                    printf(" "); // funciona com J, mas porque?
+                    printf(" ");
                 }
 
-            for (j = 1; j <= i; j++)
+            for (l = 1; l <= i; l++)
                 {
-                    if (j >= 10)
+                    if (j == 10)
                         {
-                            printf("%d", j - 10);
+                            j = 0; // resets j value.
                         }
-                    else
-                        {
-                            printf("%d ", j);
-                        }
+
+                    printf("%d ", j);
+
+                    j++;
                 }
 
-            k++;
             i++;
             printf("\n");
         }
