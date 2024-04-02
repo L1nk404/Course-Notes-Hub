@@ -20,6 +20,7 @@ class Pessoa:
 
 p1 = Pessoa('João', 35)
 p2 = Pessoa('Helena', 12)
+
 print(Pessoa.ano_atual)  # Podemos chamar o atributo fora da classe
 # Pessoa.ano_atual = 1 # Note que também podemos mudar o valor do mesmo
 print(p1.get_ano_nascimento())
