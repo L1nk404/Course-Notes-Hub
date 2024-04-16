@@ -8,7 +8,8 @@ grade in a array.
 
 int main()
 {
-    int grade[5]; // array declaration if lenght = 5 and element type set to int
+    int grade[5]; // array declaration with lenght = 5 and element type set to
+                  // int
     int i;        // It will control the loop
     int lowest_grade; // It will store the lowest grade so far in your loop
 

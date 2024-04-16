@@ -1,5 +1,5 @@
 /*
-Using the past example, last see how to deal when the lenght of the array
+Following the last example, let's see how to deal when the lenght of the array
 changes.
 */
 
@@ -10,8 +10,8 @@ changes.
 
 int main()
 {
-    int grade[SIZE]; // array declaration if lenght = SIZE and element type set
-                     // to int
+    int grade[SIZE];  // array declaration if lenght = SIZE and element type set
+                      // to int
     int i;            // It will control the loop
     int lowest_grade; // It will store the lowest grade so far in your loop
 
