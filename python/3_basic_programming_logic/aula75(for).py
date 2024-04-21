@@ -7,8 +7,8 @@ for i in range(10):
         print('i é 8, seu else não executará')
         break
 
-    for j  in range (1, 3):
+    for j in range(1, 3):
         print(i, j)
 
 else:
-    print('For completo com sucesso!')5
+    print('For completo com sucesso!')
