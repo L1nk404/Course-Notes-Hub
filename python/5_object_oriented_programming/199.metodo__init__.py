@@ -5,12 +5,16 @@ class Pessoa():
     # Note que uma função dentro de uma classe é chamada de método.
 
     # Todo método que for tratar de uma instância precisa inicializar com o parâmetro "self"
-    def __init__(self, nome, sobrenome):
+    def __init__(self, nome, sobrenome):  # O self referencia o objeto que está sendo criado
+        """ 
+        O init inicializa os atributos (Dados) da minha classe. __init__ é 
+        um dos primeiros métodos a serem executados quando a classe é chamada.
+        """
         self.nome = nome
         self.sobrenome = sobrenome
 
 
-# Note que aqui colocamos apenas nome e sobrenome como param.
+# Note que aqui colocamos apenas nome e sobrenome como paramêtros.
 p1 = Pessoa('Luiz', 'Otávio')  # Aqui o self é o atributo p1
 # p1.nome = 'Luiz'
 # p1.sobrenome = 'Otávio'
