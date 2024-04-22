@@ -51,12 +51,16 @@ int main()
 
     srand(time(NULL));
     /*
+    In C, the srand() function is used to initialize the pseudo-random number
+    generator. The srand() function takes an unsigned integer as the seed, and
+    this seed value is used by the pseudo-random number generator to create a
+    series of pseudo-random numbers.
     srand(time(NULL)) in this code has the objective of generate random numbers
     with the time(NULL) function's value. This number is the total seconds
-    passed since 1st, January, 1970 until now.
-    Doing this we can generate a different seed for each time the rand() func
-    will execute, making it to generate always random numbers.
-    See: https://linguagemc.com.br/valores-aleatorios-em-c-com-a-funcao-rand/
+    passed since 1st, January, 1970 until now. Doing this we can generate a
+    different seed for each time the rand() func will execute, making it to
+    generate always random numbers. See:
+    https://linguagemc.com.br/valores-aleatorios-em-c-com-a-funcao-rand/
     */
 
     printf("The generated array is [");
