@@ -33,13 +33,6 @@ void rotateLeft(int array[])
             backupArray[i] = array[i];
         }
 
-    printf("The backup array is [");
-    for (i = 0; i < SIZE; i++)
-        {
-            printf(" %d ", backupArray[i]);
-        }
-    printf("]\n\n");
-
     for (i = 0; i < SIZE; i++) // Let's start the rotation
         {
             // That if is important because i + 1 == SIZE, so it's out of array
