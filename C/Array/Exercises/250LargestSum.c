@@ -16,7 +16,7 @@ int genArray(int pArray[])
     In C, when you pass an array to a function, what is actually passed is a
     pointer to the first element of the array. So, even though it might not look
     like you’re using a pointer, you are in fact using a pointer when you pass
-    an array to a function. In the genArray function in the example, pArray is a
+    an array to a function. In the genArray function, pArray is a
     pointer to the first element of the array. When you modify pArray[i], you’re
     actually modifying the ith element of the array in the memory. So, the
     changes you make inside the genArray function are reflected in the main
