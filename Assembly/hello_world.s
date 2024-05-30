@@ -3,9 +3,9 @@ msg:
     .ascii "Hello world\n"   # 13 characters
 
 .section .text               # Executable code
-.global main        # label (main)
-main:                      # func implemented
-
+.global _start        # label (main)
+_start:                     # func implemented
+    nop                      # no operation (blank line)
     # Here we are telling the assembly program that we are
     # going to use write (4) System Call
     movl $4, %eax            # Move the immediate value 4 into the EAX register
@@ -18,5 +18,5 @@ main:                      # func implemented
 
     # Exit the program
     movl $1, %eax            # 1 is syscall number for exit syscall
-    xorl %ebx, %ebx          # 0 is a standard exit code
+    movl $0, %ebx            # 0 is a standard exit code
     int $0x80                # Interrupting exit syscall
