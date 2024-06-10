@@ -7,7 +7,7 @@ msg:
 _start:                     # func implemented
     nop                      # no operation (blank line)
     # Here we are telling the assembly program that we are
-    # going to use write (4) System Call
+    # going to use write (4) System Call (/usr/include/asm/unistd_32.h)
     movl $4, %eax            # Move the immediate value 4 into the EAX register
 
     # Now we'll tell the system call their arguments
