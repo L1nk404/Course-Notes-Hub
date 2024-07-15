@@ -1,10 +1,10 @@
 .section .bss
-    .comm mydata, 4         # size 4
+    .comm mydata, 4         # size 4, address: 0x804a000
 
 .section .text
 .globl _start
 _start:
-    nop
+nop                         # No operation
     movl $100, mydata       # moving 100 to mydata 
     # mydata value: 100
 
@@ -15,9 +15,8 @@ _start:
     movl $mydata, %edx      # moving the address of mydata to edx register
     movl $500,    %eax      # moving 500 to eax register
     movl %eax,   (%edx)     # moving the eax value to the location which is pointed by the value of edx
-                            # ... In that case, we moved eax value to mydata
+                            # ... In this case, we moved eax value to mydata
     # Finally, the mydata value is 500.
-
 
     # Exit syscall
     movl $1, %eax

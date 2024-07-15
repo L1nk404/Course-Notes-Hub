@@ -1,3 +1,8 @@
+# Memory Layout
+
+![[Pasted image 20240524161008.png]]
+
+---
 # Data type
 
 | Directive | Data Type                                               |
@@ -100,7 +105,7 @@ To distinguish between an immediate value and a system call in assembly code, yo
 .section .text
 .globl _start
 _start:
-    nop
+    nop                     # No operation
     movl $100, mydata       # moving 100 to mydata 
     # mydata value: 100
 
@@ -121,3 +126,11 @@ _start:
     int $0x80
 ```
 
+That's what that code is doing:
+
+1. First of all, we located a empty space in the memory called *mydata*, with size 4.
+2. Then, we moved the value 100 to *mydata*.
+3. We moved the *mydata* **value** to *ecx* register, in this way, the ecx register now stores the value 100.
+4. Using `$mydata` we moved the mydata address to the *edx* register.
+5. Now we moved the *500* value to *eax* register
+6. Now we change the *mydata* value indirectly by moving the *eax* value to the location which is pointed by the value of *edx* (denoted by "( )") which is the address of *mydata*.

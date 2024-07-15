@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "0959323563311c54",
+        "id": "60892bca1a5972dd",
         "type": "tabs",
         "children": [
           {
-            "id": "e816b57b5afabe5d",
+            "id": "7db2d9aa6548abb5",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -146,12 +146,12 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e816b57b5afabe5d",
+  "active": "7db2d9aa6548abb5",
   "lastOpenFiles": [
-    "attachment/Pasted image 20240610161802.png",
-    "Pasted image 20240610161802.png",
     "Memory layout.md",
     "Data.md",
-    "Register.md"
+    "Register.md",
+    "attachment/Pasted image 20240610161802.png",
+    "Pasted image 20240610161802.png"
   ]
 }
