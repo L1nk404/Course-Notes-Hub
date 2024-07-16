@@ -2,6 +2,26 @@
 
 ![[Pasted image 20240524161008.png]]
 
+## Memory Addressing
+
+### Direct Memory Addressing
+
+Lets suppose that the user wants to move the number 5 to the 0xAAAA memory location.
+How this can be done?
+The answer is simple. We just need to use the memory region address using the `movl $5 0xAAAA` command.
+
+![[Pasted image 20240716162116.png]]
+
+This is called **Direct Memory Addressing** 
+
+### Indirect Memory Addressing
+
+Now, suppose that the address is not accessible by us, so we cannot access this memory address.
+In this case we have to perform 2 steps in order to move 5 to 0xAAAA memory address:
+
+1. We have to move the memory address into one of our general purpose register, like the *eax* register, so, `movl 0xAAAA, %eax`.
+2. Then we move the data to the address that is pointed by the eax register using `movl $5, (%eax)`.
+
 ---
 # Data type
 
@@ -24,7 +44,6 @@
 ##### Syntax
 
     mov<size> <source> <destination>`
-
 ##### mov data size:
 - mov*l* => 32 bit long data
     - *l* stands for long
@@ -134,3 +153,43 @@ That's what that code is doing:
 4. Using `$mydata` we moved the mydata address to the *edx* register.
 5. Now we moved the *500* value to *eax* register
 6. Now we change the *mydata* value indirectly by moving the *eax* value to the location which is pointed by the value of *edx* (denoted by "( )") which is the address of *mydata*.
+
+## Accessing and Moving Indexed values
+
+In that sessions we'll see how to access elements of an Array
+To access an element in an array we have to use the *base_address*.
+The base address is the label name and it requires 3 parameters :
+1. **offset_address** - This is the distance (in bytes) from the base address to the desired element within the array.  If the elements in the array are of type int (which typically have a size of 4 bytes), and you want to access the third element, the offset would be $2 * 4$ (because array indexing starts from 0). Therefore, the offset would be 8 bytes. To calculate the address of the specific element, we use 
+$$
+	Element Address=Base Address+(Index×Element Size)
+$$
+        (!) The offset_address is often left as 0 because the actual offset is calculated using the index and size. This is why it appears as 0 or is omitted. The index and size together form the effective offset.
+2. **index** - The index of the required element.
+3. **size** - size of the target element in bytes.
+
+Take the following example:
+
+```
+.section .data                           # Initialized Data
+    Numbers:                             # Array   
+            .int  10,20,30,40,50,60
+
+.section .text
+.globl _start
+
+_start:
+    nop
+    # edi is usead as a pointer to the destination in string operations
+    movl $2, %edi                    # storing the index value to the 3rd element on the register       
+    movl Numbers(,%edi,4), %eax      # Acessing the 3rd element
+
+    # exit syscall
+    movl $1, %eax
+    movl $0, %ebx
+    int $0x80
+
+```
+
+We can see that we omitted the offset_address, in that case, we just skipped and let the index and the size form the offset address.
+
+
