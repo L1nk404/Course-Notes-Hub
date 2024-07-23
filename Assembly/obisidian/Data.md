@@ -2,26 +2,6 @@
 
 ![[Pasted image 20240524161008.png]]
 
-## Memory Addressing
-
-### Direct Memory Addressing
-
-Lets suppose that the user wants to move the number 5 to the 0xAAAA memory location.
-How this can be done?
-The answer is simple. We just need to use the memory region address using the `movl $5 0xAAAA` command.
-
-![[Pasted image 20240716162116.png]]
-
-This is called **Direct Memory Addressing** 
-
-### Indirect Memory Addressing
-
-Now, suppose that the address is not accessible by us, so we cannot access this memory address.
-In this case we have to perform 2 steps in order to move 5 to 0xAAAA memory address:
-
-1. We have to move the memory address into one of our general purpose register, like the *eax* register, so, `movl 0xAAAA, %eax`.
-2. Then we move the data to the address that is pointed by the eax register using `movl $5, (%eax)`.
-
 ---
 # Data type
 
@@ -192,4 +172,98 @@ _start:
 
 We can see that we omitted the offset_address, in that case, we just skipped and let the index and the size form the offset address.
 
+---
+
+## Memory Addressing
+
+### Direct Memory Addressing
+
+Lets suppose that the user wants to move the number 5 to the 0xAAAA memory location.
+How this can be done?
+The answer is simple. We just need to use the memory region address using the `movl $5 0xAAAA` command.
+
+![[Pasted image 20240716162116.png]]
+
+This is called **Direct Memory Addressing** 
+
+### Indirect Memory Addressing
+
+Now, suppose that the address is not accessible by us, so we cannot access this memory address.
+In this case we have to perform 2 steps in order to move 5 to 0xAAAA memory address:
+
+1. We have to move the memory address into one of our general purpose register, like the *eax* register, so, `movl 0xAAAA, %eax`.
+2. Then we move the data to the address that is pointed by the eax register using `movl $5, (%eax)`.
+
+### Pratical Example
+
+```
+.section .data
+    Number:
+        .int 0 
+
+.section .text
+.globl _start
+_start:
+    nop
+    # direct addressing
+    movl $5, Number     # Moving the number 5 to Number address
+
+    # indirect addressing
+    movl $Number, %eax   # Moving the address of Number to eax
+    movl $10, (%eax)     # Moving 10 to address pointed by eax
+
+    # exit sycall
+    movl $1, %eax
+    movl $0, %ebx
+    int $0x80
+```
+
+## Indirect address pointer
+
+Let's take a look in another example:
+
+```
+.section .data
+    myNumber:
+        .int 4,8
+
+.section .text
+_globl _start
+_start:
+    nop
+
+    movl $myNumber, %eax        # Moving myNumber addr to eax register
+    movl $2, (%eax)             # Moving 4 bytes 
+    movb $9,2 (%eax)            # Moving 1 byte
+    movw $3,6 (%eax)            # Moving 2 bytes
+
+    # exit syscal
+    movl $1, %eax
+    movl $0, %ebx
+    int $0x80
+```
+
+Take *myNumber* label. We can represent the way that it is stored in the memory in the following example:
+
+| byte index|  7   |  6   |  5   |  4   |  3   |  2   |  1   |  0   |
+| --------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| bytes     | 00   | 00   | 00   | 08   | 00   | 00   | 00   | 04   |
+
+When we use the **movl** command we are moving the number 2 contained in a **4 byte** (0000002) to the eax pointer, we are moving it to the first index of myNumber, in this way, the memory layout will be:
+
+| byte index|  7   |  6   |  5   |  4   |  3   |  2   |  1   |  0   |
+| --------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| bytes     | 00   | 00   | 00   | 08   |**00**|**00**|**00**|**02**|
+
+Now, when we use the option **movb** we are moving **1 byte**. So `movb $9,2 ($eax)` we are moving only the number 9 (09) to the third index (because the 2 after comma) to the on the memory location:
+
+| byte index|  7   |  6   |  5   |  4   |  3   |  2   |  1   |  0   |
+| --------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| bytes     | 00   | 00   | 00   | 08   |  00  |**09**|  00  |  02  |
+
+Finally, moving 2 bytes with the command `movw $3,6 (%eax)` to the index 6. We have:
+
+| byte index|  7   |  6   |  5   |  4   |  3   |  2   |  1   |  0   |
+| --------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
+| bytes     |**00**|**03**| 00   | 08   |  00  |  09  |  00  |  02  |
 

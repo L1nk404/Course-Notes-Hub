@@ -1,6 +1,6 @@
 .section .data                           # Initialized Data
     Numbers:                             # Array   
-            .int  10,20,30,40,50,60
+        .int  10,20,30,40,50,60
 
 .section .text
 .globl _start
