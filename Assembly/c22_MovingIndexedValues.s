@@ -7,7 +7,7 @@
 
 _start:
     nop
-    # edi is usead as a pointer to the destination in string operations
+    # edi is used as a pointer to the destination in string operations
     movl $2, %edi                    # storing the index value to the 3rd element on the register       
     movl Numbers(,%edi,4), %eax      # Acessing the 3rd element
 
