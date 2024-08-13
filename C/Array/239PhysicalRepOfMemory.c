@@ -1,3 +1,5 @@
+// Physical representation of memory
+
 #include <stdio.h>
 #include <stdlib.h>
 
