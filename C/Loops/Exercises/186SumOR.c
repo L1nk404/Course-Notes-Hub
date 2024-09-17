@@ -1,6 +1,6 @@
 /*
 Write a efficient program that receives a number n from the user.
-The program should calculate and print the of all number from 1 to n that
+The program should calculate and print the sum of all number from 1 to n that
 can be divided by 3 >> OR << 5.
 */
 
@@ -34,7 +34,7 @@ int main()
                 sum = sum + i;
         }
 
-    // for n = 100 --> 55 iterations agains 100 iterations in the code above.
+    // for n = 100 --> 55 iterations against 100 iterations in the code above.
 
     printf("%d\n\n", sum);
 
