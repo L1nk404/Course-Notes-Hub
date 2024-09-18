@@ -267,3 +267,16 @@ Finally, moving 2 bytes with the command `movw $3,6 (%eax)` to the index 6. We h
 | --------- | ---- | ---- | ---- | ---- | ---- | ---- | ---- | ---- |
 | bytes     |**00**|**03**| 00   | 08   |  00  |  09  |  00  |  02  |
 
+
+## Stack Frame
+
+A stack frame is a data structure that holds information about a function call in a program, specifically in the call stack. Every time a function is invoked, a new stack frame is created and pushed onto the stack, and when the function completes, its frame is popped off the stack.
+
+A stack frame typically contains:
+1. **Return address**: The location  in the memory address which points to the next instruction in the calling function  to return to after the function call is finished.
+2. **Function parameters**: The arguments passed to the function.
+3. **Local variables**: Variables that are defined within the function.
+4. **Saved registers**: The values of certain CPU registers that the function may need to restore later.
+5. **Stack pointer**: Points to the current position in the stack.
+
+Understanding stack frames is crucial in low-level programming and concepts like buffer overflows, which are common in cybersecurity exploits.
