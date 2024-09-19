@@ -52,7 +52,7 @@ Date nextDay(Date dt)
     // 31 days: 1, 3, 5, 7, 8, 10, 12 (January, March, May, July,
     // August, October, December)
 
-    if (dt.day == 28 || dt.month == 2) // frebuary case
+    if (dt.day == 28 && dt.month == 2) // frebuary case
         {
             dt.day = 1;
             dt.month++;

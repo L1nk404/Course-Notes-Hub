@@ -268,15 +268,173 @@ Finally, moving 2 bytes with the command `movw $3,6 (%eax)` to the index 6. We h
 | bytes     |**00**|**03**| 00   | 08   |  00  |  09  |  00  |  02  |
 
 
-## Stack Frame
+# Stack Frame
 
 A stack frame is a data structure that holds information about a function call in a program, specifically in the call stack. Every time a function is invoked, a new stack frame is created and pushed onto the stack, and when the function completes, its frame is popped off the stack.
 
 A stack frame typically contains:
-1. **Return address**: The location  in the memory address which points to the next instruction in the calling function  to return to after the function call is finished.
+1. **Return address**: The memory location to return to after the function call is finished.
 2. **Function parameters**: The arguments passed to the function.
 3. **Local variables**: Variables that are defined within the function.
-4. **Saved registers**: The values of certain CPU registers that the function may need to restore later.
+4. **Saved registers**: Values of certain CPU registers that the function may need to restore later.
 5. **Stack pointer**: Points to the current position in the stack.
 
-Understanding stack frames is crucial in low-level programming and concepts like buffer overflows, which are common in cybersecurity exploits.
+Understanding stack frames is crucial in low-level programming and is also relevant for concepts like buffer overflows, which are common in cybersecurity exploits.
+
+Before we see an example, let's remember the roles of the **EBP** and **ESP** registers. From [[Register]] we have:
+
+"""
+7. **EBP (Extended Base Pointer)**:	    
+    - **Primary Use**: Used to point to the base of the stack frame, facilitating stack operations.
+    - **Example**: Accessing local variables and function parameters on the stack.
+8. **ESP (Extended Stack Pointer)**:    
+    - **Primary Use**: Points to the top of the stack, managing stack operations.
+    - **Example**: Pushing and popping values from the stack.
+"""
+
+Let's analyse that register a bit deeper:
+
+### EBP
+
+The **Base Pointer (ebp)** register acts as a **fixed reference point** within the stack frame of a function. The ebp remains constant throughout the execution of a function.
+ebp is used to access variables, parameters, and saved registers with fixed offsets, making it easier to navigate the stack. Think of it as a stable anchor that provides structure within the stack frame. You can think the ebp as a Home Page, where is the start point of a website and you can navigate throught it from the Home Page.
+So , in a direct way, the base pointer (ebp) acts like a fixed reference or anchor point in the stack. While the stack pointer (esp) changes dynamically as data is added or removed from the stack, ebp stays constant within a function, making it easy to locate and access data like local variables and function parameters. In this way, ebp is like a home page—it provides a stable point from which other locations (data on the stack) can be easily reached.
+
+### ESP
+
+The **ESP register (Extended Stack Pointer)** in x86 assembly is a special-purpose register that always points to the top of the stack. It keeps track of where the current "top" (last used location) of the stack is in memory, dynamically changing as data is pushed onto or popped off the stack.
+The stack is used to manage function calls, local variables, and other temporary data needed during program execution. The stack grows downward in memory (i.e., toward lower memory addresses).
+
+#### Key Roles of `ESP`:
+
+1. **Tracks the Top of the Stack**: `ESP` always points to the memory address at the top of the stack. This is the most recent item that has been added to the stack, such as a return address, function parameter, or local variable.
+    
+2. **Changes Dynamically**: Unlike the base pointer (`EBP`), which remains constant throughout a function, `ESP` is constantly updated. It changes when:
+    
+    - You **push** data onto the stack (which decreases `ESP`).
+    - You **pop** data off the stack (which increases `ESP`).
+    - You **allocate space** for local variables (by subtracting from `ESP`).
+    - You **deallocate space** when the function returns (by restoring `ESP`).
+    
+3. **Used for Memory Management**: When you need to allocate memory for local variables or temporary storage within a function, the stack pointer (`ESP`) is adjusted to create space on the stack. Similarly, when you return from a function, `ESP` is restored to its previous value, "cleaning up" the stack.
+
+So, in a nutshell, we have:
+
+- **`ESP` (Stack Pointer)**:    
+    - Always points to the **top of the stack**.
+    - It dynamically changes as you push or pop values or allocate memory (for local variables, return addresses, etc.).
+    - **Tracks the current position in the stack** during function execution.
+    
+- **`EBP` (Base Pointer)**:    
+    - Points to the **base of the current stack frame**.
+    - **Remains fixed** throughout the function execution to serve as a stable reference point for accessing function parameters, saved registers, and local variables.
+    - Typically does not change until the function exits.
+
+So, everything works around the EBP stack pointer perspective. **We need to the ebp pointer to tell us where we are from the stack frame**
+
+
+### First Example
+
+```
+.section .data
+
+.section .text
+
+.globl _start
+
+  
+_start:
+
+nop
+nop
+
+  
+# copy the esp address to ebp (base pointer)
+movl %esp, %ebp
+
+# create some memory space in stack frame
+subl $8, %esp
+```
+
+Let's walk through the assembly code step by step and visualize how the stack frame changes with each operation.
+
+#### 1. Initial State:
+
+Before the program executes the instructions, the stack pointer (ESP) points to some memory location, for simplicity, let's say 0xFFFC. **The base pointer (EBP) is uninitialized and will be set later**.
+
+**Stack before execution:**
+
+```    
+Memory Address    Stack Content
+0xFFFC            [Undefined]   <- ESP (top of the stack)
+```
+
+At this point, ESP points to 0xFFFC (an arbitrary initial value), and EBP has not been set yet.
+
+From debugger (with real memory values): 
+
+![[Pasted image 20240918204837.png]]
+
+Notice that  the memory space (or the distance) between *ebp* and *esp* are 0
+
+![[Pasted image 20240918205343.png]]
+#### 2. After movl %esp, %ebp
+
+This instruction copies the current value of the stack pointer (ESP) into the base pointer (EBP). Now both ESP and EBP point to the same location, 0xFFFC.
+
+**Stack after movl %esp, %ebp:**
+
+```
+Memory Address    Stack Content
+0xFFFC            [Undefined]   <- ESP (top of the stack), EBP (base pointer)
+```
+
+From debugger:
+
+![[Pasted image 20240918204914.png]]
+
+Now, both ESP and EBP point to the same memory address (0xFFFC), marking the initial top and base of the stack frame.
+From now, the base pointer fixed the location, and will not change, like said above, everything will work through the ebp perspective.
+
+#### 3. After subl $8, %esp
+
+This instruction subtracts 8 bytes from the stack pointer (ESP), moving ESP down the stack (toward a lower memory address) to allocate space for local variables.
+
+**Stack after subl $8, %esp**:
+
+```
+Memory Address    Stack Content
+0xFFFC            [Undefined]   <- EBP (base pointer)
+0xFFF8            [Empty space (local variable)]
+0xFFF4            [Empty space (local variable)]
+ESP -> 0xFFF4     (New top of the stack, 8 bytes lower)
+```
+
+From debugger:
+
+![[Pasted image 20240918210248.png]]
+
+Now, the distance is 8 bytes, like in the image bellow, so, the stack now have 8 bytes of memory space:
+
+![[Pasted image 20240918210433.png]]
+
+We can also see the stack on gdb:
+
+![[Pasted image 20240918211549.png]]
+
+Is also possible to see the ebp base pointer which is the 3rd element:
+
+![[Pasted image 20240918211943.png]]
+
+So, the stack is filled from left (top) to the right (bottom).
+
+Here is important to note that the **top of the stack lies in a lower memory space**, you can imagine an analogy with a jar upside down filled from the top to the bottom:
+
+ ```
+    (Bottom)
+EBP -> | Item 2 |
+       | Item 1 |  <- (allocated space for local variables)
+ESP -> |________|  <- (stack pointer moves down as the jar fills up)
+    (Top)
+```
+
