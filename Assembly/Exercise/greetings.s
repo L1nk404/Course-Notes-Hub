@@ -61,7 +61,6 @@ _start:
     movl    $4,     %eax                # write syscall
     movl    $1,     %ebx                # stdout
     movl    $output_msg, %ecx           # pointer to message
-    # addl    $7,     %ecx                # Move pointer past "Hello "
     addl    %eax,   %edx                # Set edx to the total length of the output_msg
     int     $0x80                        # invoke write
     # exit 
