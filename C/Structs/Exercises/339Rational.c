@@ -32,12 +32,6 @@ int Euclidian_Alghorithm(int numerator, int denominator)
 
     int R; // This will hold the remainder
 
-    if (denominator == 0)
-        {
-            printf("Denominator cannot be zero!\n");
-            return -1; // Error code for zero denominator
-        }
-
     while (denominator != 0)
         {
             R = numerator % denominator;
@@ -93,11 +87,13 @@ Rational Rational_Calc(Rational num1, Rational num2, char *op)
         {
             if (num2_num == 0)
                 {
-                    printf("Numerator of number 2 cannot be 0!\n\n");
-                    exit(1);
+                    printf("Undefined! - Division by 0.\n");
                 }
-            result.numerator = num1_num * num2_den;
-            result.denominator = num1_den * num2_num;
+            else
+                {
+                    result.numerator = num1_num * num2_den;
+                    result.denominator = num1_den * num2_num;
+                }
         }
 
     Frac_Reduction(&result);
@@ -113,6 +109,12 @@ Rational inputNumber()
     scanf("%d", &num.numerator);
     printf("Enter num1 denominator: ");
     scanf("%d", &num.denominator);
+
+    if (num.denominator == 0)
+        {
+            printf("Denominator cannot be 0!\n");
+            exit(1);
+        }
 
     return num;
 }
@@ -161,5 +163,6 @@ int main()
     printf("The Division of %d/%d with %d/%d is: ", num1.numerator,
            num1.denominator, num2.numerator, num2.denominator);
     printRational(Rational_Calc(num1, num2, "/"));
+
     return 0;
 }
