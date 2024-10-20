@@ -97,7 +97,7 @@ To distinguish between an immediate value and a system call in assembly code, yo
 
 ### A bit advanced example:
 
-```
+```asm
 .section .bss
     .comm mydata, 4         # size 4
 
