@@ -16,16 +16,12 @@ pessoa = {
 }
 
 # Para salvar o dicionário no arquivo fazemos o seguinte:
-
-
 with open(file_path, 'w', encoding='utf-8') as arquivo:
     # ensure_ascii=False faz ele manter a codificação mas é recomendado manter True para evitar incompatibilidade.
     # Indent=2 faz com que ele deixe o arquivo formatado
     json.dump(pessoa, arquivo, ensure_ascii=False, indent=2)
 
-
 # Para voltar para o programa basta abrir o arquivo:
-
 with open(file_path, 'r', encoding='utf8') as arquivo:
     pessoa = json.load(arquivo)
     print(pessoa)

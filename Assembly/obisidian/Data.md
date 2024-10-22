@@ -38,7 +38,7 @@ Example:
 ###  Practical Example
 Let's debug the following code:
 
-```
+```nasm
 .section .text
 .globl _start
 _start:
@@ -97,7 +97,7 @@ To distinguish between an immediate value and a system call in assembly code, yo
 
 ### A bit advanced example:
 
-```asm
+```nasm
 .section .bss
     .comm mydata, 4         # size 4
 
@@ -149,7 +149,7 @@ $$
 
 Take the following example:
 
-```
+```nasm
 .section .data                           # Initialized Data
     Numbers:                             # Array   
             .int  10,20,30,40,50,60
@@ -196,7 +196,7 @@ In this case we have to perform 2 steps in order to move 5 to 0xAAAA memory addr
 
 ### Pratical Example
 
-```
+```nasm
 .section .data
     Number:
         .int 0 
@@ -222,7 +222,7 @@ _start:
 
 Let's take a look in another example:
 
-```
+```nasm
 .section .data
     myNumber:
         .int 4,8
@@ -335,7 +335,7 @@ So, everything works around the EBP stack pointer perspective. **We need to the 
 
 ### First Example
 
-```
+```nasm
 .section .data
 
 .section .text
@@ -422,7 +422,7 @@ We can also see the stack on gdb:
 
 ![[Pasted image 20240918211549.png]]
 
-Is also possible to see the ebp base pointer which is the 3rd element:
+Is also possible to see the **EBP** base pointer (bottom of stack) which is the 3rd element:
 
 ![[Pasted image 20240918211943.png]]
 
@@ -432,9 +432,168 @@ Here is important to note that the **top of the stack lies in a lower memory spa
 
  ```
     (Bottom)
-EBP -> | Item 2 |
-       | Item 1 |  <- (allocated space for local variables)
-ESP -> |________|  <- (stack pointer moves down as the jar fills up)
-    (Top)
+ EBP -> | 1st item |
+        | 2nd item |  <- (allocated space for local variables)
+ ESP -> |__________|  <- (stack pointer moves down as the jar fills up)
+     (Top)
+```
+
+
+> [!attention]
+> It is important to note that the 8 bytes that we allocated are not the entire space that the stack can store, as the stack frame can grow dynamically. So as we'll see in the next section, we can add as much data as we want. 
+> The 8 bytes that we allocated are typically done to reserve local memory for temporary variables or other data that may be needed within the function or code block.
+ 
+## Adding and Removing Data on Stack
+
+To add and remove items on stack frame we use the following commands:
+
+- **PUSH** - used to added data on stack frame.
+- **POP** - used to remove data from stack frame.
+
+Let's see an example:
+
+```nasm
+/*
+Adding and removing data from stack
+*/
+
+.section .data
+
+.section .text
+.globl _start
+
+_start:
+    nop
+    nop
+
+    # Stack frame
+    movl    %esp, %ebp 		# Creating the stack boundary 
+
+    # create some memory space in stack frame
+    subl    $8, %esp    	# Create 8 bytes of space on stack frame
+    
+    # Adding the data in stack frame
+    movl    $100, %eax     # Passing the data to a general purpose register
+    pushl   %eax           # Adding the data contained in %eax (100) register to the stack
+
+    movl    $200, %ebx     # Passing the second data (200) to other general purpose register
+    pushl   %ebx           # Adding $200 to the stack
+
+    # Changing the value of EBX after pushing it into the stack
+    movl    $300, %ebx     # Change %ebx to 300, but this won't affect the stack
+
+    # Removing data
+    popl    %ebx           # Removing the ebx value from the stack (this will be 200)
+    popl    %eax           # Removing the eax value from the stack (this will be 100)
+
+
+    # exit syscall
+    movl   $1, %eax
+    movl   $0, %ebx
+    int    $0x80
+```
+
+- **The process:**
+	- After setting the boundaries and the size of the stack frame we start to add the data using the general-purpose EAX register
+	- We add the value: 100 and 200 each 4 bytes size.
+	- After all, we pop each data, note that in this step, we pop from the TOP to the Bottom of the stack frame.
+
+Now what do we do with we add 3 values and we want to remove the middle one?
+The process is little tricky, you can see it, on the bellow example:
+
+```nasm
+.section .text
+.globl _start
+
+_start:
+    # Stack frame
+    movl    %esp, %ebp         # Creating the stack boundary
+
+    # Push values onto the stack using EAX
+    movl    $100, %eax         # Load 100 into EAX
+    pushl   %eax               # Push 100 onto the stack
+
+    movl    $200, %eax         # Load 200 into EAX
+    pushl   %eax               # Push 200 onto the stack
+
+    movl    $300, %eax         # Load 300 into EAX
+    pushl   %eax               # Push 300 onto the stack
+
+    # Stack state:
+    # +------+
+    # | 300  |  <-- Top of stack
+    # +------+
+    # | 200  |
+    # +------+
+    # | 100  |
+    # +------+
+
+    # Now we want to remove only the 200 from the stack.
+
+    # Step 1: Pop 300 into EAX
+    popl    %eax               # Pop the top value (300) into EAX
+
+    # Step 2: Pop 200 from the stack (which is now at the top)
+    popl    %eax               # Pop 200 (we just discard it by overwriting EAX)
+
+    # Step 3: Push 300 back onto the stack (restore 300)
+    pushl   %eax               # Push the saved value (300) back onto the stack
+
+    # Now the stack contains:
+    # +------+
+    # | 300  |  <-- Top of stack
+    # +------+
+    # | 100  |
+    # +------+
+
+    # Exit syscall
+    movl    $1, %eax           # Syscall number for exit
+    movl    $0, %ebx           # Exit code 0
+    int     $0x80              # Trigger interrupt to exit
+```
+
+---
+# Flags
+Em computação, especialmente em arquiteturas de processadores como x86, uma _flag_ é um único bit de um registro especial que indica um estado específico ou o resultado de uma operação. No caso de processadores x86, esses bits estão contidos em um registro chamado **EFLAGS** (ou apenas **FLAGS** em versões mais antigas do x86).
+### O que é uma Flag?
+Uma _flag_ é um **indicador de estado** que geralmente reflete o resultado de uma operação aritmética, lógica ou de controle. Esses indicadores são úteis porque informam ao processador (e, consequentemente, ao programador) o que aconteceu durante uma determinada instrução.
+#### Exemplos de Flags Comuns no Processador x86:
+1. **Carry Flag (CF)**: Indica um _carry_ ou _borrow_ (transbordo) em operações de adição ou subtração.
+2. **Zero Flag (ZF)**: Indica se o resultado de uma operação foi zero.
+3. **Sign Flag (SF)**: Reflete o sinal do resultado (1 se negativo, 0 se positivo) em operações aritméticas.
+4. **Overflow Flag (OF)**: Indica se ocorreu um _overflow_ aritmético, ou seja, se o resultado foi maior do que o registrador pode armazenar de forma correta.
+5. **Parity Flag (PF)**: Indica se o número de bits _1_ no resultado é par ou ímpar.
+6. **Auxiliary Carry Flag (AF)**: Indica um _carry_ (transbordo) de um nibble (4 bits) para o próximo nibble, usado em operações BCD (Decimal Codificado em Binário).
+
+## Carry flag
+A **carry flag** (ou _CF_) é um dos flags mais importantes no processador x86, utilizado principalmente para operações aritméticas. Ela faz parte do _EFLAGS_ (ou _FLAGS_ nos processadores mais antigos), que é um registro de 32 bits que contém várias bandeiras de status.
+### Função da Carry Flag
+A _carry flag_ é usada para indicar que ocorreu um _overflow_ (ou "transbordo") de um cálculo aritmético específico. Basicamente, quando realizamos uma operação que resulta em um valor maior do que o espaço disponível, essa bandeira é definida para _1_. Caso contrário, ela é definida para _0_.
+
+### Manipulando a Carry flag
+
+Usamos dois operadores para manipular a C flag, são eles:
+- **stc** - stands for "set carry flag", it sets the C flag to one.
+- **clc** - stands for "clear the carry flag", it reset the value to zero.
+
+Here you can see an simple example of code using that instruction:
+
+```nasm
+.section .text
+.globl _start
+
+_start:
+    nop
+    nop
+
+    # set the C Flag (stc - set CF)
+    stc                             # here we are fliping the CF to 1
+
+    # unset the C flag (clc - clear CF)
+    clc                             # Here we are clearing the CF flag (0)
+
+    movl    $1, %eax
+    movl    $0, %ebx
+    int     $0x80
 ```
 
