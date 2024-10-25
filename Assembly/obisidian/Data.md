@@ -553,26 +553,49 @@ _start:
 ```
 
 ---
-# Flags
-Em computação, especialmente em arquiteturas de processadores como x86, uma _flag_ é um único bit de um registro especial que indica um estado específico ou o resultado de uma operação. No caso de processadores x86, esses bits estão contidos em um registro chamado **EFLAGS** (ou apenas **FLAGS** em versões mais antigas do x86).
+# Flags Register
+In computing, especially in processor architectures like x86, a  [flag register](https://en.wikipedia.org/wiki/FLAGS_register) or simply _flag_ is a single bit in a special register that indicates a specific state or the result of an operation. In the case of x86 processors, these bits are contained in a register called **eflags** (or just **FLAGS** in older versions of x86).
+
+> [!abstract] Before we proceed
+>  Let's take a quick view on the difference between unsigned and signed integer. 
+> ##### 1. Unsigned Integer:
+> An **unsigned** integer can only represent **non-negative** values (i.e., zero and positive numbers). All bits in an unsigned integer are used to represent the magnitude of the number.
+> ###### Example for an 8-bit Unsigned Integer:
+> - **Range**: 0 to 255.
+> - **Binary Representation**: All 8 bits are used for the magnitude.
+> ##### 2. Signed Integer:
+> A **signed** integer can represent both **negative** and **positive** values. In the common **two’s complement** representation (used in x86 processors), the most significant bit (MSB) is used to indicate the **sign** of the number:
+> - `0` in the MSB indicates a **positive** or **zero** value.
+> - `1` in the MSB indicates a **negative** value.
+> ###### Example for an 8-bit Signed Integer (Two’s Complement):
+> - **Range**: -128 to 127.
+> - **Binary Representation**: The MSB represents the sign, while the remaining bits represent the magnitude.		
+
 ### O que é uma Flag?
-Uma _flag_ é um **indicador de estado** que geralmente reflete o resultado de uma operação aritmética, lógica ou de controle. Esses indicadores são úteis porque informam ao processador (e, consequentemente, ao programador) o que aconteceu durante uma determinada instrução.
-#### Exemplos de Flags Comuns no Processador x86:
-1. **Carry Flag (CF)**: Indica um _carry_ ou _borrow_ (transbordo) em operações de adição ou subtração.
-2. **Zero Flag (ZF)**: Indica se o resultado de uma operação foi zero.
-3. **Sign Flag (SF)**: Reflete o sinal do resultado (1 se negativo, 0 se positivo) em operações aritméticas.
-4. **Overflow Flag (OF)**: Indica se ocorreu um _overflow_ aritmético, ou seja, se o resultado foi maior do que o registrador pode armazenar de forma correta.
-5. **Parity Flag (PF)**: Indica se o número de bits _1_ no resultado é par ou ímpar.
-6. **Auxiliary Carry Flag (AF)**: Indica um _carry_ (transbordo) de um nibble (4 bits) para o próximo nibble, usado em operações BCD (Decimal Codificado em Binário).
-
-## Carry flag
-A **carry flag** (ou _CF_) é um dos flags mais importantes no processador x86, utilizado principalmente para operações aritméticas. Ela faz parte do _EFLAGS_ (ou _FLAGS_ nos processadores mais antigos), que é um registro de 32 bits que contém várias bandeiras de status.
-### Função da Carry Flag
-A _carry flag_ é usada para indicar que ocorreu um _overflow_ (ou "transbordo") de um cálculo aritmético específico. Basicamente, quando realizamos uma operação que resulta em um valor maior do que o espaço disponível, essa bandeira é definida para _1_. Caso contrário, ela é definida para _0_.
-
-### Manipulando a Carry flag
-
-Usamos dois operadores para manipular a C flag, são eles:
+A _flag_ is a **status indicator** that generally reflects the result of an arithmetic, logical, or control operation. These indicators are useful because they inform the processor (and consequently the programmer) of what happened during a given instruction.
+#### Common flags of x86 processors:
+- **Carry Flag(CF)** 
+	- Overflow of unsigned integers => CF = 1
+- **Overflow Flag (OF)**
+	- Overflow/underflow of signed integers => OF = 1
+- **Parity Flag (PF)**
+	- If the number of digit 1 on a $result$ is:
+		- odd => PF = 0
+		- even => PF = 1
+- **Sign Flag (SF)**
+	- if $result > 0$ => SF = 0
+	- If $result < 0$ => SF = 1
+- **Zero Flag (ZF)**
+	- if $result \neq 0$ => SF = 0
+	- if $result = 0$ => SF = 1
+### Carry Flag
+A **Carry Flag** (or _CF_) is one of the most important flags in the x86 processor, mainly used for arithmetic operations. It is part of the _EFLAGS_ (or _FLAGS_ in older processors), which is a 32-bit register that contains various status flags.
+#### Function of the Carry Flag
+The _carry flag_ is used to indicate that an _unsigned integer overflow_ occurred in a specific arithmetic calculation. Essentially, when performing an operation that results in a value larger than the available space, this flag is set to _1_. Otherwise, it is set to _0_.
+For example:
+	If an instruction has an 8-bit destination operand but the instruction generates a result larger than $11111111_{b}$ ($255_d$), the Carry flag is set to 1 (CF = 1)
+#### Manipulating the Carry flag
+We use two operators to control manipulate the CF:
 - **stc** - stands for "set carry flag", it sets the C flag to one.
 - **clc** - stands for "clear the carry flag", it reset the value to zero.
 
@@ -597,3 +620,71 @@ _start:
     int     $0x80
 ```
 
+### Overflow Flag
+
+The **Overflow Flag** (or _OF_) is another crucial status flag in the x86 processor, and it is primarily used to detect **signed integer overflow**. It is part of the same **EFLAGS** (or **FLAGS** in older processors) register, which holds various status indicators used to describe the result of executed instructions.
+#### Function of the Overflow Flag
+The _overflow flag_ is used to indicate when the result of an arithmetic operation (typically addition or subtraction) has exceeded the capacity of the destination operand when treated as a **signed** number. Essentially, this means that if the sign of the result does not make sense given the signs of the operands, the _overflow flag_ is set to **1**. Otherwise, it is set to **0**.
+For example:
+	1. If an instruction has a 16-bit destination operando but generates a negative result smaller than $1111111111111111_b$ ($-32.768_d$), the _Overflow Flag_ is set (OF = 1)
+		2. Let $a > b> 0>c$  three numbers, if:
+			- $a+b<0$, then CF = 1
+			- $b-a<0$, then CF = 1
+			- $a-c<0$, then CF = 1
+		 This happens because the result exceeds the representable range for the   signed data type. 
+	
+> [!abstract] Note
+> The range for signed numbers is  $[-2^{n-1}, 2^{n-1} + 1]$,  where $n$ is the number of bits.
+> So, by putting $n=16$, the range is $[-32768,3267]$
+
+#### Manipulating the Overflow Flag
+The manipulation of the Overflow Flag is a bit tricky. The maximum amount of data a register can hold is **0x7fffffff** ($2147483647_d$). We send this value to the register to reach its limit, and then, we send more data, causing the Overflow Flag (OF) to be triggered by the register overflow.
+To clear the register we use the XOR logical operator with itself. (A xor A = 0, for every A)
+
+```nasm
+.section .text
+.globl _start
+_start:  
+
+nop
+nop  
+
+# Set the Overflow Flag
+movl $0x7fffffff, %eax     # Here we reached the register data limit
+addl $1, %eax              # adding 1_d and triggering the overflow
+
+# Clear the OF
+xorl %eax, %eax            # Clear the register, now eax = 0  
+
+# exit
+movl $1, %eax
+movl $0, %ebx
+int $0x80
+```
+
+Note that , when we trigger the OF, another flags such the Parity Flag and Sing Flag are triggered too.
+
+![[Pasted image 20241025113431.png]]
+
+We'll see these flags bellow, and you be able to understand why that happens. 
+### Parity Flag
+The **Parity Flag** (or _PF_) is a status flag in the x86 processor used to indicate the **parity** of the **result of an arithmetic or logical operation**. Like the other flags, it is part of the **EFLAGS** (or **FLAGS** in older processors), which is a 32-bit register that holds various status flags.
+#### Function of the Parity Flag
+The **parity flag** is used to indicate whether the number of **1-bits** in the least significant byte (the lower 8 bits) of a result of a arithmetical or logical operation is **even** or **odd**. If the number of 1-bits is even, the _parity flag_ is set to **1**. Otherwise, it is set to **0**.
+For example:
+	- $0011 + 1010 = 1101$ => $1101$ have a odd quantity of 1 => PF = 0
+	- $0000+1111=1100$ => $1100$ have an even quantity of 1 => PF = 1
+
+### Sign Flag
+The **Sign Flag** (or _SF_) is a status flag in the x86 processor that indicates the **sign** of the result of an arithmetic or logical operation. Like the other flags, it is part of the **EFLAGS** register, which contains multiple status indicators used to describe the outcome of operations.
+#### Function of the Sign Flag
+The **sign flag** is used to reflect the **most significant bit (MSB)** of the result. In x86 architecture, the most significant bit determines whether a number is positive or negative when working with **signed** integers. If the result’s MSB is `1`, the **sign flag** is set to **1** (_SF = 1_), indicating a **negative** result. If the MSB is `0`, the **sign flag** is cleared to **0** (_SF = 0_), indicating a **positive** result.
+For example:
+	If the most significant bit (MSB) of the destination operand is 1, the Sign Flag is set (_SF = 1_).
+
+### Zero Flag
+The **Zero Flag** (or _ZF_) is a status flag in the x86 processor that indicates whether the result of an arithmetic or logical operation is **zero**. Like other flags, it is part of the **EFLAGS** register, which holds various status indicators used to describe the outcome of operations.
+#### Function of the Zero Flag
+The **Zero Flag** is set to **1** (_ZF = 1_) if the result of an arithmetic or logical operation is **zero**. Otherwise, it is cleared to **0** (_ZF = 0_).
+For example:
+	if an operand is subtracted from another of equal value, the Zero flag is set (_ZF = 1_).

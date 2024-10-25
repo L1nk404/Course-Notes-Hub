@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "Data.md",
-                "mode": "preview",
+                "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
@@ -77,7 +77,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 298.5
+    "width": 298.5,
+    "collapsed": true
   },
   "right": {
     "id": "bd574aef870c4a41",
@@ -164,8 +165,9 @@
   },
   "active": "d4b00f3f31b07bd3",
   "lastOpenFiles": [
-    "Register.md",
+    "Pasted image 20241025113431.png",
     "Data.md",
+    "Register.md",
     "Stack frame.md",
     "attachment/Pasted image 20240918204914.png",
     "attachment/Pasted image 20240918205343.png",
