@@ -29,7 +29,7 @@
     - *l* stands for long
 - mov*w* => 16 bit word data
     - *w* stands for world
-- mov*b* => 8 bit byte data
+- mov*b* => 8 bit data
     - *b* stands for bytes
 
 Example:
@@ -141,9 +141,12 @@ To access an element in an array we have to use the *base_address*.
 The base address is the label name and it requires 3 parameters :
 1. **offset_address** - This is the distance (in bytes) from the base address to the desired element within the array.  If the elements in the array are of type int (which typically have a size of 4 bytes), and you want to access the third element, the offset would be $2 * 4$ (because array indexing starts from 0). Therefore, the offset would be 8 bytes. To calculate the address of the specific element, we use 
 $$
-	Element Address=Base Address+(Index×Element Size)
+	ElementAddress=BaseAddress+(Index\times ElementSize)
 $$
-        (!) The offset_address is often left as 0 because the actual offset is calculated using the index and size. This is why it appears as 0 or is omitted. The index and size together form the effective offset.
+
+> [!NOTE]
+> The offset_address is often left as 0 because the actual offset is calculated using the index and size. This is why it appears as 0 or is omitted. The index and size together form the effective offset.
+
 2. **index** - The index of the required element.
 3. **size** - size of the target element in bytes.
 
@@ -670,11 +673,59 @@ We'll see these flags bellow, and you be able to understand why that happens.
 ### Parity Flag
 The **Parity Flag** (or _PF_) is a status flag in the x86 processor used to indicate the **parity** of the **result of an arithmetic or logical operation**. Like the other flags, it is part of the **EFLAGS** (or **FLAGS** in older processors), which is a 32-bit register that holds various status flags.
 #### Function of the Parity Flag
-The **parity flag** is used to indicate whether the number of **1-bits** in the least significant byte (the lower 8 bits) of a result of a arithmetical or logical operation is **even** or **odd**. If the number of 1-bits is even, the _parity flag_ is set to **1**. Otherwise, it is set to **0**.
+The **parity flag** is used to indicate whether the number of **1-bits** in the **least significant byte (the lower 8 bits)** of a result of a arithmetical or logical operation is **even** or **odd**. If the number of 1-bits is even, the _parity flag_ is set to **1**. Otherwise, it is set to **0**.
 For example:
 	- $0011 + 1010 = 1101$ => $1101$ have a odd quantity of 1 => PF = 0
 	- $0000+1111=1100$ => $1100$ have an even quantity of 1 => PF = 1
 
+#### Manipulating the Parity Flag
+In that case we need to perform an arithmetical operation and make the result have a pair number of digit 1.
+For that we move a byte with even bits (take $0xA=1010$ for example) of data (_movb_) to the _al_ register which is the lower 8 bits of the _eax_ register[^eax-details]. After that, we use the _test_ logical operator, which is similar to the _and_ but doesn't store the result (see the difference on the end of this section). So:
+$$
+	0000\ 1010\ \land 0000\ 1010 \implies 0000\ 1010 
+$$
+Therefore, CF will set to 1.
+To clear, we move a odd bit, like $0x1$ to the _al_ register and use _test_ logical operator. In that case:
+$$
+	0000\ 0001\ \land 0000\ 0001 \implies 0000\ 0001 
+$$
+thus, CF will be 0.
+
+```nasm
+.section .text
+.globl _start
+_start:
+
+	nop
+	nop
+	
+	# Setting Parity Flag (PF)
+	movb 	$0xA,  %al 	# 0xA = 1010 binary (a pair of digit 1)	 	
+	test	%al,   %al	# perform AND op: (0000 1010) & (0000 1010) => 0000 1010
+
+	# Clearing the PF
+	movb	$0x1,  %al	# Moving 0001 to the al register
+	test    %al,   %al	 
+
+	# exit
+	movl 	$1, %eax
+	movl 	$0, %ebx
+	int	$0x80
+```
+
+There's another way to clear the CF.
+We can add 1 bit to the _al_ register, but it's not so reliable as the method above, because it will only work if _al_ stores a even number of bits.
+
+> [!info] Differences between **test** and **and**
+>**Effect on the Destination Operand**:
+> - **and** modifies the destination operand with the result of the AND operation.
+> - **test** does **not** modify either operand; it just checks the result and updates the CPU’s flags.
+>
+>**Purpose**:
+> - **and** Used to perform actual bitwise operations on data. For example, masking out specific bits.
+> - **test**: Used to perform a comparison to see if certain bits are set or clear, without modifying the operands.
+
+[^eax-details]: **EAX** (32-bit): The general-purpose 32-bit register. * **AX** (16-bit): The lower 16 bits of EAX. * **AH** (8-bit): The higher 8 bits of AX. * **AL** (8-bit): The lower 8 bits of AX.
 ### Sign Flag
 The **Sign Flag** (or _SF_) is a status flag in the x86 processor that indicates the **sign** of the result of an arithmetic or logical operation. Like the other flags, it is part of the **EFLAGS** register, which contains multiple status indicators used to describe the outcome of operations.
 #### Function of the Sign Flag
