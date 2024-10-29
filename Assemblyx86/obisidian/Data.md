@@ -727,15 +727,66 @@ We can add 1 bit to the _al_ register, but it's not so reliable as the method ab
 
 [^eax-details]: **EAX** (32-bit): The general-purpose 32-bit register. * **AX** (16-bit): The lower 16 bits of EAX. * **AH** (8-bit): The higher 8 bits of AX. * **AL** (8-bit): The lower 8 bits of AX.
 ### Sign Flag
-The **Sign Flag** (or _SF_) is a status flag in the x86 processor that indicates the **sign** of the result of an arithmetic or logical operation. Like the other flags, it is part of the **EFLAGS** register, which contains multiple status indicators used to describe the outcome of operations.
+The **Sign Flag** (or _SF_) is a status flag in the x86 processor that indicates the **sign** of the **result of an arithmetic or logical operation**. Like the other flags, it is part of the **EFLAGS** register, which contains multiple status indicators used to describe the outcome of operations.
 #### Function of the Sign Flag
 The **sign flag** is used to reflect the **most significant bit (MSB)** of the result. In x86 architecture, the most significant bit determines whether a number is positive or negative when working with **signed** integers. If the result’s MSB is `1`, the **sign flag** is set to **1** (_SF = 1_), indicating a **negative** result. If the MSB is `0`, the **sign flag** is cleared to **0** (_SF = 0_), indicating a **positive** result.
 For example:
 	If the most significant bit (MSB) of the destination operand is 1, the Sign Flag is set (_SF = 1_).
 
+#### Manipulating Sign Flag
+The manipulation of the SF is similar to the  PF, we sing a negative value to the _eax_ register and use test to do a logical operator resulting in a negative result, which trigger the SF. To clear we make the result be positive.
+
+```nasm
+.section .text
+.globl _start
+
+_start:
+	nop
+	nop
+
+	# Setting the SF
+	movl	$-1,  %eax	# Send a negative value to eax
+	test	$eax, %eax	# Make an and op with negative result
+
+	# Clearing the SF
+	movl $1,   %eax
+	test %eax, %eax
+
+	# exit
+	movl	$1, %eax
+	movl	$0, %ebx
+	int	$0x80
+```
+
 ### Zero Flag
-The **Zero Flag** (or _ZF_) is a status flag in the x86 processor that indicates whether the result of an arithmetic or logical operation is **zero**. Like other flags, it is part of the **EFLAGS** register, which holds various status indicators used to describe the outcome of operations.
+The **Zero Flag** (or _ZF_) is a status flag in the x86 processor that indicates whether the **result of an arithmetic or logical operation** is **zero**. Like other flags, it is part of the **EFLAGS** register, which holds various status indicators used to describe the outcome of operations.
 #### Function of the Zero Flag
 The **Zero Flag** is set to **1** (_ZF = 1_) if the result of an arithmetic or logical operation is **zero**. Otherwise, it is cleared to **0** (_ZF = 0_).
 For example:
 	if an operand is subtracted from another of equal value, the Zero flag is set (_ZF = 1_).
+#### Manipulating Sign Flag
+Here we use _xor_  operation to make a logical result to be zero, finally we use test to clear the flag:
+
+```nasm
+.section .text
+.globl _start
+
+_start:
+	nop
+	nop
+
+	# Setting the ZF
+	movl 	$1,   %eax
+	xorl	%eax, %eax
+
+	# Clearing the ZF
+	movl 	$1,   %eax
+	test	%eax, %eax	
+
+	# exit
+	movl	$1, %eax
+	movl	$0, %ebx
+	int	$0x80
+```
+
+
