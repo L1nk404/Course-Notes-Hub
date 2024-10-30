@@ -20,6 +20,20 @@
               "icon": "lucide-file",
               "title": "Execution Flow"
             }
+          },
+          {
+            "id": "7f9ee6b01554b4df",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Data.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Data"
+            }
           }
         ]
       }
@@ -77,7 +91,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 298.5
+    "width": 298.5,
+    "collapsed": true
   },
   "right": {
     "id": "bd574aef870c4a41",
@@ -164,11 +179,12 @@
   },
   "active": "7de4d68a8c263d47",
   "lastOpenFiles": [
+    "attachment/Pasted image 20241029213611.png",
+    "Data.md",
+    "Execution Flow.md",
     "Register.md",
     "attachment/Pasted image 20241029141014.png",
     "attachment/Pasted image 20241029141001.png",
-    "Execution Flow.md",
-    "Data.md",
     "attachment/Pasted image 20241025113431.png",
     "Stack frame.md",
     "attachment/Pasted image 20240918204914.png",
