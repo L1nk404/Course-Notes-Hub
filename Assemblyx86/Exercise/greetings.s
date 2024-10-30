@@ -41,7 +41,7 @@ _start:
     movl    $hello_msg,   %esi      # Load address of hello_msg
     movl    $output_msg,  %edi      # Load address of output_msg
     movl    $7,           %ecx      # Lenght of "Hello " + null
-    rep movsb                        # Copy the string from hello_msg to output_msg
+    rep     movsb                        # Copy the string from hello_msg to output_msg
     /*rep works like a loop:
     The rep (repeat) prefix in x86 assembly language is used to repeat certain 
     string instructions a specified number of times, as determined by the value
@@ -54,7 +54,7 @@ _start:
     movl     $15,               %ecx    # Maximum lenght to copy
     int      $0x80                       # Read the number of bytes in name_buffer
     subl     %eax, %edx                 # Calculate actual lenght to append
-    rep movsb                            # Append the name to ouput_msg
+    rep     movsb                            # Append the name to ouput_msg
 
 
     # Write syscall (4)                 
