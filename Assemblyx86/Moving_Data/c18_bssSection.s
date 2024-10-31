@@ -1,4 +1,4 @@
-.section .bss   # Session of memory of initialized variables
+.section .bss   # Session of memory of unitialized variables
 
     # .comm stands for common memory, is used to define bss data
     .comm buffer_var, 15 # Defining a data named buffer_var that holds 15 bytes

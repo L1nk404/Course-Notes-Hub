@@ -89,6 +89,17 @@ The function of the registers is:
     - **Role**: Specifies the number of bytes to write from the buffer.
 - **int $0x80**: This instruction triggers the system call interrupt, transferring control to the kernel to execute the `write` system call with the provided arguments.
 
+##### Use of the register to  syscall.
+
+In x86 assembly, the choice of registers in a syscall block is not arbitrary; it follows a specific convention. For Linux x86 (32-bit) system calls, each parameter must be placed in a specific register as defined by the calling convention. You can't choose any general-purpose register freely.
+
+The convention for 32-bit Linux syscalls:
+1. **EAX**: Holds the syscall number.
+2. **EBX**: Holds the first parameter (e.g., file descriptor in `sys_read`).
+3. **ECX**: Holds the second parameter (e.g., the buffer pointer in `sys_read`).
+4. **EDX**: Holds the third parameter (e.g., the number of bytes to read in `sys_read`).
+5. **ESI** and **EDI**: Used for the fourth and fifth parameters, if the syscall takes more than three arguments.
+
 #### 2.Segment Registers 
 These are used to access different segments of memory. Examples include `CS` (Code Segment), `DS` (Data Segment), `SS` (Stack Segment), and `ES` (Extra Segment).In 32-bit architecture, there are six Segment Registers that help manage and access different segments of memory. Here's an explanation of each:
 1. **CS (Code Segment)**:
