@@ -2,6 +2,7 @@
 msg:
     .ascii "Hello World\n"
 
+# .equ stands for 'equate' and it's used to define constants
 .equ str_length, 13  # Defining a static symbol (analogous to #define in C)
 
 .section .text
