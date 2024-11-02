@@ -3,6 +3,10 @@ msg:
     .ascii "Enter a natural number: "
 msg_length = . - msg                # Calculate the length of msg
 
+overflow_msg:
+    .ascii "Overflow detected\n"
+overflow_msg_lenght = . - overflow_msg
+
 x:                                  
     .long 0                         # Set initial value for Fibonacci (0)        
 y : 
@@ -63,6 +67,9 @@ fibonacci_loop:
     movl    %eax, x                  # Set x (eax) to previous y (tmp)
     movl    %ecx, y                  # Set y to next Fibonacci number
 
+    # Break if overlow
+    jo     overflow_exit             # Exit with code 1
+
     # Restore the counter value from the stack
     popl    %edx                    
 
@@ -76,6 +83,21 @@ exit:
     movl    $1, %eax
     movl    $0, %ebx                
     int     $0x80
+
+overflow_exit:
+    # Write syscall - Prompt Overflow detect to user:
+    movl    $4, %eax
+    movl    $1, %ebx
+    movl    $overflow_msg , %ecx
+    movl    $overflow_msg_lenght, %edx
+    int     $0x80
+
+
+    # exit - return 1
+    movl    $1, %eax
+    movl    $1, %ebx
+    int     $0x80
+
 
 ###################################################################################
 

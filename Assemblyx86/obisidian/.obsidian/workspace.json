@@ -35,8 +35,7 @@
               "title": "Register"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -93,7 +92,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 298.5
+    "width": 298.5,
+    "collapsed": true
   },
   "right": {
     "id": "bd574aef870c4a41",
@@ -178,11 +178,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "46e9bcfc31c7845a",
+  "active": "7de4d68a8c263d47",
   "lastOpenFiles": [
+    "Register.md",
     "Execution Flow.md",
     "Data.md",
-    "Register.md",
     "attachment/Pasted image 20241029213611.png",
     "attachment/Pasted image 20241029141014.png",
     "attachment/Pasted image 20241029141001.png",
