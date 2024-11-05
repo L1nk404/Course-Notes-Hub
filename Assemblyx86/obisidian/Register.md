@@ -12,40 +12,31 @@ In a 32-bit architecture, there are three main types of registers:
 #### 1.General Purpose Registers (GPRs)
 These are used for various operations, including arithmetic and data manipulation. Examples include `EAX`, `EBX`, `ECX`, and `EDX`. In a 32-bit architecture, there are eight General Purpose Registers (GPRs), each with a specific use, although they can be used for various purposes. Here they are:
 
-1. **EAX (Extended Accumulator Register)**:
-	
+1. **EAX (Extended Accumulator Register)**:	
 	- **Primary Use**: Used in arithmetic operations. It often holds the return value of functions. Often holds system call numbers in Linux when making system calls via the int 0x80 instruction.
 	- **Example**: Results of calculations, such as addition or multiplication. Sometimes used to pass the first argument to system calls.
-2. **EBX (Extended Base Register)**:
-	
+2. **EBX (Extended Base Register)**:	
 	- **Primary Use**: Often used as a base pointer for memory access in some addressing modes.
 	- **Example**: Accessing arrays or memory locations.
-3. **ECX (Extended Count Register)**:
-	
+3. **ECX (Extended Count Register)**:	
 	- **Primary Use**: Used as a counter in loop operations.
 	- **Example**: Counting iterations in loops.
-4. **EDX (Extended Data Register)**:
-	
+4. **EDX (Extended Data Register)**:	
 	- **Primary Use**: Used in input/output operations and multiplication/division and to store data for input/output operations. Sometimes used to pass arguments to system calls.
 	- **Example**: Storing data for multiplication or division operations.
-5. **ESI (Extended Source Index)**:
-	
+5. **ESI (Extended Source Index)**:	
 	- **Primary Use**: Used as a pointer to the source in string operations.
 	- **Example**: Reading data from memory in string manipulation functions.
-6. **EDI (Extended Destination Index)**:
-	
+6. **EDI (Extended Destination Index)**:	
 	- **Primary Use**: Used as a pointer to the destination in string operations.
 	- **Example**: Writing data to memory in string manipulation functions.
-7. **EBP (Extended Base Pointer)**:
-	
+7. **EBP (Extended Base Pointer)**:	
 	- **Primary Use**: Used to point to the base of the stack frame, facilitating stack operations.
 	- **Example**: Accessing local variables and function parameters on the stack.
-8. **ESP (Extended Stack Pointer)**:
-	
+8. **ESP (Extended Stack Pointer)**:	
 	- **Primary Use**: Points to the top of the stack, managing stack operations.
 	- **Example**: Pushing and popping values from the stack.
 9. **ESI (Extended Source Index)**:
-
 	- **Primary Use**: Used as a pointer to the source data in string and memory operations. It is particularly useful in operations that manipulate strings or arrays, allowing for efficient data copying and manipulation.
 	- **Example**: In string manipulation functions, `%esi` is often used to point to the source data that is being read or copied. For instance, when using the `rep movsb` instruction, which copies bytes from the source address pointed to by `%esi` to the destination address pointed to by `%edi`, `%esi` indicates where the data is coming from. This makes it ideal for operations like reading from an array or a string buffer.
 
@@ -137,4 +128,4 @@ The _i_ stands for instruction. The _p_ on the end of any register stands for po
 The in the image indicate where the _EIP_ instruction are. Notice that the memory location hold by _EIP_ is the same as the instruction which the arrow are. 
 
 > [!warning] Note
-> Is important to note that the instruction that the EIP is pointed are not execute, because the EIP register point to the **next instruction to be executed**
+> Is important to note that the instruction that the EIP is pointed are not executed, because the EIP register point to the **next instruction to be executed**

@@ -90,22 +90,6 @@ stack frame.
 ---
 ## Flags Register
 In computing, especially in processor architectures like x86, a  [flag register](https://en.wikipedia.org/wiki/FLAGS_register) or simply _flag_ is a single bit in a special register that indicates a specific state or the result of an operation. In the case of x86 processors, these bits are contained in a register called **eflags** (or just **FLAGS** in older versions of x86).
-
-> [!abstract] Before we proceed
->  Let's take a quick view on the difference between unsigned and signed integer. 
-> ##### 1. Unsigned Integer:
-> An **unsigned** integer can only represent **non-negative** values (i.e., zero and positive numbers). All bits in an unsigned integer are used to represent the magnitude of the number.
-> ###### Example for an 8-bit Unsigned Integer:
-> - **Range**: 0 to 255.
-> - **Binary Representation**: All 8 bits are used for the magnitude.
-> ##### 2. Signed Integer:
-> A **signed** integer can represent both **negative** and **positive** values. In the common **two’s complement** representation (used in x86 processors), the most significant bit (MSB) is used to indicate the **sign** of the number:
-> - `0` in the MSB indicates a **positive** or **zero** value.
-> - `1` in the MSB indicates a **negative** value.
-> ###### Example for an 8-bit Signed Integer (Two’s Complement):
-> - **Range**: -128 to 127.
-> - **Binary Representation**: The MSB represents the sign, while the remaining bits represent the magnitude.		
-
 ### What is a Flag?
 A _flag_ is a **status indicator** that generally reflects the result of an arithmetic, logical, or control operation. These indicators are useful because they inform the processor (and consequently the programmer) of what happened during a given instruction.
 #### Common flags of x86 processors:
@@ -168,7 +152,7 @@ For example:
 			- $a-c<0$, then CF = 1
 		 This happens because the result exceeds the representable range for the   signed data type. 
 	
-> [!abstract] Note
+> [!abstract] Remember
 > The range for signed numbers is  $[-2^{n-1}, 2^{n-1} + 1]$,  where $n$ is the number of bits.
 > So, by putting $n=16$, the range is $[-32768,3267]$
 

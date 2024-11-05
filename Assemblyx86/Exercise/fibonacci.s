@@ -42,7 +42,7 @@ _start:
     int     $0x80
 
     # Convert ASCII from int_input into Integer
-    call ascii_to_int                # ASCII to Integer and signed the value onto EDX
+    call ascii_to_int               # ASCII to Integer and signed the value onto EDX
 
 fibonacci_loop:
     # Condition to break the loop
@@ -147,8 +147,8 @@ ascii_to_int:
 
 ascii_to_int_loop:
     movb    (%esi), %al              # Load a byte from int_input
-    cmpb    $0x0A, %al               # Check for NULL ASCII code
-    je      fibonacci_loop           # If NUll, break loop
+    cmpb    $0x0A, %al               # Check for Line Feed (LN) ASCII code
+    je      fibonacci_loop           # If LN, break loop
     subb    $'0', %al                # Convert ASCII to int (subtract ASCII '0')
     imull   $10, %edx                # Multiply current result by 10
     addl    %eax, %edx               # Add the new digit to result in EDX
