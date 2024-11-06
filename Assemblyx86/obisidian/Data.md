@@ -19,6 +19,18 @@
 | .short    | 16-bit integer number                                   |
 | .single   | Single-precision floating-point number (same as .float) |
 
+| Data Type | Size              | Range (Signed)                  | Range (Unsigned)               |
+| --------- | ----------------- | ------------------------------- | ------------------------------ |
+| `.byte`   | 1 byte (8 bits)   | -128 to 127                     | 0 to 255                       |
+| `.word`   | 2 bytes (16 bits) | -32,768 to 32,767               | 0 to 65,535                    |
+| `.int`    | 4 bytes (32 bits) | -2,147,483,648 to 2,147,483,647 | 0 to 4,294,967,295             |
+| `.long`   | 4 bytes (32 bits) | Same as `.int`                  | Same as `.int`                 |
+| `.quad`   | 8 bytes (64 bits) | -2^63 to 2^63 - 1               | 0 to 2^64 - 1                  |
+| `.short`  | 2 bytes (16 bits) | Same as `.word`                 | Same as `.word`                |
+| `.float`  | 4 bytes (32 bits) | Single-precision float          | Single-precision float         |
+| `.double` | 8 bytes (64 bits) | Double-precision float          | Double-precision float         |
+| `.ascii`  | Variable          | ASCII text, no null terminator  | ASCII text, no null terminator |
+| `.asciz`  | Variable          | ASCII text, null-terminated     | ASCII text, null-terminated    |
 # Moving Data
 
 ##### Syntax

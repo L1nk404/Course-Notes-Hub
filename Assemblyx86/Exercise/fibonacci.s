@@ -24,7 +24,7 @@ new_line:
 .section .text
 .globl _start
 
-_start:
+_start: 
     nop
 
     # Write syscall - Prompt the user to enter a number
@@ -154,5 +154,3 @@ ascii_to_int_loop:
     addl    %eax, %edx               # Add the new digit to result in EDX
     incl    %esi                     # Move pointer to the next character
     jmp     ascii_to_int_loop        # Repeat for next digit
-
-
