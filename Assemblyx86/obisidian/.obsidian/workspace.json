@@ -14,7 +14,7 @@
               "type": "markdown",
               "state": {
                 "file": "Numbers.md",
-                "mode": "source",
+                "mode": "preview",
                 "source": false
               },
               "icon": "lucide-file",
@@ -178,9 +178,14 @@
   },
   "active": "e3713fc35df5a486",
   "lastOpenFiles": [
-    "Data.md",
-    "Execution Flow.md",
+    "Untitled.md",
     "Numbers.md",
+    "attachment/Pasted image 20241110174003.png",
+    "attachment/Pasted image 20241110173601.png",
+    "Data.md",
+    "attachment/Number_Asm_dark.drawio.png",
+    "attachment/Number_Asm.drawio.png",
+    "Execution Flow.md",
     "attachment/Pasted image 20241105165955.png",
     "Register.md",
     "attachment/Pasted image 20241029213611.png",
@@ -189,10 +194,6 @@
     "attachment/Pasted image 20241025113431.png",
     "Stack frame.md",
     "attachment/Pasted image 20240918204914.png",
-    "attachment/Pasted image 20240918205343.png",
-    "attachment/Pasted image 20240918210248.png",
-    "attachment/Pasted image 20240918210433.png",
-    "attachment/Pasted image 20240918205339.png",
     "Untitled.canvas",
     "Memory layout.md"
   ]
