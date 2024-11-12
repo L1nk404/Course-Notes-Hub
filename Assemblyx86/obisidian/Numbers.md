@@ -60,7 +60,7 @@ exit:
 	int	$0x80
 ```
 ### SIMD Integers
-**SIMD** (Single Instruction, Multiple Data) is a technique used in computer architecture that allows a single instruction to perform the same operation on multiple pieces of data simultaneously. **SIMD integer operations** specifically apply SIMD techniques to **integer data types**.
+**SIMD** (Single Instruction Multiple Data) is a technique used in computer architecture that allows a single instruction to perform the same operation on multiple pieces of data simultaneously. **SIMD integer operations** specifically apply SIMD techniques to **integer data types**.
 ##### What is SIMD
 In SIMD, multiple data elements are **packed** into a single **wide register**, and operations are performed on these elements **in parallel**. This parallelism can lead to significant performance improvements in tasks that require repetitive calculations on arrays or vectors of data, such as image processing, audio processing, scientific simulations, and more.
 #### SIMD Registers in x86 Architecture
@@ -74,6 +74,11 @@ Each MMX register can hold:
 - **Eight 8-bit integers** (bytes), or
 - **Four 16-bit integers** (words), or
 - **Two 32-bit integers** (doublewords).
+
+So, in a nutshell, we have
+- **Primarily Function**: Enable integer-based SIMD (Single Instruction, Multiple Data) operations for multimedia tasks, such as image processing, audio processing, and basic 2D graphics.
+- **Data Types**: 8-bit, 16-bit, and 32-bit integers (packed within each 64-bit MMX register).
+- **Key Focus**: Integer arithmetic on multiple small data elements in parallel.
 ###### Syntax
 To move data to the MMX register we use the letter "q" on the _mov_ operator:
 
@@ -108,7 +113,41 @@ After execute the movq instruction, we can see how the data was stored:
 So we can notice that the first element (1) was stored in the most right hand side, and the second element (2) was stored on the top left.
 Now look to the _v4\_int16_, notice that there is a 0x0 stored between 0x1 and 0x2. The reason for that is because our data is 32 bit, so the 0x0 is alocated for the 32 bits number.
 ##### SSE Registers
+Like the MME instruction, the SSE is a collection of  8 register, but instead of 64 bits, they have 128 bits size, named from **xmm0** to **xmm7**.
 
+Each **SSE register** can hold:
+- **Sixteen 8-bit integers** (bytes), or
+- **Eight 16-bit integers** (words), or
+- **Four 32-bit integers** (doublewords), or
+- **Two 64-bit integers** (quadwords), or
+- **Four 32-bit single-precision floats**, or
+- **Two 64-bit double-precision floats**
+
+So, in a nutshell, we have
+- **Primarily Function**: Extend SIMD capabilities to support **floating-point arithmetic** in addition to integer operations, making them versatile for scientific and multimedia applications.
+- **Data Types**: 32-bit single-precision and 64-bit double-precision floating-point numbers, as well as 8, 16, and 32-bit integers (packed within each 128-bit XMM register).
+- **Key Focus**: High-performance floating-point calculations, as well as integer SIMD operations, across multiple data elements.
+###### Syntax
+To move data to the SSE registes, we use the operator _mvdqa_ where _dqa_ stands for **double quadword aligned**.
+
+```nasm
+.section .data
+	value1: .int 	1,2,3,4            # int have 32 bit size
+	value2: .byte 	1,2,3,4,5,7,8      # byte have 8 bit size
+
+.section .text
+.globl _start
+_start:
+	nop
+	
+	movdqa    value1, %xmm0
+	movdqa	  value2, %xmm1
+
+	# exit
+	movl	  $1, %eax
+	movl 	  $0, %ebx
+	int 	  $0x80
+```
 
 ### Binary Coded Decimal
 
