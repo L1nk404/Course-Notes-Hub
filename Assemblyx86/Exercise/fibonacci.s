@@ -9,7 +9,7 @@ overflow_msg_lenght = . - overflow_msg
 
 x:                                  
     .long 0                         # Set initial value for Fibonacci (0)        
-y : 
+y: 
     .long 1                         # Set initial value for Fibonacci (1)          
 
 new_line:

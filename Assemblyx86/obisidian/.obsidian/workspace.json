@@ -91,8 +91,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 286.5,
-    "collapsed": true
+    "width": 286.5
   },
   "right": {
     "id": "bd574aef870c4a41",
@@ -179,22 +178,23 @@
   },
   "active": "e3713fc35df5a486",
   "lastOpenFiles": [
-    "Untitled.md",
+    "attachment/Pasted image 20241114211833.png",
+    "attachment/Pasted image 20241114211757.png",
+    "Data.md",
+    "Register.md",
     "Numbers.md",
+    "Untitled.md",
     "attachment/Pasted image 20241110174003.png",
     "attachment/Pasted image 20241110173601.png",
-    "Data.md",
     "attachment/Number_Asm_dark.drawio.png",
     "attachment/Number_Asm.drawio.png",
     "Execution Flow.md",
     "attachment/Pasted image 20241105165955.png",
-    "Register.md",
     "attachment/Pasted image 20241029213611.png",
     "attachment/Pasted image 20241029141014.png",
     "attachment/Pasted image 20241029141001.png",
     "attachment/Pasted image 20241025113431.png",
     "Stack frame.md",
-    "attachment/Pasted image 20240918204914.png",
     "Untitled.canvas",
     "Memory layout.md"
   ]

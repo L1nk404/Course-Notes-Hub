@@ -3,29 +3,29 @@ Take the following flowchart as example:
 ![[Number_Asm_dark.drawio.png]]
 The process is:
 1. The user inputs a decimal value: **123456**
-2. The CPU convert from decimal to hexadecimal: **0x bc 61 4e**
+2. The CPU converts from decimal to hexadecimal: **0x bc 61 4e**
 3. The hexadecimal value is stored in memory in reverse order: **0x 4e 61 bc**
 
 ## Numeric Data Type
 
-|Data Type|Size|Range (Signed)|Range (Unsigned)|
-|---|---|---|---|
-|`.byte`|1 byte (8 bits)|-128 to 127|0 to 255|
-|`.word`|2 bytes (16 bits)|-32,768 to 32,767|0 to 65,535|
-|`.int`|4 bytes (32 bits)|-2,147,483,648 to 2,147,483,647|0 to 4,294,967,295|
-|`.long`|4 bytes (32 bits)|Same as `.int`|Same as `.int`|
-|`.quad`|8 bytes (64 bits)|-2^63 to 2^63 - 1|0 to 2^64 - 1|
-|`.short`|2 bytes (16 bits)|Same as `.word`|Same as `.word`|
-|`.float`|4 bytes (32 bits)|Single-precision float|Single-precision float|
-|`.double`|8 bytes (64 bits)|Double-precision float|Double-precision float|
-|`.ascii`|Variable|ASCII text, no null terminator|ASCII text, no null terminator|
-|`.asciz`|Variable|ASCII text, null-terminated|ASCII text, null-terminated|
+| Data Type | Size              | Range (Signed)                      | Range (Unsigned)               |
+| --------- | ----------------- | ----------------------------------- | ------------------------------ |
+| `.byte`   | 1 byte (8 bits)   | $-128$ to $127$                     | $0$ to $255$                   |
+| `.word`   | 2 bytes (16 bits) | $-32.768$ to $32.767$               | $0$ to $65.535$                |
+| `.int`    | 4 bytes (32 bits) | $-2.147.483.648$ to $2.147.483.647$ | $0$ to $4.294.967.295$         |
+| `.long`   | 4 bytes (32 bits) | Same as `.int`                      | Same as `.int`                 |
+| `.quad`   | 8 bytes (64 bits) | $-2^{63}$ to $2^{63} - 1$           | $0$ to $2^{64} - 1$            |
+| `.short`  | 2 bytes (16 bits) | Same as `.word`                     | Same as `.word`                |
+| `.float`  | 4 bytes (32 bits) | Single-precision float              | Single-precision float         |
+| `.double` | 8 bytes (64 bits) | Double-precision float              | Double-precision float         |
+| `.ascii`  | Variable          | ASCII text, no null terminator      | ASCII text, no null terminator |
+| `.asciz`  | Variable          | ASCII text, null-terminated         | ASCII text, null-terminated    |
 
 ### Integers
 #### Signed
 In a short way, signed integers are integers which has sign. A **signed** integer can represent both **negative** and **positive** values. In the common **two’s complement** representation (used in x86 processors), the most significant bit (MSB) is used to indicate the **sign** of the number
 ###### Range:
-The range for signed numbers is  $[-2^{n-1}, 2^{n-1} + 1]$,  where $n$ is the number of bits.
+The range for signed numbers is  $[-2^{n-1}, 2^{n-1} - 1]$,  where $n$ is the number of bits.
 So, in 32 bits system, $n=32$, the range is $[−2.147.483.648 , 2.147.483.647]$.
 #### Unsigned
 An **unsigned** integer can only represent **non-negative** values (i.e., zero and positive numbers). All bits in an unsigned integer are used to represent the magnitude of the number.
@@ -80,7 +80,7 @@ So, in a nutshell, we have
 - **Data Types**: 8-bit, 16-bit, and 32-bit integers (packed within each 64-bit MMX register).
 - **Key Focus**: Integer arithmetic on multiple small data elements in parallel.
 ###### Syntax
-To move data to the MMX register we use the letter "q" on the _mov_ operator:
+To move data to the MMX register we use the letter "q" on the _mov_ operator, _movq_ is used to move 64-bit data.
 
 ```nasm
 .section .data
@@ -113,7 +113,7 @@ After execute the movq instruction, we can see how the data was stored:
 So we can notice that the first element (1) was stored in the most right hand side, and the second element (2) was stored on the top left.
 Now look to the _v4\_int16_, notice that there is a 0x0 stored between 0x1 and 0x2. The reason for that is because our data is 32 bit, so the 0x0 is alocated for the 32 bits number.
 ##### SSE Registers
-Like the MME instruction, the SSE is a collection of  8 register, but instead of 64 bits, they have 128 bits size, named from **xmm0** to **xmm7**.
+Like the MMX instruction, the SSE is a collection of  8 register, but instead of 64 bits, they have 128-bits size, named from **xmm0** to **xmm7**.
 
 Each **SSE register** can hold:
 - **Sixteen 8-bit integers** (bytes), or
@@ -132,8 +132,8 @@ To move data to the SSE registes, we use the operator _mvdqa_ where _dqa_ stands
 
 ```nasm
 .section .data
-	value1: .int 	1,2,3,4            # int have 32 bit size
-	value2: .byte 	1,2,3,4,5,7,8      # byte have 8 bit size
+	value1: .int 	1,2,3,4            # int have 32-bit size
+	value2: .byte 	1,2,3,4,5,7,8      # byte have 8-bit size
 
 .section .text
 .globl _start
@@ -151,4 +151,120 @@ _start:
 
 ### Binary Coded Decimal
 
+Binary Coded Decimal (**BCD**) is a binary enconding method for decimal numbers where each decimal digit is represented by a fixed number of binary bits, usually four. In BCD, decimal digits 0 through 9 are encoded individually, meaning each digit in the decimal number is separately converted to its four-bit binary equivalent.
+For example, the decimal number $47$ in BCD is represented as $0100\ 0111$ (where
+$4_{d}=0100_{b}$ e $7_{d}=0111{b}$). So, 47 well allocate 1 byte of memory, and we can represent it like:
+
+| 7   | 6   | 5   | 4   | 3   | 2   | 1   | 0   |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 0   | 1   | 0   | 0   | 0   | 1   | 1   | 1   |
+##### Pros
+- BCD allows for easier manipulation of decimal numbers in digital systems, especially in applications like calculator and digital displays, **where precise decimal representation is critical**.
+- BCD avoids rounding error that can occur with floating-point binary representation in some cases.
+##### Cons
+ - BCD is less space-efficient than pure binary, as it uses more bits to represent the same decimal value.
+ - Arithmetic operations on BCD are generally slower because they require extra processing to handle the decimal digit constraints.
+#### Storing BCD Data
+We can only store data in the _FPU_ (Floating Point Unite) registers named from _st0_ to _st7_. The size of each _st_ register is 80 bit, but we can use only 72 bits where the last one is used for signed operations to store BCD data, the another 10 bits are used by the system.
+##### Syntax
+To BCD data we only need to use the _fbld_ (Floating-Point Binary Load) instruction and the source `fbld   <source>`.
+
+**Loading and Storing BCD Values:**
+- `fbld <source>` – Load BCD value from memory into `ST(0)` (convert to float)
+- `fbstp <destination>` – Convert `ST(0)` to BCD and store in memory, then pop
+
+```nasm
+.section  .data
+	bcd_data: 	
+		.byte	0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0x5   # 10 bytes
+
+.section .text
+.globl _start
+_start:
+	nop
+	
+	fbld 	bcd_data	 # it will store bcd_data into st0 register
+
+	# exit
+	movl 	$1, %eax
+	movl	$0, %ebx
+	int 	$0x80
+```
+
+bcd_data have 10-bytes size, as we see above, the _st_ registers can hold only 9 bytes. What will happens?
+
+![[Pasted image 20241114211833.png]]
+
+On the debugger, you can see that only 9 bytes was stored, the 10th value (`0x5`)  was not stored.
 ### Floating Point Number
+
+A **floating-point number** is a data type used to represent real numbers with fractional parts, allowing for a wide range of values. It consists of three main components:
+
+1. **Sign bit**: Indicates whether the number is positive or negative.
+2. **Exponent**: Determines the scale or "magnitude" of the number.
+3. **Mantissa (or significand)**: Represents the actual digits of the number.
+
+Floating-point numbers use scientific notation, where a number is represented (in binary) as:
+$$
+sing\times mantissa \times 2^{exponent}
+$$
+##### Floating-Point Standards:
+
+Most systems use the **IEEE 754 standard** for floating-point representation, which defines:
+- **Single precision** (32 bits): Offers approximately 7 decimal digits of precision.
+- **Double precision** (64 bits): Offers approximately 15 decimal digits of precision.
+##### Floating Point Range and Precision:
+
+Floating-point numbers are suited for very large or very small values, unlike integers, which have fixed ranges. However, they can suffer from **rounding errors** due to limited precision, especially when representing numbers with many decimal places.
+
+**Example:** For single precision (32-bit):
+- Sign bit: 1 bit
+- Exponent: 8 bits
+- Mantissa: 23 bits
+##### Pros:
+- Allows for representation of a vast range of values, including very small fractions and very large numbers.
+- Well-suited for scientific calculations and graphics.
+##### Cons:
+- Limited precision can lead to rounding errors.
+- Slower to process than integers on many CPUs.
+##### Syntax
+Like BCD, we use the _FPU_ registers. The instructions that we can use to manipulate floating point numbers is:
+
+**Loading Floating-Point Values:**
+- `flds <source>` – Load 32-bit single-precision float into `ST(0)`
+- `fldl <source>` – Load 64-bit double-precision float into `ST(0)`
+- `fld <source>`   – Load 80-bit extended-precision float into `ST(0)`
+**Storing Floating-Point Values:**
+- `fsts <destination>` – Store 32-bit single-precision float from `ST(0)`
+- `fstl <destination>` – Store 64-bit double-precision float from `ST(0)`
+- `fstp <destination>` – Store and pop `ST(0)`
+**Integer Conversion:**
+- `fild <source>` – Load integer into `ST(0)` (convert to float)
+- `fistp <destination>` – Convert `ST(0)` to integer and store, then pop
+
+```nasm
+.section .data
+    myfloat1:   .float      1.23            # Define a 4-byte (single-precision) floating-point number 1.23
+    myfloat2:   .double     1234.5432       # Define an 8-byte (double-precision) floating-point number 1234.5432
+
+.section .bss
+    .lcomm data, 8                           # Reserve 8 bytes in uninitialized memory (common block)
+
+.section .text
+.globl _start                                # Declare _start as the entry point for the program
+_start:
+    nop                                      # Placeholder for alignment or debugging (no operation)
+
+    # Load single-precision float (myfloat1) into FPU stack
+    flds    myfloat1                         # Load single-precision (4 bytes) floating-point value into ST(0)
+    # Load double-precision float (myfloat2) into top of FPU stack, myfloat1 will be passed to ST(1)
+    fldl    myfloat2                         # Load double-precision (8 bytes) floating-point value into ST(0)
+    # Store the top of the FPU stack (ST(0) = myfloat2) into memory (data)
+    fstpl   data                             # Store and pop the double-precision value from ST(0) into memory
+
+    # Exit syscall
+    movl    $1, %eax                         # Load syscall number for exit (1) into EAX
+    movl    $0, %ebx                         # Clear EBX (set to 0) for exit status
+    int     $0x80                            # Trigger the syscall using interrupt 0x80
+
+```
