@@ -242,11 +242,18 @@ Like BCD, we use the _FPU_ registers. The instructions that we can use to manipu
 - `fild <source>` – Load integer into `ST(0)` (convert to float)
 - `fistp <destination>` – Convert `ST(0)` to integer and store, then pop
 
+We can also store multiple floating points in _xmm_ registers. For that, we use the instruction _movups_ indicating the source and destination (SSE register).
+
+Let's see the following example:
+
 ```nasm
 .section .data
-    myfloat1:   .float      1.23            # Define a 4-byte (single-precision) floating-point number 1.23
-    myfloat2:   .double     1234.5432       # Define an 8-byte (double-precision) floating-point number 1234.5432
-
+    myfloat1:                                # Define a 4-byte (single-precision) floating-point number 1.23
+        .float      1.23            
+    myfloat2:                                # Define an 8-byte (double-precision) floating-point number 1234.5432
+        .double     1234.5432       
+	multifloat:                              # Define multiple 4-bytes floating-point numbers
+        .float 		1.2, 3.5, 77.45, 11.06
 .section .bss
     .lcomm data, 8                           # Reserve 8 bytes in uninitialized memory (common block)
 
@@ -261,10 +268,13 @@ _start:
     fldl    myfloat2                         # Load double-precision (8 bytes) floating-point value into ST(0)
     # Store the top of the FPU stack (ST(0) = myfloat2) into memory (data)
     fstpl   data                             # Store and pop the double-precision value from ST(0) into memory
+    
+    # Load mulitple 4-bytes floating-point numbers at xmm0
+    movups	multifloat,	%xmm0				 
 
     # Exit syscall
     movl    $1, %eax                         # Load syscall number for exit (1) into EAX
     movl    $0, %ebx                         # Clear EBX (set to 0) for exit status
     int     $0x80                            # Trigger the syscall using interrupt 0x80
-
 ```
+
