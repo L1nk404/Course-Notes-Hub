@@ -70,14 +70,14 @@ _start:
     movl    $folder_name, %esi      # Pointing to buffer
     xorl    %edi, %edi              # Zeroing EDI
 
-check_input_lenght: 
+check_input_length: 
     cmpb    $0x0A, (%esi)           # Check if current char is '\n'
     je      null_terminate          # if True, jump to null_terminate
     inc     %esi                    # move to the next character (increment pointer by 1)
     inc     %edi                    # increment edi
     cmpl    $19, %edi               # check if counter = 20
     je      truncate_input          # if limit reached, truncate input
-    jne     check_input_lenght      # Loop if not null terminator
+    jne     check_input_length      # Loop if not null terminator
 
 null_terminate:
     movb    $0x00, (%esi)           # Replace '\n' with '\0'
@@ -87,8 +87,6 @@ truncate_input:
     movl    $folder_name, %esi      # reset pointer to start of buffer
     addl    $19, %esi               # move the pointer to the 20th character (index 19)
     movb    $0x00, (%esi)           # add null temrinator ('\0') at 20th byte
-
-
 
 end_validation:
     #########################################################################################

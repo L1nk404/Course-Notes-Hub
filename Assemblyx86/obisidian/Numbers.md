@@ -59,6 +59,100 @@ exit:
 	movl	$0, %ebx
 	int	$0x80
 ```
+
+#### Converting ASCII <=> Integers
+Converting a string to an integer and vice versa in Assembly revolves around understanding how characters (in ASCII format) map to their numeric values and performing arithmetic or format operations accordingly.
+You can check the ASCII table that will be useful [here](https://www.ascii-code.com)
+##### ASCII => Integer
+###### Understanding ASCII Representation:
+- Each digit character ($0$ to $9$) is stored as an ASCII value.
+- ASCII value of $0$ is $48_d$ (or `0x30` in hex). (**To avoid misunderstanding, let denote the ASCII value of 0 by $0_A$**)
+- To get the numeric value of a digit character, subtract $0$ ($48_d$) from its ASCII value.
+You may ask why subtracting  the ASCII value from $48_d$ ($0$ in ASCII table) works. The point is, we are just doing an arithmetic operation involving two integers ($48$ and ($48+n$) where $n \in [0,9]$ ) and it will return a integer value. Take the number $3$ as example. So in the ASCII table, $3$ have the code $51_d$ ($48 + 3$) .
+Subtracting $51$ from $48$ we have $3$, an integer number!
+###### Algorithm:
+- Start with an initial value of $0$ in a register to accumulate the result.
+- For each character in the string:
+	- Subtract $0_A$ to get the numeric value of the character.
+	- Multiply the current accumulated result by $10$.
+	- Add the numeric value to the accumulated result.
+###### Example:
+```nasm
+.section .data
+    str:    .asciz "1234"           # Null-terminated string
+    result: .long 0                 # To store the final integer result
+
+.section .text
+    .globl _start
+    
+_start:
+    # Initialize variables
+    movl $0, %eax                  # EAX = 0 (accumulator for the integer result)
+    movl $str, %esi                # ESI points to the start of the string
+
+convert_loop:
+    movzbl (%esi), %ebx            # Load the current byte into EBX (zero-extended)
+    cmpb $0, %bl                   # Check if it's the null terminator
+    je end_conversion              # If null terminator, jump to the end
+
+    subb $'0', %bl                 # Convert ASCII character to integer
+    imull $10, %eax, %eax          # Multiply current result by 10
+    addl %ebx, %eax                # Add the numeric value to EAX
+
+    incl %esi                      # Move to the next character
+    jmp convert_loop               # Repeat the loop
+
+end_conversion:
+    movl %eax, result              # Store the result in memory
+
+    # Exit syscall
+    movl $60, %eax                 # syscall: exit
+    xorl %edi, %edi                # status: 0
+    syscall
+```
+##### Integer => ASCII
+To convert an integer ($1234$) to its string representation ("1234"), reverse the logic of string-to-integer conversion:
+###### Understand the Modulo Operation:
+- Extract the least significant (LSD) of the number using the modulus operation (`mod 10`).
+- Convert the digit into its ASCII representation by adding $0$ ($48_d$).
+###### Algorithm:
+- Repeat until quotient becomes 0:
+	1. Get the LSD of the number (`number % 10`).
+	2. Convert it to ASCII by adding $0$ ($48_d$).
+	3. Store the character (in reverse order)
+- After all digits are processed, reverse the order of the stored characters to get the final string.
+###### Example:
+```nasm 
+.section .data
+    result: .space 16               # Buffer for the resulting string (null-terminated)
+    integer: .long 1234             # Example integer to convert
+
+.section .text
+    .globl _start
+    
+_start:
+    movl integer, %eax              # Load the integer into EAX
+    leal result+15, %edi            # Start writing from the end of the buffer
+    movb $0, (%edi)                 # Null-terminate the string
+    decl %edi                       # Move back to the first free position
+
+convert_to_string:
+    xorl %edx, %edx                 # Clear EDX (for division remainder)
+    movl $10, %ebx                  # Divisor = 10
+    divl %ebx                       # Divide EAX by 10: quotient in EAX, remainder in EDX
+
+    addb $'0', %dl                  # Convert remainder to ASCII
+    movb %dl, (%edi)                # Store ASCII character in the buffer
+    decl %edi                       # Move to the previous position
+
+    testl %eax, %eax                # Check if quotient is 0
+    jnz convert_to_string           # If not, repeat
+
+    # Exit syscall
+    movl $60, %eax                  # syscall: exit
+    xorl %edi, %edi                 # status: 0
+    syscall
+```
 ### SIMD Integers
 **SIMD** (Single Instruction Multiple Data) is a technique used in computer architecture that allows a single instruction to perform the same operation on multiple pieces of data simultaneously. **SIMD integer operations** specifically apply SIMD techniques to **integer data types**.
 ##### What is SIMD

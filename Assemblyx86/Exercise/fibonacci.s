@@ -39,7 +39,7 @@ _start:
     movl    $0, %ebx                # stdin (0)
     movl    $int_input, %ecx        # Pointing to buffer
     movl    $4, %edx                # buffer length
-    int     $0x80
+    int     $0x80            
 
     # Convert ASCII from int_input into Integer
     call ascii_to_int               # ASCII to Integer and signed the value onto EDX
