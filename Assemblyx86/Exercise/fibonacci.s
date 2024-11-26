@@ -103,9 +103,9 @@ overflow_exit:
 
 print_fibonacci_number:
     # Convert eax (Fibonacci number) to ASCII
-    movl    %eax, %esi              # Copy Fibonacci number to esi fpr conversion
+    movl    %eax, %esi              # Copy Fibonacci number to esi for conversion
     movl    $num_str, %edi          # Pointer the buffer to num_str
-    addl    $11, %edi               # Move to the end of bugffer for reverse storage
+    addl    $11, %edi               # Move to the end of buffer for reverse storage
     movb    $0, (%edi)              # Null-terminate at the address stored in EDI
 
 convert_loop:

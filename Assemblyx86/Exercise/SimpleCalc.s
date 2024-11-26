@@ -19,7 +19,7 @@
 #  - Relies on basic system calls (`write`, `read`, `exit`) for input/output and termination.
 
 
-.globl _main
+.globl _start
 
 .section .data  
     msg:                            # Message to prompt to the user
@@ -34,7 +34,7 @@
 
 .section .text
 
-_main:
+_start:
 
     # write(stdout(1), msg, msg_lenght) syscall - Prompt to the user enters a number
     movl    $4, %eax                # write syscall(4)
@@ -72,12 +72,12 @@ _main:
 str_to_int_loop:
     # Setting conditions of the loop
     ## Case 1 - User enter exactly 4 digits (String will not have NULL)
-    cmp     $3, %edi                # Check if the digits count = 4 (3+1)
+    cmp     $4, %edi                # Check if the digits count is 4
     je      end_str_to_int          # If 4 digits, end loop
 
     ## Case 2 - The user enter fewer than 4 digits
     movzbl  (%esi), %ebx            # Load the current byte into EBX (zero-extended)
-    cmpb    $0, %bl                 # Check if it's the NULL(0x0) terminator 
+    cmpb    $0x0A, %bl              # Check if it's the NULL(0x0) terminator 
     je      end_str_to_int          # If NULL, end loop
 
     # Conversion alghorithm
@@ -91,13 +91,10 @@ str_to_int_loop:
     jmp     str_to_int_loop
 
 end_str_to_int:
-    movl    %eax, int_data          # Move the EAX value (int num) to int_data
+    # At this momment EAX have stored the value inputed by the user, let's add 3
+    addl    $3, %eax                # EAX = (int)str_data + 3
+    movl    %eax, int_data          # Move results to int_data variable
 
-    ############################################################################
-    # Adding + 3 to int_data
-
-    movl    $3, %eax                # Load EAX 
-    addl    %eax, int_data          # int_data = int_data + 3
 
     ############################################################################
     # This part of code converts int_data to str_data
@@ -111,12 +108,12 @@ end_str_to_int:
     #       - Store the character (in reverse order)
 
     # Initialize the variables
-    movl    int_data, %esi          # Copy int_data into ESI to divide
+    movl    int_data, %esi          # Copy int_data into ESI for conversion
 
     ## Zeroing the str_data
-    movl    $0x00000000, str_output # Zero 4 bytes of int_data
-    leal    str_data+4, %edi        # Pointing to the 5th Byte
-    movb    $0x00, (%edi)           # Zero 1 byte of int_data (NULL terminator)
+    leal    str_output+5, %edi      # Pointing to the 6th Byte
+    movb    $0x0A, (%edi)           # Adding line feeder '\n' at the end of string    
+    #decl    %edi                    # Moving the buffer back
 
 int_to_str_loop:
     # ESI % 10
@@ -140,4 +137,3 @@ int_to_str_loop:
     movl    $1, %eax                
     movl    $0, %ebx                # Return code: 0
     int     $0x80                   # Goodbye 
-

@@ -35,7 +35,8 @@
               "title": "Data"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -91,8 +92,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 286.5,
-    "collapsed": true
+    "width": 286.5
   },
   "right": {
     "id": "bd574aef870c4a41",
@@ -177,11 +177,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e3713fc35df5a486",
+  "active": "66f758f15a6b8c11",
   "lastOpenFiles": [
+    "Numbers.md",
     "Data.md",
     "Register.md",
-    "Numbers.md",
     "Execution Flow.md",
     "attachment/Pasted image 20241114211833.png",
     "attachment/Pasted image 20241114211757.png",
