@@ -21,7 +21,6 @@ X_0, 0 =< X_0 < m - The "seed"
 [>>] Generalized LCG to generate numbers less than 10^9
 
 
-
 1. Choosing the modulus (m):
     - Since we want numbers less than 10^9, set m = 10^9.
     - This ensures the output range will be [0, 10^9 - 1].

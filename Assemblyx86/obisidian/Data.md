@@ -1,4 +1,4 @@
-	# Memory Layout
+# Memory Layout
 
 ![[Pasted image 20240524161008.png]]
 
@@ -151,13 +151,15 @@ That's what that code is doing:
 In that sessions we'll see how to access elements of an Array
 To access an element in an array we have to use the *base_address*.
 The base address is the label name and it requires 3 parameters :
-1. **offset_address** - This is the distance (in bytes) from the base address to the desired element within the array.  If the elements in the array are of type int (which typically have a size of 4 bytes), and you want to access the third element, the offset would be $2 * 4$ (because array indexing starts from 0). Therefore, the offset would be 8 bytes. To calculate the address of the specific element, we use 
+1. **offset_address** - This is the distance (in bytes) from the base address to the desired element within the array.  If the elements in the array are of type int (which typically have a size of 4 bytes), and you want to access the third element, the offset would be $2 * 4$ (because array indexing starts from 0). Therefore, the offset would be 8 bytes. To calculate the address of the specific element, we use ^offsetAddr
 $$
 	ElementAddress=BaseAddress+(Index\times ElementSize)
 $$
 
 > [!NOTE]
 > The offset_address is often left as 0 because the actual offset is calculated using the index and size. This is why it appears as 0 or is omitted. The index and size together form the effective offset.
+
+^e8e3b9
 
 2. **index** - The index of the required element.
 3. **size** - size of the target element in bytes.

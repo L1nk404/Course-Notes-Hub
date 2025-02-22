@@ -13,30 +13,29 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Numbers.md",
-                "mode": "preview",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Numbers"
-            }
-          },
-          {
-            "id": "66f758f15a6b8c11",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Data.md",
+                "file": "DevExploit/Windows/Basics of Windows shellcode writing.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Data"
+              "title": "Basics of Windows shellcode writing"
+            }
+          },
+          {
+            "id": "5458446828dcc7e7",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Register.md",
+                "mode": "preview",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "Register"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -55,7 +54,8 @@
             "state": {
               "type": "file-explorer",
               "state": {
-                "sortOrder": "alphabetical"
+                "sortOrder": "alphabetical",
+                "autoReveal": false
               },
               "icon": "lucide-folder-closed",
               "title": "Files"
@@ -108,7 +108,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Register.md",
+                "file": "DevExploit/Windows/Basics of Windows shellcode writing.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +118,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Register"
+              "title": "Backlinks for Basics of Windows shellcode writing"
             }
           },
           {
@@ -177,23 +177,32 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "66f758f15a6b8c11",
+  "active": "e3713fc35df5a486",
   "lastOpenFiles": [
-    "Numbers.md",
-    "Data.md",
     "Register.md",
+    "Data.md",
+    "DevExploit/Windows/Basics of Windows shellcode writing.md",
+    "DevExploit/Windows/Finding Kernel32 Base and Function Addresses in Shellcode.md",
+    "attachment/Pasted image 20250217012145.png",
+    "attachment/locate_dll3.gif",
+    "attachment/locate_dll3.gif.crdownload",
+    "attachment/locate_dll2.gif",
+    "attachment/locate_dll2.gif.crdownload",
+    "attachment/locate_dll1.gif",
+    "attachment/locate_dll1.gif.crdownload",
+    "attachment/Pasted image 20250216213344.png",
     "Execution Flow.md",
-    "attachment/Pasted image 20241114211833.png",
-    "attachment/Pasted image 20241114211757.png",
-    "Untitled.md",
-    "attachment/Pasted image 20241110174003.png",
-    "attachment/Pasted image 20241110173601.png",
+    "Numbers.md",
+    "offset.md",
+    "attachment/Pasted image 20250216170926.png",
+    "attachment/Pasted image 20250212202106.png",
+    "Find the DLL Base Address.md",
+    "attachment/locate_function1 1.gif",
     "attachment/Number_Asm_dark.drawio.png",
-    "attachment/Number_Asm.drawio.png",
-    "attachment/Pasted image 20241105165955.png",
-    "attachment/Pasted image 20241029213611.png",
-    "attachment/Pasted image 20241029141014.png",
-    "attachment/Pasted image 20241029141001.png",
+    "attachment/Pasted image 20240522112857.png",
+    "attachment/locate_function1 1.gif.crdownload",
+    "DevExploit/Windows",
+    "DevExploit",
     "Stack frame.md",
     "Untitled.canvas",
     "Memory layout.md"
