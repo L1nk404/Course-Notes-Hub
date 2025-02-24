@@ -2,6 +2,7 @@ import java.util.Scanner;
 
 public class Conditional 
 {
+    @SuppressWarnings("ConvertToTryWithResources")
     public static void main(String[] args)
     {
         double IMC = 0.0f;
