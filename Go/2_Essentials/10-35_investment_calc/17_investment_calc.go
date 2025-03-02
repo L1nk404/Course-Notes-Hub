@@ -1,5 +1,3 @@
-//go:build essencials
-
 // main is a special package that tells Go that this Package will be the main entry point of
 // the application that we are building.
 package main
