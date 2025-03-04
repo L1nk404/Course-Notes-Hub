@@ -104,9 +104,7 @@ func main(){
 	var accountBalance, err = readBalanceFromFile()
 	
 	if err != nil {
-		fmt.Printf("ERROR!\n")
-		fmt.Println(err)
-		fmt.Printf("-------------------------\n")
+		panic(err) // crash the program and show err
 	}
 
 	for {		
