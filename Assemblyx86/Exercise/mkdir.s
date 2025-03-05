@@ -101,6 +101,8 @@ end_validation:
     #  0755	  rwxr-xr-x	     Read, write, execute for owner; read, execute for group/others.
     #  0700	  rwx------	     Full access for owner only.
     #  0644	  rw-r--r--	     Read/write for owner; read-only for group/others. 
+    #
+    # https://www.multacom.com/faq/password_protection/file_permissions.htm
     #########################################################################################
      
     # mkdir syscall 
