@@ -15,25 +15,13 @@ public class SwitchCase
 
         switch (grade) 
         {
-            case 1:
-                System.out.printf("Sua nota foi Ruim\n");                
-                break;
-            case 2:
-                System.out.printf("Sua nota foi Regular\n");
-                break;
-            case 3:
-                System.out.printf("Sua nota foi Boa\n");
-                break;
-            case 4:
-                System.out.printf("Sua nota foi Muito Boa\n");
-                break;
-            case 5:
-                System.out.printf("Sua nota foi Ótimo\n");
-                break;
+            case 1 -> System.out.printf("Sua nota foi Ruim\n");
+            case 2 -> System.out.printf("Sua nota foi Regular\n");
+            case 3 -> System.out.printf("Sua nota foi Boa\n");
+            case 4 -> System.out.printf("Sua nota foi Muito Boa\n");
+            case 5 -> System.out.printf("Sua nota foi Ótimo\n");
             
-            default:
-                System.out.printf("Nota inválida!\n");
-                break;                
+            default -> System.out.printf("Nota inválida!\n");                
         }
     }    
 }

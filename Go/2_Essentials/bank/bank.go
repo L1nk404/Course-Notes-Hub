@@ -93,7 +93,7 @@ func balanceChange(changeType int, accountBalance float64) float64 {
 } 
 
 
-// Main ==============================================
+// Main ==============================================================
 
 const accountBalanceFile = "balance.json"
 

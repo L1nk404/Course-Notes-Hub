@@ -11,6 +11,6 @@ public class input2
     
     comprimento = Double.parseDouble(JOptionPane.showInputDialog("Essa é a mensagem"));
     
-    JOptionPane.showMessageDialog(null, "Bom dia , o numero é  %d");
+    JOptionPane.showMessageDialog(null, "Bom dia , o numero é  %lf");
     }
 }
