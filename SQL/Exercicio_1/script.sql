@@ -2,8 +2,8 @@
 Exercćio Aula 9
 
 Criar as seguintes tabelas:
-    • Departamento (cod_depto e nome_depto)
-    • Empregado (cod_func, nome_func, sal, cod_depto)
+    • Departamento (cod_dept e nome_dept)
+    • Empregado (cod_func, nome_func, sal, cod_dept)
 
 • Incluir 5 registros para departamento e 10 registros para empregado.
 
@@ -16,23 +16,23 @@ Criar as seguintes tabelas:
 
 
 -- Cria Database se já não existe
-CREATE DATABASE IF NOT EXISTS Exercise1;
+CREATE DATABASE IF NOT EXISTS Exercicio_1;
 
 -- Abre a DataBase
-USE Exercise1;
+USE Exercicio_1;
 
 
 -- Criação de tabelas ------------------------------------------
 CREATE TABLE Departamentos (
-    cod_depto INT(4) PRIMARY KEY,
-    nome_depto VARCHAR(50) NOT NULL;
+    cod_dept INT(4) PRIMARY KEY,
+    nome_dept VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE Funcionarios (
     cod_func INT(4) PRIMARY KEY,
     nome_func VARCHAR(50) NOT NULL,
     salario INT(6) NOT NULL,
-    cod_depto INT(4) REFERENCES Departamentos (cod_depto)
+    cod_dept INT(4) REFERENCES Departamentos (cod_dept)
 );
 
 -- Preenchendo tabelas com Dados -------------------------------
@@ -52,7 +52,7 @@ VALUES
 (50, 'Estoque');
 
 -- Funcionarios <<
-INSERT INTO Funcionarios (cod_func, nome, salario, cod_dept)
+INSERT INTO Funcionarios (cod_func, nome_func, salario, cod_dept)
 VALUES
 (10, 'José da Silva', 1500, 10),
 (20, 'Antonio de Souza', 1900, 10),
@@ -72,7 +72,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 
 -- Procura por funcionários que trabalham no departamento de código 10 
 SELECT cod_func "Codigo Func", nome_func "Nome", salario "Salário" 
-FROM Funcionarios WHERE cod_depto=10;
+FROM Funcionarios WHERE cod_dept=10;
 
 SELECT cod_func "Codigo func", nome_func "Nome", salario "Salários < 10.000"
 FROM Funcionarios WHERE salario < 10000;
@@ -85,8 +85,8 @@ SELECT * FROM Funcionarios
 LIMIT 5;
 
 -- Busca todos departamentos e classifica por nome em ordem alfabetica
-SELECT cod_depto "Cod Dep", nome_depto "Departamento"
-FROM Departamentos ORDER BY nome_depto;
+SELECT cod_dept "Cod Dep", nome_dept "Departamento"
+FROM Departamentos ORDER BY nome_dept;
 
 -- Podemos fazer de outra forma:
 
@@ -100,7 +100,7 @@ SELECT
         ELSE 'Salário >= 10.000' 
     END AS "Status Salário"
 FROM Funcionarios 
-WHERE cod_depto = 10;
+WHERE cod_dept = 10;
 
 -- Query 2: Funcionários com códigos 10 e 30
 SELECT 
@@ -117,7 +117,7 @@ LIMIT 5;
 
 -- Query 4: Departamentos ordenados alfabeticamente
 SELECT 
-    cod_depto AS "Cod Dep", 
-    nome_depto AS "Departamento"
+    cod_dept AS "Cod Dep", 
+    nome_dept AS "Departamento"
 FROM Departamentos 
-ORDER BY nome_depto;
+ORDER BY nome_dept;
