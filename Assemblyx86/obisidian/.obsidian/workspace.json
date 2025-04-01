@@ -11,10 +11,14 @@
             "id": "3d8e64d1e6879ac4",
             "type": "leaf",
             "state": {
-              "type": "empty",
-              "state": {},
+              "type": "markdown",
+              "state": {
+                "file": "DevExploit/Windows/Basics of Windows shellcode writing.md",
+                "mode": "source",
+                "source": false
+              },
               "icon": "lucide-file",
-              "title": "New tab"
+              "title": "Basics of Windows shellcode writing"
             }
           }
         ]
@@ -159,8 +163,9 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "9920e1733d296358",
+  "active": "3d8e64d1e6879ac4",
   "lastOpenFiles": [
+    "DevExploit/Windows/Finding Kernel32 Base and Function Addresses in Shellcode.md",
     "1741194229050.canvas",
     "Untitled.md",
     "1741194211336.canvas",
@@ -177,7 +182,6 @@
     "attachment/Pasted image 20250222235204.png",
     "attachment/Pasted image 20250222235018.png",
     "Data.md",
-    "DevExploit/Windows/Finding Kernel32 Base and Function Addresses in Shellcode.md",
     "attachment/Pasted image 20250217012145.png",
     "attachment/locate_dll3.gif",
     "attachment/locate_dll3.gif.crdownload",

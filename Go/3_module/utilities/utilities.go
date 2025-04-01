@@ -38,7 +38,7 @@ func ClearScreen() {
 
 func LoopPause() {
 	/*
-	Create a buufer reader that waits to read a new line "\n"
+	Create a buffer reader that waits to read a new line "\n"
 	*/
 
 	fmt.Printf("Press Enter to continue!\n")
