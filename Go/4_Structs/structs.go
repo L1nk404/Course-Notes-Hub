@@ -1,57 +1,49 @@
+/*
+Quick Pointer review:
+
+- We declare a pointer using "*" in front of the type
+	 -> var Pointer *int
+
+- We also can use "*" behing a pointer to get the value of the address
+- We use "&" in front of a normal var to get their address
+*/
+
 package main
 
 import (
 	"fmt"
-	"time"
+
+	"module.com/structs/user"
 )
 
-type User struct { // Creating a Struct
-	firstName string
-	lastName string
-	birthDate string
-
-	createdAt time.Time // nested Struct (Time is also a struct)
-}
-
-
 func main(){
-	userFirtName := getUserData("Enter your first name: ")
+	userFirstName := getUserData("Enter your first name: ")
 	userLastName := getUserData("Enter your last name: ")
 	userBirthDate := getUserData("Enter your birth date (DD/MM/YYYY): ")
 
-	var appUser User // Declaring a var using User type
+	var appUser *user.User // Declaring a var using *User type
 
-	appUser = User{ //Initializing
-		firstName: userFirtName,
-		lastName: userLastName,
-		birthDate: userBirthDate,
+	appUser, err := user.New(userFirstName, userLastName, userBirthDate)
 
-		/* Note:
-		We can just define the values like this:
-
-		firstName,
-		lastName ,
-		birthDate,
-
-		time.Now(),
-		*/
-
-		createdAt: time.Now(),
+	if err != nil {
+		fmt.Println(err)
 	}
 
-	outputUserDetail(appUser);
+	admin := user.NewAdmin("test@example.com", "password123")
 
-}
-
-func outputUserDetail(uStruct User) {
-	fmt.Println(uStruct.firstName, uStruct.lastName, uStruct.birthDate, uStruct.createdAt)
+	
+	appUser.OutputUserDetail()
+	appUser.ClearUserName()
+	appUser.OutputUserDetail()
+	
+	admin.OutputUserDetail()
 }
 
 func getUserData(promptText string) string {
 	fmt.Print(promptText)
 	var value string
 
-	fmt.Scan(&value)
+	fmt.Scanln(&value) // Different than Scanf, Scanln allows empty input
 
 	return value
 }
