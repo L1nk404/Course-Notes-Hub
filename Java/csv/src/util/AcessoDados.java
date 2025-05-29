@@ -11,7 +11,6 @@ import java.io.PrintWriter;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-
 import pessoa.*;
 
 // Leitura de dados
@@ -130,7 +129,5 @@ public class AcessoDados {
         {
             e.printStackTrace();
         }
-
-
     }
 }
