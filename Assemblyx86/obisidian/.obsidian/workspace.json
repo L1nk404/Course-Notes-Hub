@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Data.md",
+                "file": "Register.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Data"
+              "title": "Register"
             }
           }
         ]
@@ -74,8 +74,7 @@
               "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -166,9 +165,9 @@
   },
   "active": "85c2172ce1eb3bcf",
   "lastOpenFiles": [
+    "Data.md",
     "Register.md",
     "attachment/Number_Asm.drawio.png",
-    "Data.md",
     "DevExploit/Windows/Basics of Windows shellcode writing.md",
     "Execution Flow.md",
     "DevExploit/Windows/Finding Kernel32 Base and Function Addresses in Shellcode.md",
