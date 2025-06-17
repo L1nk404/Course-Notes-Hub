@@ -18,7 +18,6 @@
 
 #define TRAJECTORY_LENGHT 100
 #define TRAJECTORY_WIDTH 5
-
 // Colors
 #define COLOR_PINK 0xf56f97
 #define COLOR_WHITE 0xFFFFFFFF
@@ -83,40 +82,44 @@ void FillTrajectory(SDL_Surface *surface,
 {
     for (int i = 0; i < current_trajectory_index; i++)
     {
-        double tractory_size = TRAJECTORY_WIDTH * (double)i / TRAJECTORY_LENGHT;
-        trajectory[i].radius = tractory_size;
-        FillCircle(surface, trajectory[i], color);
+        // double tractory_size = TRAJECTORY_WIDTH * (double)i /
+        // TRAJECTORY_LENGHT; trajectory[i].radius = tractory_size;
+        FillCircle(surface, trajectory[i % TRAJECTORY_LENGHT], color);
     }
 }
 
 void UpdateTrajectory(struct Circle trajectory[TRAJECTORY_LENGHT],
                       struct Circle circle, int current_index)
 {
-    if (current_index >= TRAJECTORY_LENGHT)
-    {
+    double radius;
+    int index_cache;
+    int mod_current_index = current_index % TRAJECTORY_LENGHT;
 
-        // shift array - write the circle at the end of the array
-        struct Circle trajectory_shifted_copy[TRAJECTORY_LENGHT];
-        for (int i = 0; i < current_index; i++)
-        {
-            if (i > 0)
-            {
-                trajectory_shifted_copy[i] = trajectory[i + 1];
-            }
-        }
-        for (int i = 0; i < current_index; i++)
-        {
-            trajectory[i] = trajectory_shifted_copy[i];
-        }
-        trajectory[current_index] = circle;
+    if (current_index < TRAJECTORY_LENGHT)
+    {
+        index_cache = current_index;
     }
     else
     {
-        trajectory[current_index] = circle;
+        index_cache = TRAJECTORY_LENGHT;
     }
 
-    // // Better aproax
-    // trajectory[current_index % TRAJECTORY_LENGHT] = circle;
+    radius = TRAJECTORY_WIDTH * (double)index_cache / TRAJECTORY_LENGHT;
+    printf("ENTER CASE, MOD=%d,CACHE = %d, RADIUS = %lf\n", mod_current_index,
+           index_cache, radius);
+
+    struct Circle tracer = (struct Circle){
+        circle.x,           // x
+        circle.y,           // y
+        radius,             // radius
+        circle.a_x,         // a_x
+        circle.a_y,         // a_y
+        circle.direction_y, // Start descending
+        circle.direction_x, // Start moving to right
+    };
+
+    // Better aproax
+    trajectory[mod_current_index] = tracer;
 }
 
 void step(struct Circle *circle)
@@ -131,19 +134,19 @@ void step(struct Circle *circle)
         }
 
         circle->a_y = G;
-        circle->y += circle->a_y;
+        circle->y = circle->y + circle->a_y;
     }
     else if (circle->direction_y == -1) // Ascending
     {
 
-        double A = G;
+        double A = G + 1;
 
         if (circle->y < circle->radius)
         {
             circle->direction_y = -1 * circle->direction_y;
         }
         circle->a_y = A;
-        circle->y -= circle->a_y;
+        circle->y = circle->y - circle->a_y;
     }
 
     // X axis
@@ -243,10 +246,10 @@ int main()
         step(&circle);
         UpdateTrajectory(trajectory, circle, current_trajectory_index);
 
-        if (current_trajectory_index < TRAJECTORY_LENGHT)
-        {
-            ++current_trajectory_index;
-        }
+        ++current_trajectory_index;
+        // if (current_trajectory_index < TRAJECTORY_LENGHT)
+        // {
+        // }
 
         // Update the Window surface
         SDL_UpdateWindowSurface(window);
