@@ -1,0 +1,8 @@
+CREATE DATABASE IF NOT EXIST amazon;
+
+USE amazon;
+CREATE TABLE clientes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(50),
+    
+);
