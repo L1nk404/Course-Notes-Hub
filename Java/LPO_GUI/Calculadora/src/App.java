@@ -10,7 +10,6 @@ public class App extends JFrame {
 	}
 }
 
-
 // public class App {
 //     public static void main(String[] args) throws Exception {
 //         /* Windows */
