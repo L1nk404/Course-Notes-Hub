@@ -22,11 +22,10 @@ int main()
 
     int count = 1; // a sort of control for while
 
-    while (count < 10)
-        {
-            printf("*");
-            count++; // Iancrimenting count
-        }
+    while (count < 10) {
+        printf("*");
+        count++; // Iancrimenting count
+    }
 
     return 0;
 }

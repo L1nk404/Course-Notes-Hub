@@ -17,13 +17,11 @@ int main()
     */
     // To avoid that, we use a Do-While Loop.
 
-    do
-        {
-            printf("PLeace enter a price: ");
-            scanf("%d", &price);
-            totalPrice = totalPrice + price;
-        }
-    while (price != 0); // Condition for loop
+    do {
+        printf("PLeace enter a price: ");
+        scanf("%d", &price);
+        totalPrice = totalPrice + price;
+    } while (price != 0); // Condition for loop
 
     printf("Total Order Price = %d \n", totalPrice);
 
