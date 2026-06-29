@@ -20,8 +20,5 @@ int main()
     */
     assert(s == "a");
 
-    cout << "- source: " << source << endl;
-    cout << "- string s(source.begin(), source.end()): " << s << endl;
-
     return 0;
 }
