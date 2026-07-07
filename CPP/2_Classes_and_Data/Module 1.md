@@ -1,4 +1,4 @@
-## Getting Ready for This Course:
+# Getting Ready for This Course:
 package that will take you from the very fundamentals of C++, all the way to building a cryptocurrency exchange platform.
 #####  List of readings for this course:
 **The std::string data type. Summary of the various ways you can create std::string objects in C++.** 
@@ -203,6 +203,8 @@ int main()
 ```
 
 The first argument indicates the number of copies of the second argument to place in the string. The second argument can only be a single **char**, not a **char** array.
+
+---
 ## C++ Enumeration
 An **enumeration** is a user-defined data type that consists of integral constants. To define an enumeration, [keyword](https://www.programiz.com/cpp-programming/keywords-identifiers) **enum** is used.
 
@@ -223,6 +225,21 @@ enum season
 };
 ```
 
+#### Enumeration vs Enumerator
+Before continue, let's explain the difference between **Enumeration** and **Enumerator**.
+Let's use the following example:
+
+```cpp
+enum class Color   // Color is the enumeration (the type)
+{
+    red,           // red is an enumerator (a value of that type)
+    blue,          // blue is an enumerator (a value of that type)
+};
+```
+
+So:
+- **Enumeration** - Is the type itself. Like in the example above, the `Color`.
+- **Enumerator** - Are the individual named values inside the enumeration. In the example, `red`and `blue`.
 #### Enumerated Type Declaration
 When you create an enumerated type, only a blueprint for the variable is created. Here's how you can create variables of **enum** type:
 
@@ -381,3 +398,94 @@ fruits_n_colors_are_equals.cpp:22:15: warning: comparison between ‘enum main()
 ```
 
 When `color` and `fruit` are compared, the compiler will look to see if it knows how to compare a `Color` and/or `Fruit` to integers to see if it can find a match. Eventually the compiler will determine that if it converts both to integers, it can do the comparison. Since `color`and `fruit`are both set to enumerators that convert to integer value `0`, `color == fruit` is true.
+This doesn’t make sense semantically since `color` and `fruit` are from different enumerations and are not intended to be comparable. With standard enumerators, there’s no easy way to prevent this.
+Because of such challenges, as well as the [[Glossary#^977f5f|namespace]] pollution problem (unscoped enumerations defined in the global scope put their enumerators in the global namespace), the C++ designers determined that a cleaner solution for enumerations would be of use.
+#### Scoped enumerations
+That solution is the **scoped enumeration** (often called an **enum class** in C++ for reasons that will become obvious shortly).
+Scoped enumeration work in similarly to unscoped enumerations, but have two primary differences:
+1. They won't implicitly convert to integers,
+2. The enumerator are only placed into the scope region of the enumeration (not into the scope region where the enumeration is defined).
+
+So, there are actually **two levels of nesting**:
+```
+main()'s scope region
+ └── Color (the enumeration) lives here
+      └── Color's own scope region (created by "enum class")
+           └── red, blue (the enumerators) live here
+```
+
+
+To make a scoped enumeration, we use the keywords `enum class`. The rest of the scoped enumeration definition is the same as an unscoped enumeration definition. Here’s an example:
+
+```cpp
+// 1_scoped_enum_ex1
+
+#include <iostream>
+
+int main()
+{
+    enum class Color //"enum class" defines this as a scoped enumeration rathand
+                     // than an an unscoped enumeration
+    {
+        red, // red is considered part of Color's scope region
+        blue,
+    };
+
+    enum class Fruit
+    {
+        banana, // bana is considered part of Fruit's scope region
+    };
+
+    Color color{Color::red}; // note: red is not directly accessible, we have to
+                             // use Color::red
+    Fruit fruit{Fruit::banana}; // same for banana
+
+    if (color == fruit) // compile error: the compiler doesn't how to compare
+                        // different types Color and Fruit
+        std::cout << "color and fruit are equal\n" << std::endl;
+    else
+        std::cout << "color and fruit are not the equal\n" << std::endl;
+
+    return 0;
+}
+```
+
+This program produces a compile error on line 23, since the scoped enumeration won’t convert to any type that can be compared with another type.
+
+
+> [!NOTE] As an aside…
+> The `class` keyword (along with the `static` keyword), is one of the most overloaded keywords in the C++ language, and can have different meanings depending on context. Although scoped enumerations use the `class` keyword, they aren’t considered to be a “class type” (which is reserved for structs, classes, and unions).
+> `enum struct` also works in this context, and behaves identically to `enum class`. However, use of `enum struct` is non-idiomatic, so avoid its use.
+
+#### Scoped enumerations define their own scope regions
+Unlike unscoped enumerations, which place their enumerators in the same scope as the enumeration itself, scoped enumerations place their enumerators only in the scope region of the enumeration. In  the other words, scoped enumerations act like a namespace for their enumerators. This built-in namespacing helps reduce global namespace pollution and the potencial for name conflicts when scoped enumerations are used in the global scope.
+To access a scoped enumerator, we do so just as if it was in a namespace having the same name as the scoped enumeration:
+
+```cpp
+#include <iostream>
+
+int main()
+{
+    enum class Color // "enum class" defines this as a scoped enum rather than an unscoped enum
+    {
+        red, // red is considered part of Color's scope region
+        blue,
+    };
+
+    std::cout << red << '\n';        // compile error: red not defined in this scope region
+    std::cout << Color::red << '\n'; // compile error: std::cout doesn't know how to print this (will not implicitly convert to int)
+
+    Color color { Color::blue }; // okay
+
+    return 0;
+}
+```
+
+Because scoped enumerations offer their own implicit namespacing for enumerators, there’s no need to put scoped enumerations inside another scope region (such as a namespace), unless there’s some other compelling reason to do so, as it would be redundant.
+#### Scoped enumerations don’t implicitly convert to integers
+Unlike non-scoped enumerators, scoped enumerators won’t implicitly convert to integers. In most cases, this is a good thing because it rarely makes sense to do so, and it helps prevent semantic errors, such as comparing enumerators from different enumerations, or expressions such as `red + 5`.
+
+> [!NOTE] 
+> Note that you can still compare enumerators from within the same scoped enumeration (since they are of the same type):
+
+

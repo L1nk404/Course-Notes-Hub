@@ -20,20 +20,6 @@
               "icon": "lucide-file",
               "title": "Module 1"
             }
-          },
-          {
-            "id": "a7e6818f54b74701",
-            "type": "leaf",
-            "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Glossary.md",
-                "mode": "source",
-                "source": false
-              },
-              "icon": "lucide-file",
-              "title": "Glossary"
-            }
           }
         ]
       }
@@ -200,19 +186,19 @@
   "active": "5a87a69ea9a5bdde",
   "lastOpenFiles": [
     "2_Classes_and_Data/Scoped_Enum/a.out",
-    "compile_n_run.sh",
-    "2_Classes_and_Data/Scoped_Enum/0_flags.cpp",
-    "2_Classes_and_Data/Scoped_Enum/0_enum_example.cpp",
-    "2_Classes_and_Data/Scoped_Enum/1_fruits_n_colors_are_equals.cpp",
+    "2_Classes_and_Data/Scoped_Enum/1_implict_converting_to_int.cpp",
+    "2_Classes_and_Data/Scoped_Enum/implict_converting_to_int.cpp",
+    "2_Classes_and_Data/Scoped_Enum/output/1_to_underlying",
+    "2_Classes_and_Data/Scoped_Enum/output",
+    "2_Classes_and_Data/Scoped_Enum/1_to_underlying.cpp",
+    "1_Intro_to_OOP/Intro.md",
+    "2_Classes_and_Data/Scoped_Enum/0_flags.o",
+    "2_Classes_and_Data/Scoped_Enum/0_flags.s",
     "Glossary.md",
     "2_Classes_and_Data/Module 1.md",
-    "2_Classes_and_Data/Scoped_Enum/fruits_n_colors_are_equals.cpp",
-    "2_Classes_and_Data/Strings/2_SmallString.cpp",
-    "2_Classes_and_Data/Strings/2_SmallString2.cpp",
-    "2_Classes_and_Data/Strings/2_StringIterators.cpp",
-    "2_Classes_and_Data/Strings/2_UhOh.cpp",
-    "2_Classes_and_Data/Strings",
-    "1_Intro_to_OOP/Intro.md",
+    "2_Classes_and_Data/Scoped_Enum/1_scoped_enum_ex1.cpp",
+    "2_Classes_and_Data/Scoped_Enum/1_scoped_enum_ex",
+    "compile_n_run.sh",
     "Intro.md"
   ]
 }
