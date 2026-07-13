@@ -1,4 +1,18 @@
-# Getting Ready for This Course:
+## Índice
+- [[#Getting Ready for This Course:]]
+	- [[#List of readings for this course:]]
+- [[#C++ Strings]]
+	- [[#Creating and Initializing C++ strings]]
+- [[#C++ Enumeration]]
+		  - [[#Enumeration vs Enumerator]]
+		  - [[#Enumerated Type Declaration]]
+		  - [[#Why are enums used in C++ programming?]]
+	- [[#1. Scoped enumerations (enum classes)]]
+		- [[#Scoped enumerations]]
+		- [[#Scoped enumerations define their own scope regions]]
+		- [[#Scoped enumerations don't implicitly convert to integers]]
+
+## Getting Ready for This Course:
 package that will take you from the very fundamentals of C++, all the way to building a cryptocurrency exchange platform.
 #####  List of readings for this course:
 **The std::string data type. Summary of the various ways you can create std::string objects in C++.** 

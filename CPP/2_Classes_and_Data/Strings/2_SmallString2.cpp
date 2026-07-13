@@ -20,7 +20,7 @@ int main()
 
     // Copy 6 chars form the middle of the s2:
     string s5(s2, 15, 6);
-    cout << "- Copy 6 chars form the middle of the s2: " << s5 << endl;
+cout << "- Copy 6 chars form the middle of the s2: " << s5 << endl;
 
     // Copy from middle to end:
     string s6(s3, 6, 15);

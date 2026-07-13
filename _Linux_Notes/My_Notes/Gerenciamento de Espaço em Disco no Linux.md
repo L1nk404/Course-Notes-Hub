@@ -1,6 +1,5 @@
 Guia de referência com comandos e ferramentas para investigar e liberar espaço em disco via terminal.
 ## Índice
-
 - [[#Diagnóstico rápido]]
 - [[#du - Uso de disco por pasta]]
 - [[#df - Uso de disco por partição]]
@@ -15,7 +14,6 @@ Guia de referência com comandos e ferramentas para investigar e liberar espaço
 ## Diagnóstico rápido
 
 Ordem recomendada quando o disco está cheio:
-
 1. `df -h` → confirmar qual partição está cheia
 2. `du`/`ncdu` → tentar achar pastas grandes
 3. Se o sistema for **Btrfs** → não confiar cegamente no `du`/`ncdu` (ver seção própria)
