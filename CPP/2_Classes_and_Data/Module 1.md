@@ -11,33 +11,54 @@
 		- [[#Scoped enumerations]]
 		- [[#Scoped enumerations define their own scope regions]]
 		- [[#Scoped enumerations don't implicitly convert to integers]]
-
+		- [[#Converting a Scoped Enum to Its Underlying Type via `operator+`]]
+		- [[#`using enum` statements]]
+- [[#Vector]]
+	- [[#Why Use Vectors in C++]]
+	- [[#How to Create C++ Vectors]]
+		- [[#Iterators]]
+		- [[#Modifiers]]
+	- [[#Constructing a `std vector` from a Raw Array (Range Constructor)]]
+		- [[#Why Two Pointers Instead of a Count?]]
+		- [[#Constructor Comparison]]
+		- [[#A Bug Worth Noting in the Original Snippet]]
 ## Getting Ready for This Course:
 package that will take you from the very fundamentals of C++, all the way to building a cryptocurrency exchange platform.
 #####  List of readings for this course:
 **The std::string data type. Summary of the various ways you can create std::string objects in C++.** 
-
 - [https://www.tutorialspoint.com/cplusplus/cpp_strings.htm](https://www.tutorialspoint.com/cplusplus/cpp_strings.htm)
-
 - [https://www.programiz.com/cpp-programming/strings](https://www.programiz.com/cpp-programming/strings)
-
 - [https://www.linuxtopia.org/online_books/programming_books/c++_practical_programming/c++_practical_programming_057.html](https://www.linuxtopia.org/online_books/programming_books/c++_practical_programming/c++_practical_programming_057.html)
 
 **C++ Enumerations**
-
 - [https://www.learncpp.com/cpp-tutorial/enum-classes/](https://www.learncpp.com/cpp-tutorial/enum-classes/)
-
 - [https://en.cppreference.com/w/cpp/language/enum](https://en.cppreference.com/w/cpp/language/enum)
-
 - [https://www.programiz.com/cpp-programming/enumeration](https://www.programiz.com/cpp-programming/enumeration)
 
 **The std::vector. Note the difference between initialising with curly braces and normal braces.**
-
 - [https://www.cplusplus.com/reference/vector/vector/vector/](https://www.cplusplus.com/reference/vector/vector/vector/)
-
 - [https://www.bitdegree.org/learn/c-plus-plus-vector](https://www.bitdegree.org/learn/c-plus-plus-vector)
 
-The syntax for a class. Information about how to add function members to classes. Do not worry too much about that for now, we will get into that later!
+**The syntax for a class. Information about how to add function members to classes. Do not worry too much about that for now, we will get into that later!**
+- [https://www.tutorialspoint.com/cplusplus/cpp_classes_objects.htm](https://www.tutorialspoint.com/cplusplus/cpp_classes_objects.htm)
+- [https://en.cppreference.com/w/cpp/language/class](https://en.cppreference.com/w/cpp/language/class)
+
+**Information about constructors, including an explanation of why we were able to use the class even before we had written a constructor (i.e.because the compiler provides a default constructor).**
+- [https://en.cppreference.com/w/cpp/language/default_constructor](https://en.cppreference.com/w/cpp/language/default_constructor)
+- [https://www.learncpp.com/cpp-tutorial/constructors/](https://www.learncpp.com/cpp-tutorial/constructors/)
+- [https://www.w3schools.com/cpp/cpp_constructors.asp](https://www.w3schools.com/cpp/cpp_constructors.asp)
+- [https://www.geeksforgeeks.org/constructors-c/](https://www.geeksforgeeks.org/constructors-c/)
+
+**Member initialiser lists.**
+- [https://www.geeksforgeeks.org/when-do-we-use-initializer-list-in-c/#:~:text=Initializer%20List%20is%20used%20in,and%20y%20of%20Point%20class](https://www.geeksforgeeks.org/when-do-we-use-initializer-list-in-c/#:~:text=Initializer%20List%20is%20used%20in,and%20y%20of%20Point%20class) .
+- [https://en.cppreference.com/w/cpp/language/constructor](https://en.cppreference.com/w/cpp/language/constructor)
+- [https://www.learncpp.com/cpp-tutorial/constructor-member-initializer-lists/](https://www.learncpp.com/cpp-tutorial/constructor-member-initializer-lists/)
+
+**Examples and further explanation about using references and range loops.**
+- [https://www.nextptr.com/tutorial/ta1208652092/how-cplusplus-rangebased-for-loop-works](https://www.nextptr.com/tutorial/ta1208652092/how-cplusplus-rangebased-for-loop-works)
+- [https://www.geeksforgeeks.org/range-based-loop-c/](https://www.geeksforgeeks.org/range-based-loop-c/)
+- [https://www.tutorialspoint.com/cplusplus/cpp_classes_objects.htm](https://www.tutorialspoint.com/cplusplus/cpp_classes_objects.htm)
+- [https://en.cppreference.com/w/cpp/language/class](https://en.cppreference.com/w/cpp/language/class)
 
 ---
 ## C++ Strings
@@ -366,7 +387,7 @@ int main()
 When the output is **6**, you always know that `BOLD` and `UNDERLINE` are used.
 Also, you can add flags to your requirements.
 You can accomplish almost anything in C++ programming without using enumerations. However, they can be pretty handy in certain situations. That's what differentiates good programmers from great programmers.
-### 1. Scoped enumerations (enum classes)
+### Scoped enumerations (enum classes)
 Although unscoped enumerations are distinct types in C++, they are not [[Glossary#^4b7b35|type safe]], and in some cases will allow you to do things that don't make sense. Consider the following case:
 
 ```cpp
@@ -502,4 +523,404 @@ Unlike non-scoped enumerators, scoped enumerators won’t implicitly convert to 
 > [!NOTE] 
 > Note that you can still compare enumerators from within the same scoped enumeration (since they are of the same type):
 
+There are occasionally cases where it is useful to be able to treat a scoped enumerator as an integral value. In these cases, you can explicitly convert a scoped enumerator to an integer by using a `static_cast`. A better choice in C++23 is to use `std::to_underlying()` (defined in the \<utility\> header), which converts an enumerator to a value of the underlying type of the enumeration.
 
+```cpp
+// 1_implict_converting_to_int.cpp
+// C++23: g++ -std=c++23 1_implict_converting_to_int.cpp
+
+#include <iostream>
+#include <utility> // for std::to_underlying() (C++23)
+
+int main()
+{
+    enum class Color
+    {
+        red,
+        blue,
+    };
+
+    Color color{Color::blue};
+
+    // std::cout << color << std::endl; // won't work, because there's no
+    // implicit conversion to int
+    std::cout << static_cast<int>(color)
+              << std::endl; // explicit conversion to int, will prin 1
+    std::cout << std::to_underlying(color)
+              << std::endl; // converto to underlying type, will print 1 (C++23)
+
+    return 0;
+}
+```
+
+Conversely, you can also `static_cast` an integer to a scoped enumerator, which can be useful when doing input from users:
+
+#### Converting a Scoped Enum to Its Underlying Type via `operator+`
+##### The Problem
+Scoped enums (`enum class`) do **not** implicitly convert to integers. This is intentional — it's one of the two defining features of scoped enums (the other being built-in namespacing of enumerators).
+
+```cpp
+std::cout << Animals::elephant; // ERROR: no implicit conversion
+```
+
+The standard fix is `static_cast`:
+
+```cpp
+std::cout << static_cast<int>(Animals::elephant); // works, but verbose
+```
+
+The code below creates a **shortcut** for this: writing `+Animals::elephant` instead of `static_cast<int>(Animals::elephant)`.
+##### The Full Code
+
+```cpp
+// 1_converting_enum_to_int.cpp
+
+#include <iostream>
+#include <type_traits>
+
+enum class Animals
+{
+    chicken,  // 0
+    dog,      // 1
+    cat,      // 2
+    elephant, // 3
+    duck,     // 4
+    snake,    // 5
+
+    maxAnimals,
+};
+
+/*
+Overload the unary + operator to convert an enum to the underlying type
+adapted from https://stackoverflow.com/a/42198760, thanks to Pixelchemist for
+the idea. In C++23, you can #include <utility> and return std::to_underlying(a)
+instead
+*/
+template <typename T> constexpr auto operator+(T a) noexcept
+{
+    return static_cast<std::underlying_type_t<T>>(a);
+}
+
+int main()
+{
+    std::cout << +Animals::elephant << '\n'; // convert Animals::elephant to an
+                                              // integer using unary operator+
+
+    return 0;
+}
+```
+
+#### Breaking It Down
+
+###### 1. Operator overloading — what does `operator+` mean?
+Operators like `+`, `-`, `==` are actually special functions in disguise. C++ lets you define your **own** behavior for them for your own types. The syntax `operator+` literally means: _"I am defining what `+` does."_
+
+Normally `+` is **binary** (takes two operands: `a + b`). Here it's written with **one** parameter:
+
+```cpp
+constexpr auto operator+(T a) noexcept
+```
+
+One parameter = this defines the **unary** `+` (the `+` that appears _before_ a single value, like `+5`, as opposed to `a + b`). Unary `+` normally does almost nothing useful for numbers (`+5` is just `5`) — which is exactly why it's a good candidate to repurpose: it's rarely used, so "hijacking" it for enums doesn't create confusing conflicts elsewhere.
+
+> Whenever someone writes `+someValue`, and `someValue`'s type matches `T`, the compiler runs this function instead of the default (no-op) behavior.
+###### 2. The template — why `template <typename T>`?
+```cpp
+template <typename T> constexpr auto operator+(T a) noexcept
+```
+
+`template <typename T>` means this function works for **any type** `T` — it isn't hardcoded to `Animals`. This makes the trick reusable for _any_ enum, not just this one. When the compiler sees `+Animals::elephant`, it deduces `T = Animals` automatically and generates a version of the function for that type.
+
+> Think of `T` as a placeholder meaning "whatever type is actually used when this is called."
+###### 3. The body — `std::underlying_type_t<T>`
+
+```cpp
+return static_cast<std::underlying_type_t<T>>(a);
+```
+
+Every scoped enum has an **underlying type** — the actual integer type used to store its values behind the scenes (`int` by default, unless specified otherwise). `std::underlying_type_t<T>` (from `<type_traits>`) asks the compiler: _"whatever `T` is, tell me its underlying integer type."_
+
+For `Animals`, `std::underlying_type_t<Animals>` resolves to `int`, so the line effectively becomes:
+
+```cpp
+return static_cast<int>(a);
+```
+
+**Why not just hardcode `int`?** Because the function is generic — it needs to work correctly even for some _other_ enum whose underlying type is `long` or `char` instead of `int`. `std::underlying_type_t<T>` figures that out automatically for whatever enum is passed in.
+###### 4. `constexpr` and `noexcept` (minor details)
+- `constexpr` — allows the function to be evaluated at compile-time if possible (a performance/optimization detail).
+- `noexcept` — a promise that this function will never throw an exception.
+
+Neither changes _what_ the function does — just guarantees about _how_ it does it. Safe to set aside for now.
+##### Putting It Together
+
+```cpp
+std::cout << +Animals::elephant << '\n';
+```
+
+1. `+Animals::elephant` triggers the overloaded `operator+`.
+2. `T` is deduced as `Animals`.
+3. The function casts `Animals::elephant` to its underlying type (`int`).
+4. Result: `3` is printed — identical to `static_cast<int>(Animals::elephant)`, just shorter.
+##### Takeaway
+This is an advanced idiom combining:
+
+- **Operator overloading** (unary `+`)
+- **Templates** (generic over any enum type)
+- **Type traits** (`std::underlying_type_t`)
+
+These topics are usually taught _after_ enums, so treat this as a "cool pattern that exists" rather than something to fully derive from scratch right now. Revisit this snippet once templates and type traits are covered in depth.
+
+> **C++23 note:** `std::to_underlying(a)` (from `<utility>`) does the same job natively, making this manual `operator+` trick unnecessary in newer code.
+
+### `using enum` statements
+Introduced in C++20, a `using enum` statement imports all of the enumerators from an enum into the current scope. When used with an enum class type, this allows us to access the enum class enumerators without having to prefix each with the name of the enum class.
+This can be useful in cases where we would otherwise have many identical, repeated prefixes, such as within a switch statement:
+
+```cpp
+#include <iostream>
+#include <string_view>
+
+enum class Color
+{
+    black,
+    red,
+    blue,
+};
+
+constexpr std::string_view getColor(Color color)
+{
+    using enum Color; // bring all Color enumerators into current scope (C++20)
+    // We can now access the enumerators of Color without using a Color:: prefix
+
+    switch (color)
+    {
+    case black: return "black"; // note: black instead of Color::black
+    case red:   return "red";
+    case blue:  return "blue";
+    default:    return "???";
+    }
+}
+
+int main()
+{
+    Color shirt{ Color::blue };
+
+    std::cout << "Your shirt is " << getColor(shirt) << '\n';
+
+    return 0;
+}
+```
+
+In the above example, `Color` is an enum class, so we normally would access the enumerators using a fully qualified name (e.g. `Color::blue`). However, within function `getColor()`, we’ve added the statement `using enum Color;`, which allows us to access those enumerators without the `Color::` prefix.
+
+This saves us from having multiple, redundant, obvious prefixes inside the switch statement.
+### Quiz time
+
+> [!question]
+> Define an enum class named Animal that contains the following animals: pig, chicken, goat, cat, dog, duck. Write a function named getAnimalName() that takes an Animal parameter and uses a switch statement to return the name for that animal as a std::string_view (or std::string if you’re using C++14). Write another function named printNumberOfLegs() that uses a switch statement to print the number of legs each animal walks on. Make sure both functions have a default case that prints an error message. Call printNumberOfLegs() from main() with a cat and a chicken. Your output should look like this:
+```
+A cat has 4 legs.
+A chicken has 2 legs.
+```
+
+```cpp
+#include <iostream>
+#include <string_view> // C++17
+//#include <string> // for C++14
+
+enum class Animal
+{
+    pig,
+    chicken,
+    goat,
+    cat,
+    dog,
+    duck,
+};
+
+constexpr std::string_view getAnimalName(Animal animal) // C++17
+// const std::string getAnimalName(Animal animal) // C++14
+{
+    // If C++20 capable, could use `using enum Animal` here to reduce Animal prefix redundancy
+    switch (animal)
+    {
+        case Animal::chicken:
+            return "chicken";
+        case Animal::duck:
+            return "duck";
+        case Animal::pig:
+            return "pig";
+        case Animal::goat:
+            return "goat";
+        case Animal::cat:
+            return "cat";
+        case Animal::dog:
+            return "dog";
+
+        default:
+            return "???";
+    }
+}
+
+void printNumberOfLegs(Animal animal)
+{
+    std::cout << "A " << getAnimalName(animal) << " has ";
+
+    // If C++20 capable, could use `using enum Animal` here to reduce Animal prefix redundancy
+    switch (animal)
+    {
+        case Animal::chicken:
+        case Animal::duck:
+            std::cout << 2;
+            break;
+
+        case Animal::pig:
+        case Animal::goat:
+        case Animal::cat:
+        case Animal::dog:
+            std::cout << 4;
+            break;
+
+        default:
+            std::cout << "???";
+            break;
+    }
+
+    std::cout << " legs.\n";
+}
+
+int main()
+{
+    printNumberOfLegs(Animal::cat);
+    printNumberOfLegs(Animal::chicken);
+
+    return 0;
+}
+```
+---
+## Vector
+Vector is a template class in STL (Standard Template Library) of C++ programming language. C++ vectors are sequence containers that store elements.
+Specifically used to work with dynamic data, C++ vectors may expand depending on the elements they contain. That makes it different from a fixed-size array.
+C++ vectors can automatically manage storage. It is efficient if you add and delete data often.
+
+> [!important]  
+Bear in mind however, that a vector might consume more memory than an array.
+### Why Use Vectors in C++
+Vectors C++ are preferable when managing ever-changing data elements.
+It is handy if you don’t know how big the data is beforehand since you don’t need to set the maximum size of the container. Since it’s possible to resize C++ vectors, it offers better flexibility to handle dynamic elements.
+C++ vectors offer excellent efficiency. It is a template class, which means no more typing in the same code to handle different data.
+If you use vectors, you can copy and assign other vectors with ease. There are different ways to do that: 
+- using the iterative method
+- assignment operator `=`
+- an in-built function
+- or passing vector as a constructor.
+
+In C++ vectors, automatic reallocation happens whenever the total amount of memory is used. This reallocation relates to how size and capacity function works.
+### How to Create C++ Vectors
+Vectors in C++ work by declaring which program uses them. The common syntax look like this:
+`vector <type> variable (elements)`
+
+For example:
+`vector <int> rooms (9);`
+
+Let's break it down:
+- `type` - defines a data type stored in vector  (e.g \<int\>, \<double\>, \<string\>)
+- `variable` - is a name that you choose for the data
+- `elements` - specified the number of elements for the data
+
+> [!NOTE]
+> It is mandatory to determine the type and variable name. However, the number of elements is optional.
+
+Basically, all the data elements are stored in contiguous storage. Whenever you want to access or move through the data, you can use iterators.
+The data elements in C++ vectors are inserted at the end. Use modifiers to insert new elements or delete existing ones.
+#### Iterators
+An iterator allows you to access the data elements stored within the C++ vector. It is an object that functions as a pointer. There are five types of iterators in C++: input, output, forward, bidirectional, and random access.
+C++ vectors support random access iterators. Here are a few function you may use with iterators for C++ vectors:
+- `vector::begin()` returns an iterator to point at the first element of a C++ vector.
+- `vector::end()` returns an iterator to point at past-the-end element of a C++ vector.
+- `vector::cbegin()` is similar to `vector::begin()`, but without the ability to modify the content.
+- `vector::cend()` issimilar to `vector::end()` but can’t modify the content.
+#### Modifiers
+As its name suggests, you can use a modifier to change the meaning of a specified type of data. Here are some modifiers you can use in C++ vectors:
+- `vector::push_back()` pushes elements from the back.
+- `vector::insert()` inserts new elements to a specified location.
+- `vector::pop_back()` removes elements from the back.
+- `vector::erase()` removes a range of elements from a specified location.
+- `vector::clear()` removes all elements.
+### Constructing a `std::vector` from a Raw Array (Range Constructor)
+#### The Code
+
+```cpp
+void start_with_an_array()
+{
+    std::cout << "\n===============================" << std::endl;
+    std::cout << "Start with an array:" << std::endl;
+    // Array of string objects
+    std::string arr[] = {"first", "sec", "third", "fourth"};
+
+    // Vector with a string array
+    std::vector<std::string> vecOfStr(arr,
+                                      arr + sizeof(arr) / sizeof(std::string));
+
+    for (std::string str : vecOfStr)
+        std::cout << str << std::endl;
+}
+```
+
+#### Which Constructor Is This?
+`std::vector` is overloaded — it has multiple constructors, and the compiler picks the right one based on the **types** of the arguments passed in. This is easy to confuse with the "count" constructor:
+
+```cpp
+std::vector<int> a(5); // "count" constructor: 5 default-constructed ints
+```
+
+But `vecOfStr(arr, arr + n)` is a **different** constructor entirely — the **range constructor**:
+
+```cpp
+vector(InputIt first, InputIt last);
+```
+
+It takes **two pointers/iterators**: one to the **first** element to copy, and one to **one-past-the-last** element to copy. It copies everything in that `[first, last)` range into the new vector.
+#### Breaking Down the Arguments
+
+```cpp
+std::vector<std::string> vecOfStr(arr, arr + sizeof(arr) / sizeof(std::string));
+```
+
+- `arr` → pointer to the **first** element (arrays decay to a pointer to their first element)
+- `arr + sizeof(arr) / sizeof(std::string)` → pointer to **one past the last** element
+
+> [!NOTE]  The `sizeof(arr) / sizeof(std::string)` 
+> 
+> This is a classic C-style trick for computing the **element count** of a raw array (only valid when `arr` is an actual array, not a pointer):
+> 
+> - `sizeof(arr)` → total size in bytes of the whole array
+> - `sizeof(std::string)` → size in bytes of _one_ `std::string`
+> - Dividing → the number of elements, `n`
+
+In other words:
+$$
+ first\_block\_of\_array+\frac{size\_of\_array}{elements}
+$$
+
+
+So `arr + n` is pointer arithmetic: start at `arr`, move forward `n` `std::string`-sized steps, landing exactly one position past the last valid element.
+
+```
+arr                          arr + n
+ |                              |
+ v                              v
+[elem0][elem1][elem2]...[elemN-1]   (one past the end, not accessed)
+ ^-------------- copies this range --------------^
+```
+
+#### Why Two Pointers Instead of a Count?
+A single pointer (`arr`) doesn't carry information about _how many elements follow it_ — pointers have no built-in sense of length. A second pointer (or an explicit count) is required to mark where copying should stop.
+#### Constructor Comparison
+
+| Call                        | Constructor used  | Meaning                        |
+| --------------------------- | ----------------- | ------------------------------ |
+| `vector<int> a(5)`          | count constructor | 5 default-constructed `int`s   |
+| `vector<int> b(arr, arr+5)` | range constructor | copies 5 `int`s **from** `arr` |
+Both look like `(x, y)`, but the compiler tells them apart by **argument type**: `(int, int)` matches the count constructor; two pointers of the same type match the range constructor.

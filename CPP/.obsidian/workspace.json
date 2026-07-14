@@ -4,11 +4,11 @@
     "type": "split",
     "children": [
       {
-        "id": "ec17a4c428f562cc",
+        "id": "21826e42bb0c57a0",
         "type": "tabs",
         "children": [
           {
-            "id": "5a87a69ea9a5bdde",
+            "id": "04e62534ad65a6a5",
             "type": "leaf",
             "state": {
               "type": "markdown",
@@ -183,22 +183,22 @@
       "bases:Create new base": false
     }
   },
-  "active": "5a87a69ea9a5bdde",
+  "active": "04e62534ad65a6a5",
   "lastOpenFiles": [
+    "2_Classes_and_Data/Vectors/a.out",
+    "2_Classes_and_Data/Vectors/vectors.cpp",
+    "2_Classes_and_Data/Vectors",
+    "2_Classes_and_Data/vectors",
     "2_Classes_and_Data/Scoped_Enum/a.out",
+    "2_Classes_and_Data/Scoped_Enum/1_converting_enum_to_int.cpp",
+    "2_Classes_and_Data/Module 1.md",
     "2_Classes_and_Data/Scoped_Enum/1_implict_converting_to_int.cpp",
     "2_Classes_and_Data/Scoped_Enum/implict_converting_to_int.cpp",
     "2_Classes_and_Data/Scoped_Enum/output/1_to_underlying",
     "2_Classes_and_Data/Scoped_Enum/output",
     "2_Classes_and_Data/Scoped_Enum/1_to_underlying.cpp",
     "1_Intro_to_OOP/Intro.md",
-    "2_Classes_and_Data/Scoped_Enum/0_flags.o",
-    "2_Classes_and_Data/Scoped_Enum/0_flags.s",
     "Glossary.md",
-    "2_Classes_and_Data/Module 1.md",
-    "2_Classes_and_Data/Scoped_Enum/1_scoped_enum_ex1.cpp",
-    "2_Classes_and_Data/Scoped_Enum/1_scoped_enum_ex",
-    "compile_n_run.sh",
     "Intro.md"
   ]
 }
