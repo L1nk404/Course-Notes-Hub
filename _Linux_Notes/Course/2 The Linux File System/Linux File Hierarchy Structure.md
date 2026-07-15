@@ -1,5 +1,5 @@
 
-> [!NOTE] Source:
+> [!info] Source:
 > https://www.geeksforgeeks.org/linux-unix/linux-file-hierarchy-structure/
 
 ---
