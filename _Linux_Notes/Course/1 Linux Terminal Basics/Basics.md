@@ -1,9 +1,9 @@
 ## Índice
 - [[#Getting Help in Linux (man, type, help, apropos)]]
 	- [[#Searching for keyword]]
-	- [[#Nutshell]]
+	- [[#Getting Help Cheat Sheet]]
 - [[#History]]
-- 
+	- [[#History Cheat Sheet]]
 
 ## Getting Help in Linux (man, type, help, apropos)
 #man #type #help #apropos
@@ -63,7 +63,7 @@ rust-uname (1)       - Print certain system information. With no OPTION, s
 uname (1)            - Print certain system information. With no OPTION, same as -s.  
 uname (2)            - get name and information about current kernel
 ```
-### Nutshell
+### Getting Help Cheat Sheet
 ```bash
 1. ##########################
 2. ## Getting Help in Linux
@@ -107,6 +107,7 @@ We have two ways to see the terminal history:
 The file have some variables for settings:
 - `$HISTSIZE` - Determine the number of commands that are saved in the file
 - `$HISTCONTROL` - Determine when to not save a command on history:
+- `$HISTTIMEFORMAT "%d/%m/%y %T` - Set history to save date and time of a command
 ```bash
 # On bash
 05:46:51 link@Ubuntu26 ~ → echo $HISTCONTROL  
@@ -128,4 +129,54 @@ We can also delete commands for history with
 > To run a command without leaving trace on history we type the command with a space " " before it: ` pwd`
 > Note that only work if $HISTCONTROL=ignorespace
 
+> [!NOTE] History Management System on ZSH
+> https://deepwiki.com/ohmyzsh/ohmyzsh/4.4-utility-libraries
 
+### History Cheat Sheet
+```bash
+1. ##########################
+2. ## Bash History
+3. ##########################
+
+4. # showing the history
+5. history
+
+6. # removing a line (ex: 100) from the history
+7. history -d 100
+
+8. # removing the entire history
+9. history -c
+
+10. # printing the no. of commands saved in the history file (~/.bash_history)
+11. echo $HISTFILESIZE
+
+12. # printing the no. of history commands saved in the memory
+13. echo $HISTSIZE
+
+14. # rerunning the last command from the history
+15. !!
+
+16. # running a specific command from the history (ex: the 20th command)
+17. !20
+
+18. # running the last nth (10th) command from the history
+19. !-10
+
+20. # running the last command starting with abc
+21. !abc
+
+22. # printing the last command starting with abc
+23. !abc:p
+
+24. # reverse searching into the history
+25. CTRL + R
+
+26. # recording the date and time of each command in the history
+27. HISTTIMEFORMAT="%d/%m/%y %T"
+
+28. # making it persistent after reboot
+29. echo "HISTTIMEFORMAT=\"%d/%m/%y %T\"" >> ~/.bashrc
+30. # or
+31. echo 'HISTTIMEFORMAT="%d/%m/%y %T"' >> ~/.bashrc
+```
+---
