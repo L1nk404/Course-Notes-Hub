@@ -10,7 +10,10 @@ The **Linux File Hierarchy Structure** or the **Filesystem Hierarchy Standard (F
 - Most of these directories exist in all UNIX operating systems and are generally used in much the same way
 - However, the descriptions here are those used specifically for the FHS and are not considered authoritative for platforms other than Linux
 
+![[Pasted image 20260716112105.png]]
+
 ![[Pasted image 20260714114041.png]]
+
 ### 1. `/` (Root)
 At the top of every Linux file system is the root directory represented by a forward slash `/`. It’s the base point, and no directory exists above it.
 - If you look at the file system graphically, you’ll see all other directories branching from this root directory
@@ -31,7 +34,6 @@ Device files in Linux are stored in the `/dev` directory. These are special file
 - **Example**: /dev/tty1, /dev/usbmon0
 ### 5. `/etc`
 Short for "Editable Text Configuration," `/etc` contains configuration files for system applications, users, services, and tools or it contains the Host-specific system-wide configuration files. For example, user details like UID and local addresses are defined here.
-
 - This also contains startup and shutdown shell scripts used to start/stop individual programs
 - **Example**: `/etc/resolv.conf`, `/etc/logrotate.conf`
 ### 6. `/home`
@@ -60,6 +62,7 @@ When external drives are connected, they are temporarily mounted in `/mnt`. This
 Example:
 ```bash
 sudo mount /dev/sdb1 /mnt
+
 # or create a specific subfolder
 sudo mkdir /mnt/backup
 sudo mount /dev/sdb1 /mnt/backup
@@ -95,3 +98,16 @@ The `/proc` directory provides detailed information about system processes. Each
 - Contains information about system processes
 - This is a pseudo filesystem that contains information about running processes. For example: `/proc/{pid}` directory contains information about the process with that particular pid
 - This is a virtual filesystem with text information about system resources. For example: `/proc/uptime`
+
+Examples:
+```bash
+# Information about CPU
+cat /proc/cpuinfo
+
+#Information about Memory
+cat /proc/meminfo
+```
+### 16. `/run`
+Is a fairly new directory and different distributions use it on different ways. 
+- I'ts a temporary file system that runs in RAM.
+- This directory is used only by processes.

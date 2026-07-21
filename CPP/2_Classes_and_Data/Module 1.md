@@ -1,4 +1,4 @@
-## Índice
+## Index
 - [[#Getting Ready for This Course:]]
 	- [[#List of readings for this course:]]
 - [[#C++ Strings]]

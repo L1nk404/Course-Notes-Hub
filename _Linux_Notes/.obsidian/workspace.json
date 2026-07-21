@@ -8,35 +8,34 @@
         "type": "tabs",
         "children": [
           {
-            "id": "f3f6dd9bf38fcf9c",
+            "id": "66550452d620554c",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Course/2 The Linux File System/The Linux File System.md",
+                "file": "Course/2 The Linux File System/Working With Files and Directories.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "The Linux File System"
+              "title": "Working With Files and Directories"
             }
           },
           {
-            "id": "d410b09529d19b50",
+            "id": "f4f360986aba7e4d",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Course/2 The Linux File System/The Linux File System.md",
+                "file": "Course/1 Linux Terminal Basics/Basics.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "The Linux File System"
+              "title": "Basics"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -93,7 +92,8 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300
+    "width": 300,
+    "collapsed": true
   },
   "right": {
     "id": "1f5c10e73ef9abc7",
@@ -198,18 +198,30 @@
       "bases:Create new base": false
     }
   },
-  "active": "d410b09529d19b50",
+  "active": "66550452d620554c",
   "lastOpenFiles": [
-    "Course/2 The Linux File System/Linux File Hierarchy Structure.md",
-    "Course/2 The Linux File System/The Linux File System.md",
-    "Pasted image 20260714114041.png",
+    "Course/2 The Linux File System/Attachments/Pasted image 20260721153504.png",
+    "Course/2 The Linux File System/Attachments/Pasted image 20260721153307.png",
+    "My_Notes/Xclip.md",
+    "Course/2 The Linux File System/Working With Files and Directories.md",
+    "Course/2 The Linux File System/Attachments/Pasted image 20260716135147.png",
     "Course/1 Linux Terminal Basics/Basics.md",
+    "Course/2 The Linux File System/The Linux File System.md",
+    "My_Notes/Disk Storage Management on Linux.md",
+    "My_Notes/Find.md",
+    "My_Notes/OpenSUSE.md",
+    "Course/2 The Linux File System/Attachments/Pasted image 20260715205907.png",
+    "Course/2 The Linux File System/Linux File Hierarchy Structure.md",
+    "Course/2 The Linux File System/Attachments/Pasted image 20260714114041.png",
+    "Course/2 The Linux File System/Attachments/Pasted image 20260715204952.png",
+    "Course/2 The Linux File System/Attachments/Pasted image 20260716133536.png",
+    "Course/2 The Linux File System/Attachments",
+    "Course/2 The Linux File System/Attachments/Pasted image 20260716112105.png",
+    "Course/2 The Linux File System/Attachments/Pasted image 20260715210547.png",
+    "Course/2 The Linux File System/Attachments/Pasted image 20260715210545.png",
+    "Course/2 The Linux File System/Attachments/Pasted image 20260715205857.png",
     "Course/2 The Linux File System",
     "davidsouther_bash-zsh-shourtcuts.pdf",
-    "My_Notes/Gerenciamento de Espaço em Disco no Linux.md",
-    "My_Notes/Find.md",
-    "My_Notes/Xclip.md",
-    "My_Notes/OpenSUSE.md",
     "Find.md",
     "Course/1 Linux Terminal Basics",
     "Course/Untitled",
