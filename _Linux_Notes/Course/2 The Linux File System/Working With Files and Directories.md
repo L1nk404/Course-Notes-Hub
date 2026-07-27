@@ -3,11 +3,21 @@
 	- [[#`ls` Cheat Sheet]]
 - [[#Understanding File Timestamps `atime`, `mtime`, `ctime` (`stat`, `touch`, `date`)]]
 	- [[#Changing File Timestamp]]
-	- [[#Manipulating a File's Change Time (ctime)]]
+	- [[#Manipulating a File's Change Time `ctime`]]
 	- [[#The `date` command]]
+	- [[#Timestamp Cheat Sheet]]
+- [[#File Types in Linux (`ls -F`, `file`)]]
 ---
 ## The `ls`command in Depth
 ![[Pasted image 20260716135147.png]]
+
+
+> [!NOTE] Special type of files
+> Beside `-`, `d` and `l` we have two special types of files:
+> - `b`: Is a **block device**. A block device is a type of device file that allows for reading and writing data in fixed-size blocks, typically used for storage devices like hard drives and SSDs. Example: `brw-rw---- 1 root disk 8, 1 Jul 27 14:45 /dev/sda1`
+> - `c`: Is a **char device**. in Linux is an abstraction that allows userspace applications to communicate with hardware or kernel subsystems by transmitting data sequentially **byte-by-byte as a continuous stream**. Unlike block devices (like hard drives) which read and write data in fixed-size chunks using caches, character devices provide unbuffered, sequential access. Example: `crw-rw-rw- 1 root root 1, 5 Jul 27 14:45 /dev/zero`
+> - `s`:  Is a `socket`. This type of file is used by processes to communicate and has nothing to do with the socket term in TCP/IP. Example: `srw-rw-rw- 1 root root 0 Jul 27 14:45 /run/snapd-snap.socket`
+
 ### `ls` Cheat Sheet
 ```bash
 ##########################
@@ -144,9 +154,8 @@ Change: 2026-07-21 19:00:43.027919308 +0000
 Birth: 2026-07-21 18:47:58.457756170 +0000  
 ```
 
-### Manipulating a File's Change Time (ctime)
+### Manipulating a File's Change Time `ctime`
 
-#### The trick
 Note that `ctime` cannot be changed by the `touch` command. This happens because the kernel always stamps it with the **current** system time whenever anything on the inode changes.
 
 Since `ctime` always reflects the system's current moment at the time of the change, you can "trick" it by temporarily changing the system clock:
@@ -180,9 +189,7 @@ Since `ctime` always reflects the system's current moment at the time of the cha
 
 > [!warning] Important
 > A subtlety worth noting Since `ctime` only updates when something on the file changes, step 3 (restoring `atime`/`mtime`) will **also bump `ctime` again** — to whatever moment step 3 is actually run. So the order matters: **the final `ctime` will end up being the time at which step 3 was executed**, not the moment of step 2. Make sure the system clock is still set to your desired value when you run step 3, _before_ reverting it back in step 4.
-
 ### The `date` command
-
 Shows or sets the system's date and time.
 #### Display current date/time
 
@@ -212,8 +219,7 @@ Common format codes:
 |`%s`|Unix timestamp|
 |`%A`|Full weekday name|
 |`%B`|Full month name|
-
-#### Set the system date/time
+- **Set the system date/time**
 
 ```bash
 sudo date -s "2026-07-21 15:30:00"
@@ -222,19 +228,111 @@ sudo date -s "2026-07-21 15:30:00"
 > [!warning] 
 > Requires root Setting the system clock needs `sudo`. Also, if a time sync service (like `systemd-timesyncd` or `chrony`) is running, it may override your manual change shortly after.
 
-#### Convert a Unix timestamp to a readable date
+- **Convert a Unix timestamp to a readable date**
 
 ```bash
 date -d @1783962827
 ```
-#### Restore time sync after a manual change
+
+- **Restore time sync after a manual change**
 
 ```bash
 sudo timedatectl set-ntp true
 ```
-#### Check the manual for accepted date formats
+
+- **Check the manual for accepted date formats**
 
 ```bash
 man date
 ```
+
+### Timestamp Cheat Sheet
+```bash
+1. ##########################
+2. ## File Timestamps and Date
+3. ##########################
+
+4. # displaying atime
+5. ls -lu
+
+6. # displaying mtime
+7. ls -l
+8. ls -lt
+
+9. # displaying ctime
+10. ls -lc
+
+11. # displaying all timestamps
+12. stat file.txt
+
+13. # displaying the full timestamp
+14. ls -l --full-time /etc/
+
+15. # creating an empty file if it does not exist, update the timestamps if the file exists
+16. touch file.txt
+
+17. # changing only the access time to current time
+18. touch -a file
+
+19. # changing only the modification time to current time
+20. touch -m file
+
+21. # changing the modification time to a specific date and time
+22. touch -m -t 201812301530.45 a.txt
+
+23. # changing both atime and mtime to a specific date and time
+24. touch -d "2010-10-31 15:45:30" a.txt
+
+25. # changing the timestamp of a.txt to those of b.txt
+26. touch a.txt -r b.txt
+
+27. # displaying the date and time
+28. date
+
+29. # showing this month's calendar
+30. cal
+
+31. # showing the calendar of a specific year
+32. cal 2021
+
+33. # showing the calendar of a specific month and year
+34. cal 7 2021
+
+35. # showing the calendar of previous, current and next month
+36. cal -3
+
+37. # setting the date and time
+38. date --set="2 OCT 2020 18:00:00"
+
+39. # displaying the modification time and sorting the output by name.
+40. ls -l
+
+41. # displaying the output sorted by modification time, newest files first
+42. ls -lt
+
+43. # displaying and sorting by atime
+44. ls -ltu
+
+45. # reversing the sorting order
+46. ls -ltu --reverse
+```
+
+---
+## File Types in Linux (`ls -F`, `file`)
+Linux determines the type of a file via a code in the file header. It  does not depend in the file extension.
+We can use `file` to determine the header of the file that contains their type.
+
+> Note that it can be changed
+
+```bash
+➜  ~ file linux.txt  
+linux.txt: ASCII text
+```
+
+We can also use `ls -F` command:
+- No symbol added - Indicates a regular non-executable file: `linux.txt`
+- `/` - Indicated a directory: `Documents/`
+- `@` - Indicates a symlink:  `os-release@`
+- `=` - Indicates a socket: `snapd.socket=`
+- `*` - Indicates an executable file: `zstd*`
 
