@@ -1,4 +1,4 @@
-## Índice
+![[Pasted image 20260727232040.png]]## Índice
 ## Índice
 - [[#Usage Methods]]
 	- [[#Basic Copy and Paste]]

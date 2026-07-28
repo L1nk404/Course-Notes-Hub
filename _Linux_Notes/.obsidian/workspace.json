@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "My_Notes/Find.md",
+                "file": "My_Notes/Xclip.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Find"
+              "title": "Xclip"
             }
           }
         ]
@@ -185,6 +185,9 @@
   },
   "active": "f4f360986aba7e4d",
   "lastOpenFiles": [
+    "My_Notes/Attachments/Pasted image 20260727232040.png",
+    "My_Notes/Attachments",
+    "My_Notes/Find.md",
     "Course/2 The Linux File System/Working With Files and Directories.md",
     "My_Notes/Disk Storage Management on Linux.md",
     "Course/2 The Linux File System/Linux File Hierarchy Structure.md",
@@ -195,7 +198,6 @@
     "Course/2 The Linux File System/Attachments/Pasted image 20260721153307.png",
     "My_Notes/Xclip.md",
     "Course/2 The Linux File System/Attachments/Pasted image 20260716135147.png",
-    "My_Notes/Find.md",
     "My_Notes/OpenSUSE.md",
     "Course/2 The Linux File System/Attachments/Pasted image 20260715205907.png",
     "Course/2 The Linux File System/Attachments/Pasted image 20260714114041.png",
