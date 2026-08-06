@@ -97,6 +97,7 @@ uname (2)            - get name and information about current kernel
 ```
 ---
 ## History
+#history
 We have two ways to see the terminal history:
 1. By the file:
 	1. `.zsh_history`

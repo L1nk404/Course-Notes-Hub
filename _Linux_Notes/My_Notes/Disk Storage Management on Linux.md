@@ -40,7 +40,8 @@ du -h --max-depth=1 /path | sort -rh
 du -h -x --max-depth=1 /
 ```
 
-> [!warning] Be careful with `-x` on systems with bind mounts If `/home`, `/var`, `/opt`, etc. are **separate mount points** from the same partition (common in setups with subvolumes), `-x` will _skip_ those folders and mask where the actual usage is. In that case, run `du` **without `-x`**, folder by folder, specifically on those mount points.
+> [!warning] 
+> Be careful with `-x` on systems with bind mounts If `/home`, `/var`, `/opt`, etc. are **separate mount points** from the same partition (common in setups with subvolumes), `-x` will _skip_ those folders and mask where the actual usage is. In that case, run `du` **without `-x`**, folder by folder, specifically on those mount points.
 
 ---
 
@@ -65,7 +66,8 @@ df -i
 |Use%|Percentage used|
 |Mounted on|Mount point|
 
-> [!tip] `du` vs `df` `du` measures folders/files. `df` measures the entire partition/disk. When the two **don't match** (df shows much more used than the sum from du), it's a sign of: a deleted file still open by a process, or a filesystem quirk (e.g., Btrfs with snapshots).
+> [!tip] 
+> `du` vs `df` `du` measures folders/files. `df` measures the entire partition/disk. When the two **don't match** (df shows much more used than the sum from du), it's a sign of: a deleted file still open by a process, or a filesystem quirk (e.g., Btrfs with snapshots).
 
 ---
 
@@ -82,9 +84,11 @@ sudo zypper install ncdu     # openSUSE
 sudo ncdu -x /
 ```
 
-> [!warning] Running without `sudo` masks results System folders without read permission show up with an error (`!` or `e` in the interface) and are undercounted or ignored — always run with `sudo` for a reliable diagnosis.
+> [!warning] 
+> Running without `sudo` masks results System folders without read permission show up with an error (`!` or `e` in the interface) and are undercounted or ignored — always run with `sudo` for a reliable diagnosis.
 
-> [!danger] ncdu and Btrfs don't mix well On Btrfs systems with snapshots, `ncdu` counts the **apparent** size of each file in each snapshot, without knowing that multiple snapshots share the same physical blocks (CoW). This can make `/.snapshots` appear to be **terabytes**, even though the entire disk has only a few GB of real space actually occupied by them. See the Btrfs section below.
+> [!danger] 
+> ncdu and Btrfs don't mix well On Btrfs systems with snapshots, `ncdu` counts the **apparent** size of each file in each snapshot, without knowing that multiple snapshots share the same physical blocks (CoW). This can make `/.snapshots` appear to be **terabytes**, even though the entire disk has only a few GB of real space actually occupied by them. See the Btrfs section below.
 
 ---
 
@@ -114,7 +118,8 @@ sudo btrfs filesystem du -s /.snapshots/*/snapshot
 - **Exclusive**: space that would **actually be freed** if that snapshot were deleted
 - **Set shared**: blocks shared with other snapshots/subvolumes
 
-> [!tip] What actually matters To decide what to delete, look at the **Exclusive** column, not Total. A snapshot might show "11GB total" but have "0B exclusive" — meaning deleting it frees nothing, because the data still exists in other snapshots.
+> [!tip] 
+> What actually matters To decide what to delete, look at the **Exclusive** column, not Total. A snapshot might show "11GB total" but have "0B exclusive" — meaning deleting it frees nothing, because the data still exists in other snapshots.
 
 ### View all subvolumes (mounted or not)
 
@@ -152,7 +157,8 @@ sudo btrfs balance status /
 sudo btrfs balance cancel /
 ```
 
-> [!note] Why the space doesn't show up right away Deleting a snapshot (`snapper delete`) doesn't free space instantly. The kernel processes the block removal in the background (**cleaner thread**). On systems with many accumulated snapshots (months of updates), this can take a while. Running `sync` or restarting the system usually forces it to finish.
+> [!note] 
+> Why the space doesn't show up right away Deleting a snapshot (`snapper delete`) doesn't free space instantly. The kernel processes the block removal in the background (**cleaner thread**). On systems with many accumulated snapshots (months of updates), this can take a while. Running `sync` or restarting the system usually forces it to finish.
 
 ---
 
@@ -174,7 +180,8 @@ sudo snapper delete <start>-<end>
 sudo snapper list-configs
 ```
 
-> [!warning] Snapshot 0 (current) cannot be deleted Snapshot `0` represents the currently running system — it cannot be deleted.
+> [!warning] 
+> Snapshot 0 (current) cannot be deleted Snapshot `0` represents the currently running system — it cannot be deleted.
 
 ### Configure automatic retention (prevent future buildup)
 
@@ -209,7 +216,8 @@ Happens when a process still has the file open (file handle), even after it's be
 sudo find /proc/*/fd -ls 2>/dev/null | grep '(deleted)' | sort -rn -k7 | head -10
 ```
 
-> [!tip] `memfd` doesn't count Entries like `/memfd:something (deleted)` are shared memory segments (RAM), not disk files — they can be ignored in this context.
+> [!tip] 
+> `memfd` doesn't count Entries like `/memfd:something (deleted)` are shared memory segments (RAM), not disk files — they can be ignored in this context.
 
 ### `df` shows disk full, but `du` can't find anything
 

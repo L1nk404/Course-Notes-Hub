@@ -7,8 +7,17 @@
 	- [[#The `date` command]]
 	- [[#Timestamp Cheat Sheet]]
 - [[#File Types in Linux (`ls -F`, `file`)]]
+- [[#Viewing File (cat, tail, head, watch)]]
+	- [[#`cat`]]
+	- [[#`tail` and `head`]]
+	- [[#`watch`]]
+	- [[#Viewing Files Cheat Sheet]]
+- [[#Manipulating Files andDirectories (`mkdir`, `cp`, `mv`, `rf`, `shred`)]]
+	- [[#mkdir - make directory]]
+	- [[#cp - copy]]
 ---
 ## The `ls`command in Depth
+#ls
 ![[Pasted image 20260716135147.png]]
 
 
@@ -73,6 +82,7 @@ ls -li /etc
 ```
 ---
 ## Understanding File Timestamps: `atime`, `mtime`, `ctime` (`stat`, `touch`, `date`)
+#timestamp #atime #mtime #ctim
 
 Every file on Linux has three timestamps:
 1. The **Access** timestamp or `atime` is the last time the file was read (`ls -lu`)
@@ -97,6 +107,7 @@ To see the entire timestamp with the `ls` command, we use the `--full-time` para
 -rw-r--r-- 1 root root 2814 2026-07-21 01:19:19.785000061 +0000 /etc/passwd
 ```
 ### Changing File Timestamp
+#changing_file_timestamp
 This option is useful when you want a backup program to include or exclude some files or when you simply do not want other users to know that you've read or modified the file.
 We can do that using the `touch` command.
 
@@ -155,6 +166,7 @@ Birth: 2026-07-21 18:47:58.457756170 +0000
 ```
 
 ### Manipulating a File's Change Time `ctime`
+#ctime
 
 Note that `ctime` cannot be changed by the `touch` command. This happens because the kernel always stamps it with the **current** system time whenever anything on the inode changes.
 
@@ -190,6 +202,7 @@ Since `ctime` always reflects the system's current moment at the time of the cha
 > [!warning] Important
 > A subtlety worth noting Since `ctime` only updates when something on the file changes, step 3 (restoring `atime`/`mtime`) will **also bump `ctime` again** — to whatever moment step 3 is actually run. So the order matters: **the final `ctime` will end up being the time at which step 3 was executed**, not the moment of step 2. Make sure the system clock is still set to your desired value when you run step 3, _before_ reverting it back in step 4.
 ### The `date` command
+#date
 Shows or sets the system's date and time.
 #### Display current date/time
 
@@ -319,6 +332,7 @@ man date
 
 ---
 ## File Types in Linux (`ls -F`, `file`)
+#file
 Linux determines the type of a file via a code in the file header. It  does not depend in the file extension.
 We can use `file` to determine the header of the file that contains their type.
 
@@ -335,4 +349,174 @@ We can also use `ls -F` command:
 - `@` - Indicates a symlink:  `os-release@`
 - `=` - Indicates a socket: `snapd.socket=`
 - `*` - Indicates an executable file: `zstd*`
+---
+## Viewing File (cat, tail, head, watch)
+### `cat`
+#cat
+Cat allows to open files. We can use the `-n` parameter to see the number of the lines of a file:
+
+```bash
+➜  ~ cat -n /etc/group  
+    1  root:x:0:  
+    2  daemon:x:1:  
+    3  bin:x:2:  
+    4  sys:x:3:  
+    5  adm:x:4:syslog,link  
+    6  tty:x:5:  
+    7  disk:x:6:  
+    8  lp:x:7:  
+    9  mail:x:8:
+```
+### `tail` and `head`
+#tail #head
+`tail` allows to see the last lines of a file while `head` reads the top lines.
+By default they read the last/first 10 lines. 
+#### Usefull Parameters
+- `-n <number>` - show the last $n$ lines;
+	- We can use `+` to see the last lines starting from a specific line:
+```bash
+➜  ~ tail -n  +8 /etc/group    
+lp:x:7:  
+mail:x:8:  
+news:x:9:  
+uucp:x:10:  
+man:x:12:  
+proxy:x:13:  
+kmem:x:15:  
+dialout:x:20:  
+fax:x:21:  
+voice:x:22:  
+cdrom:x:24:link  
+floppy:x:25:
+```
+- Tail is really usfeul for reading a file in real time, like when you want see the last lines of a log file:
+	- For that we use `-f` parameter, for example `tail -f /var/log/auth.log` :
+
+![[Pasted image 20260805225116.png]] 
+### `watch`  
+#watch
+`watch` runs command repeatedly, displaying its output and errors (the first screenfull). This  allows  you to watch the program output change over time. By default, command is run every 2 seconds and watch will run until interrupted.
+#### Usefull Parameters
+- `-d` - highlight the differences between succesisve updates 
+- `-n <number>` - specify the update interval
+### Viewing Files Cheat Sheet
+
+```bash
+1. ##########################
+2. ## Viewing files (cat, less, more, head, tail, watch)
+3. ##########################
+
+4. # displaying the contents of a file
+5. cat filename
+
+6. # displaying more files
+7. cat filename1 filename2
+
+8. # displaying the line numbers
+9. cat -n filename
+
+10. # concatenating 2 files
+11. cat filename1 filename2 > filename3
+
+12. # viewing a file using less
+13. less filename
+
+14. # less shortcuts:
+15. # h => getting help
+16. # q => quit
+17. # enter => show next line
+18. # space => show next screen
+19. # /string => search forward for a string
+20. # ?string => search backwards for a string
+21. # n / N => next/previous appearance
+
+22. # showing the last 10 lines of a file
+23. tail filename
+
+24. # showing the last 15 lines of a file
+25. tail -n 15 filename
+
+26. # showing the last lines of a file starting with line no. 5
+27. tail -n +5 filename
+
+28. # showing the last 10 lines of the file in real-time
+29. tail -f filename
+
+30. # showing the first 10 lines of a file
+31. head filename
+
+32. # showing the first 15 lines of a file
+33. head -n 15 filename
+
+34. # running repeatedly a command with refresh of 3 seconds
+35. watch -n 3 ls -l
+```
+--- 
+## Manipulating Files andDirectories (`mkdir`, `cp`, `mv`, `rf`, `shred`)
+### mkdir - make directory
+#mkdir
+
+`mkdir` is a tool to create directories
+### Useful parameteres:
+- We can use `-p` to create a whole structure of directories in one command:
+
+```bash
+➜  ~ mkdir -p -v  /tmp/first/second/third # -v stands for verbose  
+mkdir: created directory '/tmp/first'  
+mkdir: created directory '/tmp/first/second'  
+mkdir: created directory '/tmp/first/second/third'
+```
+
+`-p` options is also good when the directory exists and you don't want an error:
+
+```bash
+➜  ~ mkdir /tmp/dir1  
+mkdir: /tmp/dir1: File exists  
+➜  ~ mkdir -p /tmp/dir1
+```
+### cp - copy
+#cp
+
+`cp` have three principal modes of operation, depending on the number and the type of arguments passed.
+1. If the command has two arguments of type files, it copies the content of the first file to the second file. **If the second file does not exist it will be create, if exists, it will overwrite the destination**:
+
+```bash
+➜  ~ cp -v /etc/group ./users.txt # -v stands for verbose   
+'/etc/group' -> './users.txt'
+```
+- It's recommend to use `-i` to prompt confiormation if the file exists:
+
+```bash 
+➜  ~ cp -v -i /etc/passwd ./users.txt     
+cp: overwrite './users.txt'? y  
+'/etc/passwd' -> './users.txt'
+```
+
+2. If the command has one or more arguments of type files, which the source and the last argument is a directory, which is a destination. It copies the source files to the directory.
+```bash
+➜  ~ cp -v -i /etc/group /etc/passwd /etc/dracut.conf /tmp  
+'/etc/group' -> '/tmp/group'  
+'/etc/passwd' -> '/tmp/passwd'  
+'/etc/dracut.conf' -> '/tmp/dracut.conf'
+```
+
+3. If all the arguments are of type directory, cp copies all files in the source directory to the directory directory creating any files or direcotry needed. This requires `-r` parameter:
+```bash
+➜  ~ sudo cp -r /etc/ /tmp  # copies the entire /etc/ directory into /tmp
+➜  ~ ls -l /tmp          
+total 12  
+drwxrwxr-x   2 link link   40 Aug  6 02:17 dir1  
+-rw-r--r--   1 link link  117 Aug  6 02:28 dracut.conf  
+drwxr-xr-x 144 root root 4960 Aug  6 02:33 etc  
+drwxrwxr-x   3 link link   60 Aug  6 02:15 first  
+-rw-r--r--   1 link link 1169 Aug  6 02:28 group  
+drwxr-x---  18 link link  820 Aug  6 02:31 link  
+-rw-r--r--   1 link link 2814 Aug  6 02:28 passwd
+```
+
+
+> [!warning] Warning
+> When a user copies a file from another user, it becomes the owner.
+> To preserve the file attributes, permissions, group and user ownership use the `-p`option.
+
 
