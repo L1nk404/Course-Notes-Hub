@@ -13,8 +13,8 @@
 	- [[#`watch`]]
 	- [[#Viewing Files Cheat Sheet]]
 - [[#Manipulating Files andDirectories (`mkdir`, `cp`, `mv`, `rf`, `shred`)]]
-	- [[#mkdir - make directory]]
-	- [[#cp - copy]]
+	- [[#`mkdir` - make directory]]
+	- [[#`cp` - copy]]
 ---
 ## The `ls`command in Depth
 #ls
@@ -453,11 +453,11 @@ floppy:x:25:
 ```
 --- 
 ## Manipulating Files andDirectories (`mkdir`, `cp`, `mv`, `rf`, `shred`)
-### mkdir - make directory
+### `mkdir` - make directory
 #mkdir
 
 `mkdir` is a tool to create directories
-### Useful parameteres:
+#### Useful parameteres:
 - We can use `-p` to create a whole structure of directories in one command:
 
 ```bash
@@ -474,7 +474,7 @@ mkdir: created directory '/tmp/first/second/third'
 mkdir: /tmp/dir1: File exists  
 ➜  ~ mkdir -p /tmp/dir1
 ```
-### cp - copy
+### `cp` - copy
 #cp
 
 `cp` have three principal modes of operation, depending on the number and the type of arguments passed.
@@ -484,7 +484,7 @@ mkdir: /tmp/dir1: File exists
 ➜  ~ cp -v /etc/group ./users.txt # -v stands for verbose   
 '/etc/group' -> './users.txt'
 ```
-- It's recommend to use `-i` to prompt confiormation if the file exists:
+- It's recommend to use `-i` to prompt confirmation if the file exists:
 
 ```bash 
 ➜  ~ cp -v -i /etc/passwd ./users.txt     
@@ -518,5 +518,14 @@ drwxr-x---  18 link link  820 Aug  6 02:31 link
 > [!warning] Warning
 > When a user copies a file from another user, it becomes the owner.
 > To preserve the file attributes, permissions, group and user ownership use the `-p`option.
+
+
+> [!NOTE] 
+> Is possible to copy one or more files from only one source, for that, we use `tee`:
+```bash
+tee dest_file1 dest_file2 < file_source
+```
+
+
 
 

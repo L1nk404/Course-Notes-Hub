@@ -1,4 +1,4 @@
-![[Pasted image 20260727232040.png]]## Índice
+![[Pasted image 20260727232040.png]]
 ## Índice
 - [[#Usage Methods]]
 	- [[#Basic Copy and Paste]]
@@ -10,7 +10,6 @@
 - [[#Best Practices]]
 	- [[#Error Handling]]
 	- [[#Security Considerations]]## Usage Methods
-
 ### Basic Copy and Paste
 To copy text to the clipboard, you can pipe the output of a command to `xclip`. For example, to copy the contents of a file named `example.txt` to the CLIPBOARD selection:
 
