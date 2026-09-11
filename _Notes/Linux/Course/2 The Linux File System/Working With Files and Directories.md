@@ -1,11 +1,9 @@
 ## Index
 - [[#The `ls`command in Depth]]
-	- [[#`ls` Cheat Sheet]]
 - [[#Understanding File Timestamps `atime`, `mtime`, `ctime` (`stat`, `touch`, `date`)]]
 	- [[#Changing File Timestamp]]
 	- [[#Manipulating a File's Change Time `ctime`]]
 	- [[#The `date` command]]
-	- [[#Timestamp Cheat Sheet]]
 - [[#File Types in Linux (`ls -F`, `file`)]]
 - [[#Viewing File (cat, tail, head, watch)]]
 	- [[#`cat`]]
@@ -18,6 +16,11 @@
 ---
 ## The `ls`command in Depth
 #ls
+
+
+> [!NOTE] Cheat Sheet
+> [[ls | `ls` cheat Sheet]]
+
 ![[Pasted image 20260716135147.png]]
 
 
@@ -28,61 +31,13 @@
 > - `s`:  Is a `socket`. This type of file is used by processes to communicate and has nothing to do with the socket term in TCP/IP. Example: `srw-rw-rw- 1 root root 0 Jul 27 14:45 /run/snapd-snap.socket`
 
 ### `ls` Cheat Sheet
-```bash
-##########################
-## The ls Command
-## ls [OPTIONS] [FILES]
-##########################
-  
 
-# listing the current directory
-# ~ => user's home directory
-# . => current directory
-# .. => parent directory
-ls
-ls .
-
-# listing more directories
-ls ~ /var /
-
-# -l => long listing
-ls -l ~
-
-# -a => listing all files and directories including hidden ones
-ls -la ~
-
-# -1 => listing on a single column
-ls -1 /etc
-
-# -d => displaying information about the directory, not about its contents
-ls -ld /etc
-
-# -h => displaying the size in human readable format
-ls -h /etc
-
-# -S => displaying sorting by size
-ls -Sh /var/log
-
-# Note: ls does not display the size of a directory and all its contents. Use du instead
-du -sh ~
-
-# -X => displaying sorting by extension
-ls -lX /etc
-
-# --hide => hiding some files
-ls --hide="*.log" /var/log
-# or (source: https://www.baeldung.com/linux/ls-ignore-hide-files)
-ls --ignore="*.log" /var/log
-
-# -R => displaying a directory recursively
-ls -lR ~
-
-# -i => displaying the inode number
-ls -li /etc
-```
 ---
 ## Understanding File Timestamps: `atime`, `mtime`, `ctime` (`stat`, `touch`, `date`)
 #timestamp #atime #mtime #ctim
+
+> [!NOTE] Cheat Sheet
+> [[Timestamp]]
 
 Every file on Linux has three timestamps:
 1. The **Access** timestamp or `atime` is the last time the file was read (`ls -lu`)
@@ -259,77 +214,6 @@ sudo timedatectl set-ntp true
 man date
 ```
 
-### Timestamp Cheat Sheet
-```bash
-1. ##########################
-2. ## File Timestamps and Date
-3. ##########################
-
-4. # displaying atime
-5. ls -lu
-
-6. # displaying mtime
-7. ls -l
-8. ls -lt
-
-9. # displaying ctime
-10. ls -lc
-
-11. # displaying all timestamps
-12. stat file.txt
-
-13. # displaying the full timestamp
-14. ls -l --full-time /etc/
-
-15. # creating an empty file if it does not exist, update the timestamps if the file exists
-16. touch file.txt
-
-17. # changing only the access time to current time
-18. touch -a file
-
-19. # changing only the modification time to current time
-20. touch -m file
-
-21. # changing the modification time to a specific date and time
-22. touch -m -t 201812301530.45 a.txt
-
-23. # changing both atime and mtime to a specific date and time
-24. touch -d "2010-10-31 15:45:30" a.txt
-
-25. # changing the timestamp of a.txt to those of b.txt
-26. touch a.txt -r b.txt
-
-27. # displaying the date and time
-28. date
-
-29. # showing this month's calendar
-30. cal
-
-31. # showing the calendar of a specific year
-32. cal 2021
-
-33. # showing the calendar of a specific month and year
-34. cal 7 2021
-
-35. # showing the calendar of previous, current and next month
-36. cal -3
-
-37. # setting the date and time
-38. date --set="2 OCT 2020 18:00:00"
-
-39. # displaying the modification time and sorting the output by name.
-40. ls -l
-
-41. # displaying the output sorted by modification time, newest files first
-42. ls -lt
-
-43. # displaying and sorting by atime
-44. ls -ltu
-
-45. # reversing the sorting order
-46. ls -ltu --reverse
-```
-
 ---
 ## File Types in Linux (`ls -F`, `file`)
 #file
@@ -351,6 +235,10 @@ We can also use `ls -F` command:
 - `*` - Indicates an executable file: `zstd*`
 ---
 ## Viewing File (cat, tail, head, watch)
+
+
+> [!NOTE] Cheat Sheet
+> [[Cat Tail Head Watch|cat, tail, head, watch cheat sheet]]
 ### `cat`
 #cat
 Cat allows to open files. We can use the `-n` parameter to see the number of the lines of a file:
@@ -399,60 +287,14 @@ floppy:x:25:
 #### Usefull Parameters
 - `-d` - highlight the differences between succesisve updates 
 - `-n <number>` - specify the update interval
-### Viewing Files Cheat Sheet
 
-```bash
-1. ##########################
-2. ## Viewing files (cat, less, more, head, tail, watch)
-3. ##########################
-
-4. # displaying the contents of a file
-5. cat filename
-
-6. # displaying more files
-7. cat filename1 filename2
-
-8. # displaying the line numbers
-9. cat -n filename
-
-10. # concatenating 2 files
-11. cat filename1 filename2 > filename3
-
-12. # viewing a file using less
-13. less filename
-
-14. # less shortcuts:
-15. # h => getting help
-16. # q => quit
-17. # enter => show next line
-18. # space => show next screen
-19. # /string => search forward for a string
-20. # ?string => search backwards for a string
-21. # n / N => next/previous appearance
-
-22. # showing the last 10 lines of a file
-23. tail filename
-
-24. # showing the last 15 lines of a file
-25. tail -n 15 filename
-
-26. # showing the last lines of a file starting with line no. 5
-27. tail -n +5 filename
-
-28. # showing the last 10 lines of the file in real-time
-29. tail -f filename
-
-30. # showing the first 10 lines of a file
-31. head filename
-
-32. # showing the first 15 lines of a file
-33. head -n 15 filename
-
-34. # running repeatedly a command with refresh of 3 seconds
-35. watch -n 3 ls -l
-```
 --- 
-## Manipulating Files andDirectories (`mkdir`, `cp`, `mv`, `rf`, `shred`)
+## Manipulating Files and Directories (`mkdir`, `cp`, `mv`, `rf`, `shred`)
+
+
+> [!NOTE] Cheat Sheet
+> [[touch, mkdir, cp, mv, rm, shred] | touch, mkdir, cp, mv, rm, shred Cheat Sheet]]
+
 ### `mkdir` - make directory
 #mkdir
 
@@ -525,6 +367,8 @@ drwxr-x---  18 link link  820 Aug  6 02:31 link
 ```bash
 tee dest_file1 dest_file2 < file_source
 ```
+### `mv`
+
 
 
 

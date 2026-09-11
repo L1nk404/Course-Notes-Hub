@@ -1,3 +1,6 @@
+## Index
+- [[#Aula 1]]
+- [[#Aula 2]]
 ## Aula 1
 ### Erro - Representação dos Números
 #### Sistema Posicionais
@@ -115,3 +118,26 @@ $x=13,50 + 5,06\implies 18,56$
 
 Fazendo o truncamento:
 > $18,5$
+> 
+## Aula 2
+### Zeros de Funções
+
+> [!NOTE] Teorema de Bolzano
+> Se $f(x)$ é uma função contínua me um intervalo fechado $[a,b]$, e se $f(a)$ tem sinais opostos, então existe $c \in [a,b]$ tal que $f(c)=0$
+
+> [!NOTE] Teorema da Raiz Racional
+> Seja $p(x)$ um polinômio dado por 
+> $$
+> p(x)=a_nx^n+a_{n-1}x^{n-1}+...+a_1x+a_0
+> $$
+> onde $a_n,...,a_0 \in \mathbb{Z}$. Se $\frac{r}{s} \in \mathbb{Q}$, na forma irredutível, é uma raiz de $p(x)$, então $r$ divide $a_0$ e $s$ divide $a_n$
+##### Exemplo
+Seja $f(x)=4x³-5x²+16x-20$:
+1. Possíveis valores para $r$ (divisores de $20$): ($|1|,|2|,|4|,|5|,|10|,|20|$)
+2. Possíveis valores para $s$ (divisores de 4): ($|2|,|4|$)
+
+> Lembre-se que $\frac{r}{s}$ é irredutível
+
+
+> [!NOTE] Dispositivo de Briot-Ruffini
+> Contents
